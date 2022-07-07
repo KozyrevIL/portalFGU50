@@ -1,0 +1,359 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.OracleClient;
+using System.Linq;
+using System.Web;
+
+/// <summary>
+/// Сводное описание для ClassPaperInfo
+/// </summary>
+public class ClassPaperInfo
+{
+    public struct TMFC
+    {
+        public string num_mfc;
+        public string num_kuvd;
+        public string num_pack;
+        public string limit;
+        public string date_reg;
+        public string date_mfc;
+        public string date_poss_end;
+        public string date_end_in_ppoz;
+        public string User;
+        public string exists;
+        public string MFC;
+        public int action;
+        public string result_action;
+        public string RACKING;
+        public string SHELF;
+        public string LINE;
+        public string PLACE_NOTE;
+        public string USER_PLACE;
+        public string id_place;
+    }
+
+    public struct TPPOZ
+    {
+        public string num_pack;
+        public string num_kuvd;
+        public string limit;
+        public string date_reg;
+        public string date_poss_end;
+        public string rtype;
+        public string rsubtype;
+        public string declarant;
+        public string main_kuvd;
+        public string status;
+        public string executor;
+        public string mfc;
+    }
+    public struct TPLACE
+    {
+        public string id_place;
+        public string place;
+    }
+
+    public TMFC MFC;
+    public TPPOZ PPOZ;
+    public TPLACE PLACE;
+
+    public ClassPaperInfo()
+    {
+        MFC.date_mfc = "";
+        MFC.date_poss_end = "";
+        MFC.date_end_in_ppoz = "";
+        MFC.date_reg = "";
+        MFC.num_kuvd = "";
+        MFC.num_pack = "";
+        MFC.User = "";
+        MFC.limit = "";
+        MFC.exists = "";
+        MFC.MFC = "";
+        MFC.RACKING = "";
+        MFC.SHELF = "";
+        MFC.LINE = "";
+        MFC.PLACE_NOTE = "";
+        MFC.USER_PLACE = "";
+        MFC.id_place = "";
+
+
+        PPOZ.num_pack = "";
+        PPOZ.num_kuvd = "";
+        PPOZ.limit = "";
+        PPOZ.date_reg = "";
+        PPOZ.date_poss_end = "";
+        PPOZ.rtype = "";
+        PPOZ.rsubtype = "";
+        PPOZ.declarant = "";
+        PPOZ.main_kuvd = "";
+        PPOZ.status = "";
+        PPOZ.executor = "";
+        PPOZ.mfc = "";
+
+        PLACE.id_place = "";
+        PLACE.place = "";
+    }
+
+
+
+
+    public void GetPlace(string login)
+    {
+        PLACE.id_place = "";
+        PLACE.place = "";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            sqc.Open();
+            OracleCommand comCheck = new OracleCommand("select uo.place_id, po.name from egrn.PAPER_USER_OFFICE uo, egrn.PAPER_PLACE_OFFICE po where po.id=uo.place_id and uo.user_logon='" + login + "'", sqc);
+            OracleDataReader reader = comCheck.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                PLACE.id_place = reader["place_id"].ToString();
+                PLACE.place = reader["name"].ToString();
+            }
+        }
+    }
+
+    public void ReadInfoPPOZ(string in_num_mfc, string id_place, string action)
+    {
+
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(@"
+select p.ID, p.NUM_MFC, p.NUM_KUVD, p.num_pack, p.LIMIT, to_char(p.DATE_MFC,'dd.mm.yyyy') DATE_MFC, to_char(p.DATE_REG,'dd.mm.yyyy') DATE_REG, to_char(p.DATE_END,'dd.mm.yyyy') DATE_END, p.NAME_USER, p.RACKING, p.SHELF, p.LINE, p.PLACE_NOTE, p.USER_PLACE
+from egrn.paper p, egrn.paper_action pa where p.num_mfc='" + in_num_mfc + "' and p.id_place="+id_place+" and pa.id= (select max(pa1.id) from egrn.paper_action pa1 where pa1.num_mfc=p.num_mfc) and pa.id_action in (" + action + ")", sqc);
+            sqc.Open();
+            OracleDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                MFC.num_mfc = in_num_mfc;
+                MFC.num_kuvd = reader["NUM_KUVD"].ToString();
+                MFC.num_pack = reader["NUM_PACK"].ToString();
+                MFC.limit = reader["LIMIT"].ToString();
+                MFC.date_reg = reader["DATE_REG"].ToString();
+                MFC.date_mfc = reader["DATE_MFC"].ToString();
+                MFC.date_poss_end = reader["DATE_END"].ToString();
+                MFC.User = reader["NAME_USER"].ToString();
+                MFC.RACKING = reader["RACKING"].ToString();
+                MFC.SHELF = reader["SHELF"].ToString();
+                MFC.LINE = reader["LINE"].ToString();
+                MFC.PLACE_NOTE = reader["PLACE_NOTE"].ToString();
+                MFC.USER_PLACE = reader["USER_PLACE"].ToString();
+                MFC.id_place = id_place;
+                MFC.exists = "Пакет внесен в базу";
+
+            }
+            else
+            {
+                MFC.num_mfc = in_num_mfc;
+                MFC.date_reg = DateTime.Now.ToString("dd.MM.yyyy");
+                MFC.date_mfc = (DateTime.Now.AddDays(-1)).ToString("dd.MM.yyyy");
+                MFC.exists = "";
+            }
+            sqc.Close();
+
+            command = new OracleCommand(@"
+    select
+i.c2 PPOZ_NUM_PACK, i.c4 declarant, i.c5 ppoz_type, i.c7 ppoz_subtype, i.c8 ppoz_num_kuvd, DEVELOPER.WORK_DAYS_BETWEEN(to_date(TO_DATE (c15, 'dd.mm.yyyy hh24:mi:ss') ),to_date(TO_DATE (c16, 'dd.mm.yyyy hh24:mi:ss'))) PPOZ_LIMIT,
+i.c15 PPOZ_DATE_REG, i.c16 PPOZ_POSS_END, i.c19 ppoz_mfc, i.c13 executor, i.c14 status
+from egrn.imp i where i.c3= '" + in_num_mfc + "'", sqc);
+
+            sqc.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                PPOZ.date_poss_end = reader["PPOZ_POSS_END"].ToString();
+                PPOZ.date_reg = reader["PPOZ_DATE_REG"].ToString();
+                PPOZ.declarant = reader["declarant"].ToString();
+                PPOZ.executor = reader["executor"].ToString();
+                PPOZ.limit = reader["PPOZ_LIMIT"].ToString();
+                PPOZ.main_kuvd = reader["PPOZ_LIMIT"].ToString();
+                PPOZ.mfc = reader["ppoz_mfc"].ToString();
+                PPOZ.num_kuvd = reader["ppoz_num_kuvd"].ToString();
+                PPOZ.num_pack = reader["PPOZ_NUM_PACK"].ToString();
+                PPOZ.rsubtype = reader["ppoz_subtype"].ToString();
+                PPOZ.rtype = reader["ppoz_type"].ToString();
+                PPOZ.status = reader["status"].ToString();
+            }
+            sqc.Close();
+        }
+    }
+    
+
+    public string AddPackage(TMFC inMFC)
+    {
+        string result = "Успешно добавлен!";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            string TextCommand = "";
+            sqc.Open();
+
+            OracleCommand comCheck = new OracleCommand(@"select 'есть' from egrn.paper where num_mfc='" + inMFC.num_mfc + "'", sqc);
+            string Chk = "нет";
+            try
+            {
+                Chk = comCheck.ExecuteOracleScalar().ToString();
+            }
+            catch
+            {
+                Chk = "нет";
+            }
+
+            if (Chk == "есть")
+            {
+                TextCommand = "update egrn.paper set NUM_KUVD='" + inMFC.num_kuvd + "', NUM_PACK='" + inMFC.num_pack + "', LIMIT=" + inMFC.limit + ", DATE_MFC=to_date('" + inMFC.date_mfc + "','dd.mm.yyyy'), DATE_REG=to_date('" + inMFC.date_reg + "','dd.mm.yyyy'),DATE_END=to_date('" + inMFC.date_poss_end + "','dd.mm.yyyy'),DATE_END_INPPOZ=to_date('" + inMFC.date_end_in_ppoz + "','dd.mm.yyyy'), NAME_USER='" + inMFC.User + "', MFC='" + inMFC.MFC + "' where num_mfc='" + inMFC.num_mfc + "'";
+                try
+                {
+                    OracleCommand comUpdate = new OracleCommand(TextCommand, sqc);
+                    comUpdate.ExecuteNonQuery();
+                    result = "Успешно обновлен!";
+                }
+                catch
+                {
+                    result = "Ошибка обновления!";
+                }
+            }
+            else
+            {
+                TextCommand = "insert into egrn.paper (NUM_MFC, NUM_KUVD,NUM_PACK,LIMIT,DATE_MFC,DATE_REG,DATE_END,DATE_END_INPPOZ, NAME_USER,MFC,LOCATION, id_place) values " +
+                    "('" + inMFC.num_mfc + "','" + inMFC.num_kuvd + "','" + inMFC.num_pack + "'," + inMFC.limit + ",to_date('" + inMFC.date_mfc + "','dd.mm.yyyy'), to_date('" + inMFC.date_reg + "','dd.mm.yyyy'),to_date('" + inMFC.date_poss_end + "','dd.mm.yyyy'),to_date('" + inMFC.date_end_in_ppoz + "','dd.mm.yyyy'),'" + inMFC.User + "','" + inMFC.MFC + "',1,"+MFC.id_place+")";
+                try
+                {
+                    OracleCommand comUpdate = new OracleCommand(TextCommand, sqc);
+                    comUpdate.ExecuteNonQuery();
+
+                    TextCommand = "insert into egrn.paper_action (NUM_MFC,ID_ACTION,DATE_ACTION,RESULT_ACTION,NAME_USER) values ('" + inMFC.num_mfc + "',1,to_date(sysdate),'','" + inMFC.User + "')";
+                    comUpdate = new OracleCommand(TextCommand, sqc);
+                    comUpdate.ExecuteNonQuery();
+
+                    result = "Успешно добавлен!";
+                }
+                catch
+                {
+                    result = "Ошибка добавления!";
+                }
+
+
+            }
+            sqc.Close();
+        }
+        return result;
+    }
+
+    public DateTime AddWorkDays(DateTime SourceDate, int WorkDays)
+    {
+
+        string result = SourceDate.ToString("dd.MM.yyyy");
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            sqc.Open();
+            OracleCommand comCheck = new OracleCommand(@"select to_char(DEVELOPER.add_work_day(:nd,:srcDay),'dd.mm.yyyy') from dual", sqc);
+            comCheck.Parameters.AddWithValue("nd", WorkDays);
+            comCheck.Parameters.AddWithValue("srcDay", SourceDate);
+            try
+            {
+                result = comCheck.ExecuteOracleScalar().ToString();
+            }
+            catch
+            {
+                result = SourceDate.ToString("dd.MM.yyyy");
+            }
+            sqc.Close();
+        }
+        return Convert.ToDateTime(result);
+    }
+    public string AddAction(TMFC inMFC)
+    {
+        string result = "Сведения внесены";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            sqc.Open();
+            OracleCommand comCheck = new OracleCommand("insert into egrn.paper_action (NUM_MFC,ID_ACTION,DATE_ACTION,RESULT_ACTION,NAME_USER) " +
+                " values (:NUM_MFC,:ID_ACTION,to_date(sysdate),:RESULT_ACTION,:NAME_USER)", sqc);
+            comCheck.Parameters.AddWithValue("NUM_MFC", inMFC.num_mfc);
+            comCheck.Parameters.AddWithValue("ID_ACTION", inMFC.action);
+            comCheck.Parameters.AddWithValue("RESULT_ACTION", inMFC.result_action);
+            comCheck.Parameters.AddWithValue("NAME_USER", inMFC.User);
+            try
+            {
+                comCheck.ExecuteNonQuery();
+                result = "Сведения внесены";
+            }
+            catch
+            {
+                result = "Ошибка внесения сведений";
+            }
+            sqc.Close();
+        }
+        return result;
+    }
+    public string UpdatePaper(TMFC inMFC)
+    {
+        string result = "Сведения о пакете обновлены";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            sqc.Open();
+            OracleCommand comCheck = new OracleCommand("update egrn.paper set RACKING =:RACKING ,SHELF =:SHELF,LINE = :LINE,PLACE_NOTE = :PLACE_NOTE ,USER_PLACE=:USER_PLACE " +
+                "  where num_mfc=:NUM_MFC", sqc);
+            comCheck.Parameters.AddWithValue("NUM_MFC", inMFC.num_mfc);
+            comCheck.Parameters.AddWithValue("RACKING", inMFC.RACKING);
+            comCheck.Parameters.AddWithValue("SHELF", inMFC.SHELF);
+            comCheck.Parameters.AddWithValue("LINE", inMFC.LINE);
+            comCheck.Parameters.AddWithValue("PLACE_NOTE", inMFC.PLACE_NOTE);
+            comCheck.Parameters.AddWithValue("USER_PLACE", inMFC.USER_PLACE);
+            try
+            {
+                comCheck.ExecuteNonQuery();
+                result = "Сведения о пакете обновлены";
+            }
+            catch
+            {
+                result = "Ошибка внесения сведений";
+            }
+            sqc.Close();
+        }
+        return result;
+    }
+
+    public string DeletePackage(TMFC inMFC,bool GlobalFlag)
+    {
+        string result = "Сведения удалены";
+        bool inReestr = false; 
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            sqc.Open();
+            OracleCommand orc = new OracleCommand("select num_mfc from egrn.paper_reestr_in where num_mfc = '" + inMFC.num_mfc + "'", sqc);
+            OracleDataReader oread = orc.ExecuteReader();
+            if (oread.HasRows)
+            {
+                inReestr = true;
+            }
+            if (GlobalFlag||!inReestr)
+            {
+                orc = new OracleCommand("update egrn.paper_reestr_in set is_del=1, date_del=to_date(sysdate), user_del = '" + inMFC.User + "' where num_mfc = '" + inMFC.num_mfc + "'", sqc);
+                    result = "Сведения удалены";
+            }
+            else
+            {
+                result = "Пакет передан по реестру. Удаление невозможно!";
+            }
+            return result;
+        }
+    }
+
+    private IDisposable OracleConnection(object connStr)
+    {
+        throw new NotImplementedException();
+    }
+}

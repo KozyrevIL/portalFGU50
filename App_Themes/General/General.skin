@@ -1,0 +1,79 @@
+﻿<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+
+
+<asp:GridView runat="server" Width="98%" BackColor="White" BorderColor="#999999" 
+	BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Vertical" >
+    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+    <EditRowStyle BackColor="#999999" />
+    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+</asp:GridView>
+
+
+--%>
+
+<asp:GridView runat="server" Width="98%" BackColor="White" BorderColor="#999999" 
+	BorderStyle="Solid" BorderWidth="1px" CellPadding="3" GridLines="Vertical" 
+	Font-Size="11px" AutoGenerateColumns="False" AllowPaging="True" AllowSorting="True" >
+
+    <HeaderStyle BackColor="#1E5A92" Font-Bold="True" ForeColor="White" />
+    <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
+    <AlternatingRowStyle BackColor="#DCDCDC" BorderWidth="1px" />
+    <SelectedRowStyle BackColor="#6F2424" Font-Bold="True" ForeColor="White" />
+    <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+    <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
+
+</asp:GridView>
+
+
+<asp:Button runat="server" Width="250px" BackColor="#1E5A92" ForeColor="#FFFFFF" 
+    BorderColor="#0F4272" Font-Bold="True"  />
+<asp:Button SkinId="Button_Wide" runat="server" Width="300px" BackColor="#1E5A92" ForeColor="#FFFFFF" 
+    BorderColor="#0F4272" Font-Bold="True"  />
+
+
+<asp:TextBox runat="server" Width="250px" BorderColor="#1E5A92" ForeColor="#1E5A92" />
+<asp:TextBox SkinId="TextBox_HeaderText" runat="server" Width="100px" BorderColor="#1E5A92" ForeColor="#1E5A92" />
+<asp:TextBox SkinId="TextBox_ReqDetails" runat="server" BorderStyle="None" ForeColor="#1E5A92" />
+<asp:TextBox SkinId="TextBox_ReqDetailsComment" runat="server" Width="100%" BorderColor="#1E5A92" ForeColor="#1E5A92" />
+
+<asp:RadioButton runat="server" Width="250px" BorderColor="#1E5A92" ForeColor="#1E5A92" />
+<asp:DropDownList runat="server" Width="250px" BorderColor="#1E5A92" ForeColor="#174672" />
+<asp:DropDownList SkinId="DropDownList_SCEdit" runat="server" Width="500px" BorderColor="#1E5A92" ForeColor="#174672" />
+
+
+<asp:LinkButton runat="server" Font-Bold="True" Font-Underline="True" ForeColor="#174672" />
+<asp:LinkButton SkinId="LinkButton_HeaderText" runat="server" Font-Bold="True" Font-Underline="True" ForeColor="White" />
+
+<asp:Label runat="server" ForeColor="#1E5A92" />
+<asp:Label SkinID="Label_MainHeader_Username" runat="server" ForeColor="#FFFFFF" />
+<asp:Label SkinID="Label_MainHeader_Otdelname" runat="server" ForeColor="#FFFFFF" Font-Italic="True" />
+<asp:Label SkinID="Label_SmallHeader" runat="server" ForeColor="#1E5A92" Font-Bold="True" Font-Size="Large"/>
+<asp:Label SkinID="Label_Error" runat="server" Font-Bold="True" Font-Size="Larger"
+	Font-Underline="False" ForeColor="Maroon" Visible="False" BackColor="Yellow" BorderColor="Red" 
+	BorderStyle="Solid" />
+<asp:Label SkinID="Label_LoginError" runat="server" Font-Bold="True" Font-Underline="False" ForeColor="#ff0000" Visible="False" />
+
+<asp:TreeView runat="server" CollapseImageToolTip="Свернуть {0}" ExpandImageToolTip="Развернуть {0}" 
+	ImageSet="XPFileExplorer" NodeIndent="15" ShowLines="True" Width="250px" >
+	<HoverNodeStyle Font-Underline="True" />
+    <NodeStyle ForeColor="#1E5A92" Font-Names="Tahoma" Font-Size="8pt" HorizontalPadding="2px" NodeSpacing="0px" VerticalPadding="2px" />
+	<ParentNodeStyle Font-Bold="False" />
+	<SelectedNodeStyle Font-Bold="True" HorizontalPadding="0px" VerticalPadding="0px" />
+</asp:TreeView>
+

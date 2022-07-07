@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<equipments>
+  <equipment name="Выбор типа оборудования" value=""></equipment>
+  <equipment name="принтер" value="принтер"></equipment>
+  <equipment name="сканер" value="сканер"></equipment>
+  <equipment name="копир" value="копир"></equipment>
+  <equipment name="МФУ" value="МФУ"></equipment>
+  <equipment name="сканер-штрих" value="сканер-штрих"></equipment>
+  <equipment name="плоттер" value="плоттер"></equipment>
+  <equipment name="системный блок" value="системный блок"></equipment>
+  <equipment name="ноутбук" value="ноутбук"></equipment>
+  <equipment name="АРМ" value="АРМ"></equipment>
+  <equipment name="монитор" value="монитор"></equipment>
+  <equipment name="телевизор" value="телевизор"></equipment>
+  <equipment name="коммутатор" value="коммутатор"></equipment>
+  <equipment name="KVM консоль" value="KVM консоль"></equipment>
+<equipment name="KVM переключатель" value="KVM переключатель"></equipment>
+  <equipment name="маршрутизатор" value="маршрутизатор"></equipment>
+<equipment name="межсетевой экран" value="межсетевой экран"></equipment>
+<equipment name="криптошлюз" value="криптошлюз"></equipment>
+  <equipment name="ленточная библиотека" value="ленточная библиотека"></equipment>
+<equipment name="СХД" value="СХД"></equipment>
+  <equipment name="IP телефон" value="IP телефон"></equipment>
+  <equipment name="ИБП" value="ИБП"></equipment>
+  <equipment name="USB Flash" value="USB Flash"></equipment>
+  <equipment name="USB token" value="USB token"></equipment>
+  <equipment name="видеокамера" value="видеокамера"></equipment>
+<equipment name="видеорегистратор" value="видеорегистратор"></equipment>
+  <equipment name="инжектор питания" value="инжектор питания"></equipment>
+  <equipment name="информационное табло" value="информационное табло"></equipment>
+  <equipment name="мебель" value="мебель"></equipment>
+<equipment name="микрофон" value="микрофон"></equipment>
+<equipment name="колонки" value="колонки"></equipment>
+<equipment name="сервер" value="сервер"></equipment>
+<equipment name="шасси" value="шасси"></equipment>
+<equipment name="шкаф кроссовый" value="шкаф кроссовый"></equipment>
+<equipment name="шкаф серверный" value="шкаф серверный"></equipment>
+<equipment name="система контроля доступа" value="система контроля доступа"></equipment>
+<equipment name="система пожарной сигнализации" value="система пожарной сигнализации"></equipment>
+<equipment name="система охранной сигнализации" value="система охранной сигнализации"></equipment>
+<equipment name="АТС" value="АТС"></equipment>
+<equipment name="кондиционер" value="кондиционер"></equipment>
+<equipment name="шредер" value="шредер"></equipment>
+<equipment name="аудиоконференция" value="аудиоконференция"></equipment>
+<equipment name="аудиосистема" value="аудиосистема"></equipment>
+<equipment name="информационный киоск" value="информационный киоск"></equipment>
+<equipment name="малое информационное табло" value="малое информационное табло"></equipment>
+<equipment name="комплект DVD-театр с напольной акустикой" value="комплект DVD-театр с напольной акустикой"></equipment>
+<equipment name="общее информационное табло" value="общее информационное табло"></equipment>
+<equipment name="аппарат электронной очереди" value="аппарат электронной очереди"></equipment>
+<equipment name="система резервного копирования/восстановления" value="система резервного копирования/восстановления"></equipment>
+<equipment name="система управления базами данных" value="система управления базами данных"></equipment>
+<equipment name="микшер" value="микшер"></equipment>
+<equipment name="медиа плейер" value="медиа плейер"></equipment>
+<equipment name="показать все" value="-1"></equipment>
+  
+
+ 
+ 
+</equipments>
+	
+
+	

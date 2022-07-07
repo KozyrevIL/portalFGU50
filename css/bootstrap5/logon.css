@@ -1,0 +1,87 @@
+
+
+*{
+	margin:0;
+	padding:0;
+}
+
+body{
+	/* Setting default text color, background and a font stack */
+	color:#555555;
+	font-size:0.825em;
+	background: #fcfcfc;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+#exampleBody{
+	background-color:#F5F5F5;
+}
+
+.example{
+	background-color:#F0F0F0;
+	border:1px solid #FFFFFF;
+	margin:40px auto;
+	padding:10px;
+	width:700px;
+	
+	-moz-box-shadow:0 0 2px gray;
+	-webkit-box-shadow:0 0 2px gray;
+	box-shadow:0 0 2px gray;
+}
+
+.demo{
+	background-color:#F5F5F5;
+	border:2px solid white;
+	float:left;
+	
+	-moz-box-shadow:0 0 1px gray;
+	-webkit-box-shadow:0 0 1px gray;
+	box-shadow:0 0 1px gray;
+}
+
+.code{
+	background-color:#E6E6E6;
+	border:1px solid #DDDDDD;
+	float:right;
+	padding:10px;
+	width:300px;
+	
+	-moz-box-shadow:0 0 1px white;
+	-webkit-box-shadow:0 0 1px white;
+	box-shadow:0 0 1px white;
+}
+
+pre{
+	text-shadow:0 1px 1px white;
+}
+
+.className{
+	background-color:#338BC7;
+	width: 500px;
+	height: 150px;
+	position:relative;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+}
+
+.className p{
+	font-size:22px;
+	margin:45px 10px 10px;
+	color:white;
+	position:absolute;
+}
+
+.clear{
+	clear:both;
+}
+
+p.tutInfo{
+	padding:10px 0;
+	text-align:center;
+	position:fixed;
+	bottom:0px;
+	background-color:#011D2E;
+	border-top:1px solid #011d2e;
+	width:100%;
+}

@@ -1,0 +1,301 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.OracleClient;
+using System.Linq;
+using System.Web;
+
+/// <summary>
+/// Сводное описание для ClassPaperReestr
+/// </summary>
+public class ClassPaperReestr
+{
+    public struct TReestr
+    {
+        public int type_reestr;
+        public string num_reestr;
+        public string date_reestr;
+        public string PASSED;
+        public string ACCEPTED;
+        public bool isOUT;
+        public DateTime Date_IN;
+        public DateTime Date_OUT;
+    }
+
+    public TReestr ReestrInfo;
+
+    public ClassPaperReestr()
+    {
+        ReestrInfo.type_reestr = 0;
+        ReestrInfo.num_reestr = "";
+        ReestrInfo.date_reestr = "";
+        ReestrInfo.PASSED = "";
+        ReestrInfo.ACCEPTED = "";
+        ReestrInfo.isOUT = false;
+        ReestrInfo.Date_IN = DateTime.MinValue;
+        ReestrInfo.Date_OUT = DateTime.MinValue;
+    }
+
+    public string AddReestr(int type_reestr, string UsrName, string id_place, bool OnlyUser, int sub_type, int min_limit, int max_limit)
+    {
+        string NewID = "";
+        string NumReestr = NewID + "/" + DateTime.Now.ToString("yyyyMMdd");
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+
+            OracleCommand command = new OracleCommand(@"select p.NUM_MFC from EGRN.PAPER p, EGRN.PAPER_ACTION pa, EGRN.PAPER_TYPE_REESTR tr where
+  and 1 = 1 and tr.ID = " + type_reestr.ToString() + " and pa.ID_ACTION = tr.ID_ACTION and nvl(pa.RESULT_ACTION,'no')= nvl(tr.RESULT_ACTION, 'no') and p.id_place=" +id_place+" and "+
+ " pa.id= (select max(pa1.id) from egrn.paper_action pa1 where pa1.num_mfc=p.num_mfc) and (p.limit between "+min_limit.ToString()+" and "+max_limit.ToString() +" or " + max_limit.ToString() + " =0) and "+
+ " not exists (select 'x' from EGRN.PAPER_REESTR_IN r1, EGRN.PAPER_REESTRS r2 where r2.id=r1.ID_REESTR and r1.NUM_MFC=p.num_mfc " +
+ " and r2.type_reestr=" + type_reestr.ToString() + ")", sqc);
+            if (OnlyUser)
+            {
+                command.CommandText = command.CommandText.Replace("1=1", "p.NAME_USER = '" + UsrName + "'");
+            }
+
+
+            sqc.Open();
+
+            OracleDataReader rdd = command.ExecuteReader();
+            if (!rdd.HasRows)
+            {
+                return "Нет пакетов для добавления в реестр";
+            }
+
+
+            command = new OracleCommand(@"Select EGRN.PAPER_REESTRS_SEQ.nextval from dual", sqc);
+            NewID = command.ExecuteOracleScalar().ToString();
+            NumReestr = NewID + "/" + DateTime.Now.ToString("yyyyMMdd");
+
+            command = new OracleCommand(@"insert into EGRN.PAPER_REESTRS (ID,NUM_REESTR,DATE_REESTR,TYPE_REESTR,SUB_TYPE,CREATED)
+  values ('" + NewID + "','" + NumReestr + "', to_date(sysdate)," + type_reestr.ToString() + "," + sub_type.ToString() + ",'" + UsrName + "')", sqc);
+            int InsCount = command.ExecuteNonQuery();
+            if (InsCount == 0)
+            {
+                NumReestr = "";
+            }
+            command = new OracleCommand(@"insert into EGRN.PAPER_REESTR_IN pri (pri.ID_REESTR,pri.NUM_MFC) select " + NewID + @", p.NUM_MFC from EGRN.PAPER p, EGRN.PAPER_ACTION pa, EGRN.PAPER_TYPE_REESTR tr where 
+  1=1 and tr.ID=" + type_reestr.ToString() + " and pa.ID_ACTION=tr.ID_ACTION and nvl(pa.RESULT_ACTION,'no')=nvl(tr.RESULT_ACTION,'no') and p.id_place=" + id_place + " and " +
+ " pa.id= (select max(pa1.id) from egrn.paper_action pa1 where pa1.num_mfc=p.num_mfc) and (p.limit between " + min_limit.ToString() + " and " + max_limit.ToString() + " or " + max_limit.ToString() + " =0) and " +
+ " not exists (select 'x' from EGRN.PAPER_REESTR_IN r1, EGRN.PAPER_REESTRS r2 where r2.id=r1.ID_REESTR and r1.NUM_MFC=p.num_mfc " +
+ " and r2.type_reestr=" + type_reestr.ToString() + ")", sqc);
+
+            if (OnlyUser)
+            {
+                command.CommandText = command.CommandText.Replace("1=1", "p.NAME_USER = '" + UsrName + "'");
+            }
+
+
+            command.ExecuteNonQuery();
+            sqc.Close();
+        }
+
+        ReestrInfo.type_reestr = type_reestr;
+        ReestrInfo.num_reestr = NumReestr;
+        ReestrInfo.date_reestr = DateTime.Now.ToString("dd.MM.yyyy");
+        ReestrInfo.PASSED = UsrName;
+        ReestrInfo.ACCEPTED = "";
+        ReestrInfo.isOUT = false;
+        ReestrInfo.Date_IN = DateTime.MinValue;
+        ReestrInfo.Date_OUT = DateTime.MinValue;
+        return NewID;
+    }
+
+    public string AddRequest(int type_reestr, string UsrName, string DateN, int sub_type)
+    {
+        string NewID = "";
+
+        string cmdSQL = "";
+        switch (sub_type)
+        {
+            case 1:
+                cmdSQL = @"p.NUM_MFC from EGRN.PAPER p, EGRN.IMP i, EGRN.PAPER_ACTION pa,  EGRN.PAPER_TYPE_REESTR tr 
+    where p.num_mfc=i.c3 and to_date(P.DATE_END_INPPOZ)<to_date('" + DateN + @"','dd.mm.yyyy') and nvl(i.status,i.c14) in (select st.STATUS from egrn.paper_status_packets st where st.type_status='Готово') 
+    and tr.ID=" + type_reestr.ToString() + @" and pa.ID_ACTION = tr.ID_ACTION and nvl(pa.RESULT_ACTION, 'no') = nvl(tr.RESULT_ACTION, 'no') and
+    pa.id= (select max(pa1.id) from egrn.paper_action pa1 where pa1.num_mfc=p.num_mfc) and 
+    not exists (select 'x' from EGRN.PAPER_REESTR_IN r1, EGRN.PAPER_REESTRS r2 where r2.id=r1.ID_REESTR and r1.NUM_MFC=p.num_mfc and (r1.ready is not null or r2.DATE_REESTR=to_date('" + DateN + @"','dd.mm.yyyy')) 
+    and r2.type_reestr=" + type_reestr.ToString() + ")";
+                break;
+            case 2:
+                cmdSQL = @"p.NUM_MFC from EGRN.PAPER p, EGRN.IMP i, EGRN.PAPER_ACTION pa,  EGRN.PAPER_TYPE_REESTR tr 
+    where p.num_mfc=i.c3 and to_date(P.DATE_END_INPPOZ)=to_date('" + DateN + @"','dd.mm.yyyy') and nvl(i.status,i.c14) in (select st.STATUS from egrn.paper_status_packets st where st.type_status='Готово') 
+    and tr.ID=" + type_reestr.ToString() + @" and pa.ID_ACTION = tr.ID_ACTION and nvl(pa.RESULT_ACTION, 'no') = nvl(tr.RESULT_ACTION, 'no') and
+    pa.id= (select max(pa1.id) from egrn.paper_action pa1 where pa1.num_mfc=p.num_mfc)and 
+    not exists (select 'x' from EGRN.PAPER_REESTR_IN r1, EGRN.PAPER_REESTRS r2 where r2.id=r1.ID_REESTR and r1.NUM_MFC=p.num_mfc and (r1.ready is not null or r2.DATE_REESTR=to_date('" + DateN + @"','dd.mm.yyyy')) 
+    and r2.type_reestr=" + type_reestr.ToString() + ")";
+                break;
+            case 3:
+                cmdSQL = @"p.NUM_MFC from EGRN.PAPER p, EGRN.IMP i, EGRN.PAPER_ACTION pa,  EGRN.PAPER_TYPE_REESTR tr 
+    where p.num_mfc=i.c3 and to_date(P.DATE_END_INPPOZ)>to_date('" + DateN + @"','dd.mm.yyyy') and nvl(i.status,i.c14) in (select st.STATUS from egrn.paper_status_packets st where st.type_status='Готово') 
+    and tr.ID=" + type_reestr.ToString() + @" and pa.ID_ACTION = tr.ID_ACTION and nvl(pa.RESULT_ACTION, 'no') = nvl(tr.RESULT_ACTION, 'no') and
+    pa.id= (select max(pa1.id) from egrn.paper_action pa1 where pa1.num_mfc=p.num_mfc)and 
+    not exists (select 'x' from EGRN.PAPER_REESTR_IN r1, EGRN.PAPER_REESTRS r2 where r2.id=r1.ID_REESTR and r1.NUM_MFC=p.num_mfc and (r1.ready is not null or r2.DATE_REESTR=to_date('" + DateN + @"','dd.mm.yyyy')) 
+    and r2.type_reestr=" + type_reestr.ToString() + ")";
+                break;
+        }
+
+
+        string NumReestr = NewID + "/" + DateTime.Now.ToString("yyyyMMdd");
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand("select " + cmdSQL, sqc);
+            sqc.Open();
+
+            OracleDataReader rdd = command.ExecuteReader();
+            if (!rdd.HasRows)
+            {
+                return "Нет пакетов для добавления в запрос";
+            }
+
+            command = new OracleCommand(@"Select EGRN.PAPER_REESTRS_SEQ.nextval from dual", sqc);
+            NewID = command.ExecuteOracleScalar().ToString();
+            NumReestr = NewID + "/" + DateTime.Now.ToString("yyyyMMdd");
+
+            command = new OracleCommand(@"insert into EGRN.PAPER_REESTRS (ID,NUM_REESTR,DATE_REESTR,TYPE_REESTR,SUB_TYPE,CREATED)
+  values ('" + NewID + "','" + NumReestr + "', to_date(sysdate)," + type_reestr.ToString() + "," + sub_type.ToString() + ",'" + UsrName + "')", sqc);
+            int InsCount = command.ExecuteNonQuery();
+            if (InsCount == 0)
+            {
+                NumReestr = "";
+            }
+
+            cmdSQL = @"insert into EGRN.PAPER_REESTR_IN pri (pri.ID_REESTR,pri.NUM_MFC) select " + NewID + ", " + cmdSQL;
+            command = new OracleCommand(cmdSQL, sqc);
+
+            command.ExecuteNonQuery();
+            sqc.Close();
+        }
+
+        ReestrInfo.type_reestr = type_reestr;
+        ReestrInfo.num_reestr = NumReestr;
+        ReestrInfo.date_reestr = DateTime.Now.ToString("dd.MM.yyyy");
+        ReestrInfo.PASSED = UsrName;
+        ReestrInfo.ACCEPTED = "";
+        ReestrInfo.isOUT = false;
+        ReestrInfo.Date_IN = DateTime.MinValue;
+        ReestrInfo.Date_OUT = DateTime.MinValue;
+        return NewID;
+    }
+
+
+
+    public int MoveReestr(string what, string IDReestr, string UsrName, int type_action)
+    {
+        int CountMove = 0;
+        string SQLcmd = "update EGRN.PAPER_REESTRS set date_out=to_date(sysdate), PASSED='" + UsrName + "' where id= " + IDReestr;
+        if (what == "IN")
+        {
+            SQLcmd = "update EGRN.PAPER_REESTRS set date_in=to_date(sysdate), ACCEPTED='" + UsrName + "' where id= " + IDReestr;
+        }
+
+
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(SQLcmd, sqc);
+            sqc.Open();
+            CountMove = command.ExecuteNonQuery();
+
+            string SQLCommand = "insert into egrn.paper_action (NUM_MFC,ID_ACTION,DATE_ACTION,RESULT_ACTION,NAME_USER) " +
+                "select p.num_mfc," + type_action.ToString() + ",to_date(sysdate),'','" + UsrName + "' from egrn.paper_reestr_in p where p.id_reestr=" + IDReestr;
+            command = new OracleCommand(SQLCommand, sqc);
+            command.ExecuteNonQuery();
+        }
+
+        return CountMove;
+    }
+    public void GetReestrInfo(string id, int type_req)
+    {
+        string SQLCommand = "select ID,NUM_REESTR,to_char(DATE_REESTR,'dd.mm.yyyy') DATE_REESTR,TYPE_REESTR,PASSED,ACCEPTED,DATE_IN,DATE_OUT from EGRN.PAPER_REESTRS where ";
+        switch (type_req)
+        {
+            case 1:
+                SQLCommand += " ID=" + id;
+                break;
+                case2:
+                SQLCommand += " NUM_REESTR=" + id;
+                break;
+        }
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(SQLCommand, sqc);
+            sqc.Open();
+            OracleDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                ReestrInfo.type_reestr = Convert.ToInt16(reader["TYPE_REESTR"].ToString());
+                ReestrInfo.num_reestr = reader["NUM_REESTR"].ToString();
+                ReestrInfo.date_reestr = reader["DATE_REESTR"].ToString();
+                ReestrInfo.PASSED = reader["PASSED"].ToString();
+                ReestrInfo.ACCEPTED = reader["ACCEPTED"].ToString();
+                ReestrInfo.isOUT = false;
+                ReestrInfo.Date_IN = DateTime.MinValue;
+                ReestrInfo.Date_OUT = DateTime.MinValue;
+                string dd = reader["DATE_OUT"].ToString();
+                if (dd.Trim() != "")
+                {
+                    ReestrInfo.isOUT = true;
+                    ReestrInfo.Date_OUT = (DateTime)reader["DATE_OUT"];
+                }
+                dd = reader["DATE_IN"].ToString();
+                if (dd.Trim() != "")
+                {
+                    ReestrInfo.Date_IN = (DateTime)reader["DATE_IN"];
+                }
+            }
+        }
+    }
+    public void AddToReestr(string id_reestr, string num_mfc)
+    {
+        string SQLCommand = "insert into egrn.paper_reestr_in (id_reestr,num_mfc) values (" + id_reestr + ",'" + num_mfc + "')";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(SQLCommand, sqc);
+            sqc.Open();
+            command.ExecuteNonQuery();
+            sqc.Close();
+
+        }
+    }
+    public void DeleteFromReestr(string id_reestr, string id)
+    {
+        string SQLCommand = "delete from egrn.paper_reestr_in where id_reestr=" + id_reestr + " and id='" + id + "'";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(SQLCommand, sqc);
+            sqc.Open();
+            command.ExecuteNonQuery();
+            sqc.Close();
+        }
+    }
+    public void DeleteReestr(string id_reestr)
+    {
+        string SQLCommand = "begin delete from egrn.paper_reestr_in where id_reestr=" + id_reestr + "; delete from egrn.paper_reestrs where id=" + id_reestr + ";commit; end;";
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(SQLCommand, sqc);
+            sqc.Open();
+            command.ExecuteNonQuery();
+            sqc.Close();
+        }
+    }
+    public void ReadyInReestr(string id_in_reestr, string UserName)
+    {
+        string SQLCommand = "update egrn.paper_reestr_in set READY=SYSDATE where  id=" + id_in_reestr;
+        OracleConnection sqc = new OracleConnection(ConfigurationManager.ConnectionStrings["portalFGU59Oracle"].ToString());
+        using (sqc)
+        {
+            OracleCommand command = new OracleCommand(SQLCommand, sqc);
+            sqc.Open();
+            command.ExecuteNonQuery();
+            sqc.Close();
+        }
+    }
+}

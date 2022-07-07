@@ -1,0 +1,339 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin_div.master.cs" EnableTheming="true" Inherits="Admin_admin_div" %>
+
+<%--<%@ Register src="~/UC/banner_div.ascx" tagname="banner_div" tagprefix="uc1" %>--%>
+
+<%@ Register src="~/UC/admin_banner.ascx" tagname="admin_banner" tagprefix="uc2" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../portalfgu59_div.css" rel="stylesheet" type="text/css" />
+    <link href="../portalFGU59.css" rel="stylesheet" type="text/css" />
+	
+	<link rel="stylesheet" href="../jQuery/css/start/jquery-ui-1.8.16.custom.css">
+	<script src="../jQuery/jquery-1.6.2.min.js"></script>
+	<script src="../jQuery/ui/minified/jquery.ui.core.min.js"></script>
+	<script src="../jQuery/ui/minified/jquery.ui.widget.min.js"></script>
+	<script src="../jQuery/ui/minified/jquery.ui.datepicker.min.js"></script>
+	<script src="../jQuery/ui/i18n/jquery.ui.datepicker-ru-utf8.js"></script>
+    
+	<script language="javascript" type="text/javascript">	    
+	    $(function () {
+	        $("#ctl00_ContentPlaceHolder1_TextBoxDate_reg").datepicker();
+	        $("#ctl00_ContentPlaceHolder1_TextBoxDate_to_take").datepicker();
+	        $("#ctl00_ContentPlaceHolder1_TextBoxDate_to_ready").datepicker();
+	        $("#ctl00_ContentPlaceHolder1_TextBoxDate_ca_ready").datepicker();
+	        $("#ctl00_ContentPlaceHolder1_TextBoxDate_control").datepicker();
+	        $("#ctl00$ContentPlaceHolder1$TextBoxBegin").datepicker(); 
+	    });
+	</script>
+</asp:Content>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        <div id="page">
+            <uc2:admin_banner ID="admin_banner1" runat="server" />
+            <div style=" padding-left:50px; padding-top:20px; padding-bottom:20px; width: 853px; border: 1px solid #cccccc; margin-left:17px">
+
+                <div style=" float:left; width:300px; display:table-cell;">Номер кадастрового района</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:DropDownList ID="DropDownListNumberRaion" runat=server Width=100px></asp:DropDownList>
+                    
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Регистрационный номер</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBoxRegNumberUchetDelo" Width=100px runat=server></asp:TextBox>
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Дата регистрации</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox1" Width=70px runat=server></asp:TextBox>
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Наименование запрашиваемого документа</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox2" Width=500px runat=server></asp:TextBox>
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Адрес объекта недвижимости, по которому направлен запрос</div>
+                <div style="float:left;display:table-cell; padding-bottom:20px">
+                    <asp:TextBox ID="TextBox3" Width=500px runat=server></asp:TextBox>
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Способ отправки</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:DropDownList ID="DropDownList1" runat=server Width=100px>
+                        <asp:ListItem></asp:ListItem>
+                        <asp:ListItem>FTP</asp:ListItem>
+                        <asp:ListItem>e-mail</asp:ListItem>
+                        <asp:ListItem>По почте</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Отметка теротдела о получении (дата)</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox4" Width=70px runat=server></asp:TextBox>
+                </div>
+                <div style="float:left; width:50px; display:table-cell; padding-left:5px; padding-right: 5px; display:table-cell;"> (время) </div>
+                <div style="float: left; display: table-cell;">
+                    <asp:DropDownList ID="DropDownListHours" runat="server" Width="40px">
+                        <asp:ListItem>1</asp:ListItem>
+                        <asp:ListItem>2</asp:ListItem>
+                        <asp:ListItem>3</asp:ListItem>
+                        <asp:ListItem>4</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>6</asp:ListItem>
+                        <asp:ListItem>7</asp:ListItem>
+                        <asp:ListItem>8</asp:ListItem>
+                        <asp:ListItem>9</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>11</asp:ListItem>
+                        <asp:ListItem>12</asp:ListItem>
+                        <asp:ListItem>13</asp:ListItem>
+                        <asp:ListItem>14</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>16</asp:ListItem>
+                        <asp:ListItem>17</asp:ListItem>
+                        <asp:ListItem>18</asp:ListItem>
+                        <asp:ListItem>19</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>21</asp:ListItem>
+                        <asp:ListItem>22</asp:ListItem>
+                        <asp:ListItem>23</asp:ListItem>
+                        <asp:ListItem>24</asp:ListItem>
+                    </asp:DropDownList>
+                    <asp:DropDownList ID="DropDownListMinutes" runat="server" Width="40px">
+                        <asp:ListItem>00</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>25</asp:ListItem>
+                        <asp:ListItem>30</asp:ListItem>
+                        <asp:ListItem>35</asp:ListItem>
+                        <asp:ListItem>40</asp:ListItem>
+                        <asp:ListItem>45</asp:ListItem>
+                        <asp:ListItem>50</asp:ListItem>
+                        <asp:ListItem>55</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+                <div style="clear:both;"></div>
+
+                <div style="float:left; width:300px; display:table-cell;">Контрольная дата исполнения</div>
+                <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox7" Width=100px runat=server></asp:TextBox>
+                </div>
+
+                <div style="clear: both;"></div>
+
+                <div style="float: left; width: 300px; display: table-cell;">
+                    Отметка о получение теротделом подготовленного документа</div>
+                 <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox5" Width=70px runat=server></asp:TextBox>
+                </div>
+                <div style="float:left; width:50px; display:table-cell; padding-left:5px; padding-right: 5px; display:table-cell;"> (время) </div>
+                <div style="float: left; display: table-cell;">
+                    <asp:DropDownList ID="DropDownList4" runat="server" Width="40px">
+                        <asp:ListItem>1</asp:ListItem>
+                        <asp:ListItem>2</asp:ListItem>
+                        <asp:ListItem>3</asp:ListItem>
+                        <asp:ListItem>4</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>6</asp:ListItem>
+                        <asp:ListItem>7</asp:ListItem>
+                        <asp:ListItem>8</asp:ListItem>
+                        <asp:ListItem>9</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>11</asp:ListItem>
+                        <asp:ListItem>12</asp:ListItem>
+                        <asp:ListItem>13</asp:ListItem>
+                        <asp:ListItem>14</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>16</asp:ListItem>
+                        <asp:ListItem>17</asp:ListItem>
+                        <asp:ListItem>18</asp:ListItem>
+                        <asp:ListItem>19</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>21</asp:ListItem>
+                        <asp:ListItem>22</asp:ListItem>
+                        <asp:ListItem>23</asp:ListItem>
+                        <asp:ListItem>24</asp:ListItem>
+                    </asp:DropDownList>
+                    <asp:DropDownList ID="DropDownList5" runat="server" Width="40px">
+                        <asp:ListItem>00</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>25</asp:ListItem>
+                        <asp:ListItem>30</asp:ListItem>
+                        <asp:ListItem>35</asp:ListItem>
+                        <asp:ListItem>40</asp:ListItem>
+                        <asp:ListItem>45</asp:ListItem>
+                        <asp:ListItem>50</asp:ListItem>
+                        <asp:ListItem>55</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+                <div style="clear: both;"></div>
+
+                <div style="float: left; width: 300px; display: table-cell;">
+                    Наименование полученного документа</div>
+                 <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox8" Width=500px runat=server></asp:TextBox>
+                </div>
+
+                <div style="clear: both;"></div>
+
+                <div style="float: left; width: 300px; display: table-cell;">
+                    Отметка о получении документа ЦА
+                </div>
+                <div style="float:left;display:table-cell;">
+                    <asp:TextBox ID="TextBox6" Width=70px runat=server></asp:TextBox>
+                </div>
+                <div style="float:left; width:50px; display:table-cell;padding-left:5px; padding-right: 5px; display:table-cell;"> (время) </div>
+                <div style="float: left; display: table-cell;">
+                    <asp:DropDownList ID="DropDownList2" runat="server" Width="40px">
+                        <asp:ListItem>1</asp:ListItem>
+                        <asp:ListItem>2</asp:ListItem>
+                        <asp:ListItem>3</asp:ListItem>
+                        <asp:ListItem>4</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>6</asp:ListItem>
+                        <asp:ListItem>7</asp:ListItem>
+                        <asp:ListItem>8</asp:ListItem>
+                        <asp:ListItem>9</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>11</asp:ListItem>
+                        <asp:ListItem>12</asp:ListItem>
+                        <asp:ListItem>13</asp:ListItem>
+                        <asp:ListItem>14</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>16</asp:ListItem>
+                        <asp:ListItem>17</asp:ListItem>
+                        <asp:ListItem>18</asp:ListItem>
+                        <asp:ListItem>19</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>21</asp:ListItem>
+                        <asp:ListItem>22</asp:ListItem>
+                        <asp:ListItem>23</asp:ListItem>
+                        <asp:ListItem>24</asp:ListItem>
+                    </asp:DropDownList>
+                    <asp:DropDownList ID="DropDownList3" runat="server" Width="40px">
+                        <asp:ListItem>00</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>25</asp:ListItem>
+                        <asp:ListItem>30</asp:ListItem>
+                        <asp:ListItem>35</asp:ListItem>
+                        <asp:ListItem>40</asp:ListItem>
+                        <asp:ListItem>45</asp:ListItem>
+                        <asp:ListItem>50</asp:ListItem>
+                        <asp:ListItem>55</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+                <div style="clear: both;"></div>
+
+                <div style="width: 300px; display: table-cell;">
+                <asp:Button ID="ButtonAdd" Text="Добавить" runat=server onclick="ButtonAdd_Click" />
+                    </div>
+                 <asp:Label ID="LabelError" runat="server" CssClass="textError" Visible="False"></asp:Label>
+
+
+            </div>
+            <div id="GridView" style=" width: 100%; padding-left:50px; padding-bottom:20px; padding-right:20px; padding-top:20px">
+
+
+                <asp:GridView ID="GridView1" runat="server" AllowPaging="True" 
+                    AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id_megved" 
+                    DataSourceID="SqlDataSourceMegVed">
+                    <Columns>
+                        <asp:CommandField ShowSelectButton="True" />
+                        <asp:BoundField DataField="id_megved" HeaderText="id_megved" 
+                            InsertVisible="False" ReadOnly="True" SortExpression="id_megved" />
+                        <asp:BoundField DataField="id_filial" HeaderText="id_filial" 
+                            SortExpression="id_filial" />
+                        <asp:BoundField DataField="reg_number" HeaderText="reg_number" 
+                            SortExpression="reg_number" />
+                        <asp:BoundField DataField="date_reg" HeaderText="date_reg" 
+                            SortExpression="date_reg" />
+                        <asp:BoundField DataField="name_request_dela" HeaderText="name_request_dela" 
+                            SortExpression="name_request_dela" />
+                        <asp:BoundField DataField="address" HeaderText="address" 
+                            SortExpression="address" />
+                        <asp:BoundField DataField="variant_send" HeaderText="variant_send" 
+                            SortExpression="variant_send" />
+                        <asp:BoundField DataField="date_to_take" HeaderText="date_to_take" 
+                            SortExpression="date_to_take" />
+                        <asp:BoundField DataField="time_to_take" HeaderText="time_to_take" 
+                            SortExpression="time_to_take" />
+                        <asp:BoundField DataField="date_control" HeaderText="date_control" 
+                            SortExpression="date_control" />
+                        <asp:BoundField DataField="date_to_ready" HeaderText="date_to_ready" 
+                            SortExpression="date_to_ready" />
+                        <asp:BoundField DataField="time_to_ready" HeaderText="time_to_ready" 
+                            SortExpression="time_to_ready" />
+                        <asp:BoundField DataField="name_doc_ready" HeaderText="name_doc_ready" 
+                            SortExpression="name_doc_ready" />
+                        <asp:BoundField DataField="date_ca_ready" HeaderText="date_ca_ready" 
+                            SortExpression="date_ca_ready" />
+                        <asp:BoundField DataField="time_ca_ready" HeaderText="time_ca_ready" 
+                            SortExpression="time_ca_ready" />
+                    </Columns>
+                </asp:GridView>
+
+
+            </div>
+        </div>
+            <asp:SqlDataSource ID="SqlDataSourceMegVed" runat="server" ConnectionString="<%$ ConnectionStrings:portalFGU59ConnectionString %>"
+                InsertCommand="MegVedInsert" InsertCommandType="StoredProcedure" SelectCommand="MegVedSelect"
+                SelectCommandType="StoredProcedure" OnInserting="SqlDataSourceMegVed_Inserting">
+                <InsertParameters>
+                    <asp:Parameter Name="id_filial" Type="Int32" />
+                    <asp:Parameter Name="reg_number" Type="String" />
+                    <asp:Parameter Name="date_reg" Type="DateTime" />
+                    <asp:Parameter Name="name_request_dela" Type="String" />
+                    <asp:Parameter Name="address" Type="String" />
+                    <asp:Parameter Name="variant_send" Type="String" />
+                    <asp:Parameter Name="date_to_take" Type="DateTime" />
+                    <asp:Parameter Name="time_to_take" Type="DateTime" />
+                    <asp:Parameter Name="date_control" Type="DateTime" />
+                    <asp:Parameter Name="date_to_ready" Type="DateTime" />
+                    <asp:Parameter Name="time_to_ready" Type="DateTime" />
+                    <asp:Parameter Name="name_doc_ready" Type="String" />
+                    <asp:Parameter Name="date_ca_ready" Type="DateTime" />
+                    <asp:Parameter Name="time_ca_ready" Type="DateTime" />
+                </InsertParameters>
+            </asp:SqlDataSource>
+
+        </asp:ContentPlaceHolder>
+    </div>
+    
+    </form>
+</body>
+</html>

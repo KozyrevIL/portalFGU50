@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<regions>
+  <region name="Выбор региона" full_name="" value="-1" timezone="-1" isRGRN="-1"></region>
+  <region name="Республика Адыгея" full_name="01 Филиал ФГБУ 'ФКП Росреестра' по Республике Адыгея" value="01" timezone="3" isRGRN="1"></region>
+  <region name="Республика Башкортостан" full_name="02 Филиал ФГБУ 'ФКП Росреестра' по Республике Башкортостан" value="02" timezone="5" isRGRN="0"></region>
+  <region name="Республика Бурятия" full_name=" 03 Филиал ФГБУ 'ФКП Росреестра' по Республике Бурятия" value="03" timezone="8" isRGRN="1"></region>
+  <region name="Республика Алтай" full_name="04 Филиал ФГБУ 'ФКП Росреестра' по Республике Алтай" value="04" timezone="7" isRGRN="1"></region>
+  <region name="Республика Дагестан" full_name="05 Филиал ФГБУ 'ФКП Росреестра' по Республике Дагестан" value="05" timezone="3" isRGRN="1"></region>
+  <region name="Республика Ингушетия" full_name="06 Филиал ФГБУ 'ФКП Росреестра' по Республике Ингушетия" value="06" timezone="3" isRGRN="0"></region>
+  <region name="Кабардино-Балкарская Республика" full_name="07 Филиал ФГБУ 'ФКП Росреестра' по Кабардино-Балкарской Республике" value="07" timezone="3" isRGRN="1"></region>
+  <region name="Республика Калмыкия" full_name="08 Филиал ФГБУ 'ФКП Росреестра' по Республике Калмыкия" value="08" timezone="3" isRGRN="1"></region>
+  <region name="Карачаево-Черкесская республика" full_name="09 Филиал ФГБУ 'ФКП Росреестра' по Карачаево-Черкесской республике" value="09" timezone="3" isRGRN="0"></region>
+  <region name="Республика Карелия" full_name="10 Филиал ФГБУ 'ФКП Росреестра' по Республике Карелия" value="10" timezone="3" isRGRN="1"></region>
+  <region name="Республика Коми" full_name="11 Филиал ФГБУ 'ФКП Росреестра' по Республике Коми" value="11" timezone="3" isRGRN="1"></region>
+  <region name="Республика Марий Эл" full_name="12 Филиал ФГБУ 'ФКП Росреестра' по Республике Марий Эл" value="12" timezone="3" isRGRN="1"></region>
+  <region name="Республика Мордовия" full_name="13 Филиал ФГБУ 'ФКП Росреестра' по Республике Мордовия" value="13" timezone="3" isRGRN="1"></region>
+  <region name="Республика Саха (Якутия)" full_name="14 Филиал ФГБУ 'ФКП Росреестра' по Республике Саха (Якутия)" value="14" timezone="9" isRGRN="0"></region>
+  <region name="Северная Осетия – Алания" full_name="15 Филиал ФГБУ 'ФКП Росреестра' по Республике Северная Осетия - Алания" value="15" timezone="3" isRGRN="0"></region>
+  <region name="Республика Татарстан" full_name="16 Филиал ФГБУ 'ФКП Росреестра' по Республике Татарстан" value="16" timezone="3" isRGRN="0"></region>
+  <region name="Республика Тыва" full_name="17 Филиал ФГБУ 'ФКП Росреестра' по Республике Тыва" value="17" timezone="7" isRGRN="1"></region>
+  <region name="Удмуртская Республика" full_name="18 Филиал ФГБУ 'ФКП Росреестра' по Удмуртской Республике" value="18" timezone="4" isRGRN="0"></region>
+  <region name="Республика Хакасия" full_name="19 Филиал ФГБУ 'ФКП Росреестра' по Республике Хакасия" value="19" timezone="7" isRGRN="1"></region>
+  <region name="Чеченская Республика" full_name="20 Филиал ФГБУ 'ФКП Росреестра' по Чеченской Республике" value="20" timezone="3" isRGRN="1"></region>
+  <region name="Чувашская Республика" full_name="21 Филиал ФГБУ 'ФКП Росреестра' по Чувашской Республике-Чувашии" value="21" timezone="3" isRGRN="1"></region>
+  <region name="Алтайский край" full_name="22 Филиал ФГБУ 'ФКП Росреестра' по Алтайскому краю" value="22" timezone="7" isRGRN="0"></region>
+  <region name="Краснодарский край" full_name="23 Филиал ФГБУ 'ФКП Росреестра' по Краснодарскому краю" value="23" timezone="3" isRGRN="0"></region>
+  <region name="Красноярский край" full_name="24 Филиал ФГБУ 'ФКП Росреестра' по Красноярскому краю" value="24" timezone="7" isRGRN="1"></region>
+  <region name="Приморский край" full_name="25 Филиал ФГБУ 'ФКП Росреестра' по Приморскому краю" value="25" timezone="10" isRGRN="0"></region>
+  <region name="Ставропольский край" full_name="26 Филиал ФГБУ 'ФКП Росреестра' по Ставропольскому краю" value="26" timezone="3" isRGRN="0"></region>
+  <region name="Хабаровский край" full_name="27 Филиал ФГБУ 'ФКП Росреестра' по Хабаровскому краю" value="27" timezone="10" isRGRN="1"></region>
+  <region name="Амурская область" full_name="28 Филиал ФГБУ 'ФКП Росреестра' по Амурской области" value="28" timezone="9" isRGRN="0"></region>
+  <region name="Архангельская область и Ненецкий автономный округ" full_name="29 Филиал ФГБУ 'ФКП Росреестра' по Архангельской области" value="29" timezone="3" isRGRN="1"></region>
+  <region name="Астраханская область" full_name="30 Филиал ФГБУ 'ФКП Росреестра' по Астраханской области" value="30" timezone="4" isRGRN="1"></region>
+  <region name="Белгородская область" full_name="31 Филиал ФГБУ 'ФКП Росреестра' по Белгородской области" value="31" timezone="3" isRGRN="0"></region>
+  <region name="Брянская область" full_name="32 Филиал ФГБУ 'ФКП Росреестра' по Брянской области" value="32" timezone="3" isRGRN="0"></region>
+  <region name="Владимирская область" full_name="33 Филиал ФГБУ 'ФКП Росреестра' по Владимирской области" value="33" timezone="3" isRGRN="0"></region>
+  <region name="Волгоградская область" full_name="34 Филиал ФГБУ 'ФКП Росреестра' по Волгоградской области" value="34" timezone="3" isRGRN="1"></region>
+  <region name="Вологодская область" full_name="35 Филиал ФГБУ 'ФКП Росреестра' по Вологодской области" value="35" timezone="3" isRGRN="0"></region>
+  <region name="Воронежская область" full_name="36 Филиал ФГБУ 'ФКП Росреестра' по Воронежской области" value="36" timezone="3" isRGRN="1"></region>
+  <region name="Ивановская область" full_name="37 Филиал ФГБУ 'ФКП Росреестра' по Ивановской области" value="37" timezone="3" isRGRN="1"></region>
+  <region name="Иркутская область" full_name="38 Филиал ФГБУ 'ФКП Росреестра' по Иркутской области" value="38" timezone="8" isRGRN="0"></region>
+  <region name="Калининградская область" full_name="39 Филиал ФГБУ 'ФКП Росреестра' по Калининградской области" value="39" timezone="2" isRGRN="1"></region>
+  <region name="Калужская область" full_name="40 Филиал ФГБУ 'ФКП Росреестра' по Калужской области" value="40" timezone="3" isRGRN="1"></region>
+  <region name="Камчатский край" full_name="41 Филиал ФГБУ 'ФКП Росреестра' по Камчатскому краю" value="41" timezone="12" isRGRN="1"></region>
+  <region name="Кемеровская область" full_name="42 Филиал ФГБУ 'ФКП Росреестра' по Кемеровской области" value="42" timezone="7" isRGRN="0"></region>
+  <region name="Кировская область" full_name="43 Филиал ФГБУ 'ФКП Росреестра' по Кировской области" value="43" timezone="3" isRGRN="0"></region>
+  <region name="Костромская область" full_name="44 Филиал ФГБУ 'ФКП Росреестра' по Костромской области" value="44" timezone="3" isRGRN="1"></region>
+  <region name="Курганская область" full_name="45 Филиал ФГБУ 'ФКП Росреестра' по Курганской области" value="45" timezone="5" isRGRN="1"></region>
+  <region name="Курская область" full_name="46 Филиал ФГБУ 'ФКП Росреестра' по Курской области" value="46" timezone="3" isRGRN="0"></region>
+  <region name="Ленинградская область" full_name="47 Филиал ФГБУ 'ФКП Росреестра' по Ленинградской области" value="47" timezone="3" isRGRN="0"></region>
+  <region name="Липецкая область" full_name="48 Филиал ФГБУ 'ФКП Росреестра' по Липецкой области" value="48" timezone="3" isRGRN="1"></region>
+  <region name="Магаданская область" full_name="49 Филиал ФГБУ 'ФКП Росреестра' по Магаданской области" value="49" timezone="10" isRGRN="1"></region>
+  <region name="Московская область" full_name="50 Филиал ФГБУ 'ФКП Росреестра' по Московской области" value="50" timezone="3" isRGRN="0"></region>
+  <region name="Мурманская область" full_name="51 Филиал ФГБУ 'ФКП Росреестра' по Мурманской области" value="51" timezone="3" isRGRN="1"></region>
+  <region name="Нижегородская область" full_name="52 Филиал ФГБУ 'ФКП Росреестра' по Нижегородской области" value="52" timezone="3" isRGRN="0"></region>
+  <region name="Новгородская область" full_name="53 Филиал ФГБУ 'ФКП Росреестра' по Новгородской области" value="53" timezone="3" isRGRN="1"></region>
+  <region name="Новосибирская область" full_name="54 Филиал ФГБУ 'ФКП Росреестра' по Новосибирской области" value="54" timezone="7" isRGRN="0"></region>
+  <region name="Омская область" full_name="55 Филиал ФГБУ 'ФКП Росреестра' по Омской области" value="55" timezone="6" isRGRN="1"></region>
+  <region name="Оренбургская область" full_name="56 Филиал ФГБУ 'ФКП Росреестра' по Оренбургской области" value="56" timezone="5" isRGRN="0"></region>
+  <region name="Орловская область" full_name="57 Филиал ФГБУ 'ФКП Росреестра' по Орловской области" value="57" timezone="3" isRGRN="1"></region>
+  <region name="Пензенская область" full_name="58 Филиал ФГБУ 'ФКП Росреестра' по Пензенской области" value="58" timezone="3" isRGRN="1"></region>
+  <region name="Пермский край" full_name="59 Филиал ФГБУ 'ФКП Росреестра' по Пермскому краю" value="59" timezone="5" isRGRN="1"></region>
+  <region name="Псковская область" full_name="60 Филиал ФГБУ 'ФКП Росреестра' по Псковской области" value="60" timezone="3" isRGRN="1"></region>
+  <region name="Ростовская область (Новочеркасск)" full_name="61 Филиал ФГБУ 'ФКП Росреестра' по Ростовской области" value="61" timezone="3" isRGRN="0"></region>
+  <region name="Ростовская область (Руководство + ТО)" full_name="62 Филиал ФГБУ 'ФКП Росреестра' по Рязанской области" value="" timezone="3" isRGRN="0"></region>
+  <region name="Рязанская область" full_name="62 Филиал ФГБУ 'ФКП Росреестра' по Рязанской области" value="62" timezone="3" isRGRN="1"></region>
+  <region name="Самарская область" full_name="63 Филиал ФГБУ 'ФКП Росреестра' по Самарской области" value="63" timezone="4" isRGRN="0"></region>
+  <region name="Саратовская область" full_name="64 Филиал ФГБУ 'ФКП Росреестра' по Саратовской области" value="64" timezone="4" isRGRN="0"></region>
+  <region name="Сахалинская область" full_name="65 Филиал ФГБУ 'ФКП Росреестра' по Сахалинской области" value="65" timezone="11" isRGRN="1"></region>
+  <region name="Свердловская область" full_name="" value="66" timezone="5" isRGRN="0"></region>
+  <region name="Смоленская область" full_name="67 Филиал ФГБУ 'ФКП Росреестра' по Смоленской области" value="67" timezone="3" isRGRN="1"></region>
+  <region name="Тамбовская область" full_name="68 Филиал ФГБУ 'ФКП Росреестра' по Тамбовской области" value="68" timezone="3" isRGRN="1"></region>
+  <region name="Тверская область" full_name="69 Филиал ФГБУ 'ФКП Росреестра' по Тверской области" value="69" timezone="3" isRGRN="1"></region>
+  <region name="Томская область" full_name="70 филиал ФГБУ 'ФКП Росреестра' по Томской области" value="70" timezone="7" isRGRN="1"></region>
+  <region name="Тульская область" full_name="71 Филиал ФГБУ «ФКП Росреестра» по Тульской области" value="71" timezone="3" isRGRN="0"></region>
+  <region name="Тюменская область" full_name="72 Филиал ФГБУ 'ФКП Росреестра' по Тюменской области" value="72" timezone="5" isRGRN="1"></region>
+  <region name="Ульяновская область (Административная площадка)" full_name="73 Филиал ФГБУ 'ФКП Росреестра' по Ульяновской области" value="73" timezone="4" isRGRN="1"></region>
+  <region name="Ульяновская область (Производственная площадка)" full_name="73 Филиал ФГБУ 'ФКП Росреестра' по Ульяновской области" value="73" timezone="4" isRGRN="0"></region>
+  <region name="Челябинская область" full_name="74 Филиал ФГБУ 'ФКП Росреестра' по Челябинской области" value="74" timezone="5" isRGRN="0"></region>
+  <region name="Забайкальский край" full_name="75 Филиал ФГБУ 'ФКП Росреестра' по Забайкальскому краю" value="75" timezone="9" isRGRN="1"></region>
+  <region name="Ярославская область" full_name="76 Филиал ФГБУ 'ФКП Росреестра' по Ярославской области" value="76" timezone="3" isRGRN="0"></region>
+  <region name="г.Москва" full_name="77 Филиал ФГБУ 'ФКП Росреестра' по г. Москве" value="77" timezone="3" isRGRN="0"></region>
+  <region name="г.Санкт-Петербург" full_name="78 Филиал ФГБУ 'ФКП Росреестра' по городу Санкт-Петербургу" value="78" timezone="3" isRGRN="0"></region>
+  <region name="Еврейская автономная область" full_name="79 Филиал ФГБУ ФКП Росреестра по Еврейской автономной области" value="79" timezone="10" isRGRN="1"></region>
+  <region name="Ханты-Мансийский автономный округ - Югра" full_name="" value="86" timezone="5" isRGRN="1"></region>
+  <region name="Ямало-Ненецкий автономный округ" full_name="89 Филиал ФГБУ 'ФКП Росреестра' по Ямало-Ненецкому автономному округу" value="89" timezone="5" isRGRN="1"></region>
+  <region name="г. Севастополь" full_name="г. Севастополь" value="92" timezone="3" isRGRN="0"></region>
+  <region name="Республика Крым" full_name="Республика Крым" value="91" timezone="3" isRGRN="0"></region>
+  <region name="Уральский федеральный округ" full_name="101 (66, 86) Филиал ФГБУ 'ФКП Росреестра' по Уральскому федеральному округу" value="101" timezone="5" isRGRN="0"></region>
+</regions>
+	
+
+	

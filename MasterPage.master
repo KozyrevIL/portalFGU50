@@ -1,0 +1,115 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<%@ Register Src="~/UC/right_col.ascx" TagPrefix="uc1" TagName="right_col" %>
+<%@ Register Src="~/UC/menu_vert.ascx" TagPrefix="uc1" TagName="menu_vert" %>
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-fgu59.css" rel="stylesheet" />
+    
+
+
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="jQuery/jquery-3.0.0.min.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div id="header" class="header">
+                    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#">Портал филиала ФГБУ "ФКП Росреестра" по Пермскому краю</a>
+                            </div>
+
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                               <%-- <ul class="nav navbar-nav">
+                                    <li class="active"><a href="#">Ссылка</a></li>
+                                    <li><a href="#">Ссылка</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Действие</a></li>
+                                            <li><a href="#">Другое действие</a></li>
+                                            <li><a href="#">Что-то еще</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Отдельная ссылка</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Еще одна отдельная ссылка</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>--%>
+                              <%--  <form class="navbar-form navbar-right" role="search">
+                                    <div class="form-group col-lg-2">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Отправить</button>
+                                </form>--%>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="#">Вход</a></li>
+                                   <%-- <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Действие</a></li>
+                                            <li><a href="#">Другое действие</a></li>
+                                            <li><a href="#">Что-то еще</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Отдельная ссылка</a></li>
+                                        </ul>
+                                    </li>--%>
+                                </ul>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container-fluid -->
+                    </nav>
+                </div>
+
+                <div id="content" class="content">
+                    <div class="col-lg-2 well">
+                        <uc1:menu_vert runat="server" id="menu_vert" />
+                    </div>
+                    <div class="col-lg-8"><asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder></div>
+                    <div class="col-lg-2 well">
+                        <uc1:right_col runat="server" id="right_col" />
+                    </div>
+                </div>
+
+                <div id="footer">
+                </div>
+            </div>
+
+            
+
+        </div>
+    </form>
+</body>
+</html>

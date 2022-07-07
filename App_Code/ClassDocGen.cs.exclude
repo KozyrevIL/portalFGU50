@@ -1,0 +1,283 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+    [Serializable]
+    public class ClassDocGen
+    {
+        public string GUID;
+        public string Obj;
+        public string Name;
+        public string typeObj;
+        public string IDGroup;
+        public string Bookmark;
+        public string Pattern;
+        public string Value;
+        public bool isMulti;
+        public ClassDocGen Parent;
+        private int QtCopy;
+
+        public List<ClassDocGen> ChildOdjects;
+        public List<DataTable> Params;
+
+        public ClassDocGen()
+        {
+            ChildOdjects = new List<ClassDocGen>();
+            Params = new List<DataTable>();
+            QtCopy = 0;
+     
+        }
+        protected DataTable NewParams()
+        {
+            DataTable FParams = new DataTable();
+            DataColumn column;
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "id";
+            column.Caption = "id";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "Key";
+            column.Caption = "Параметр";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "Note";
+            column.Caption = "Приглашение";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "Value";
+            column.Caption = "Значение";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "Type";
+            column.Caption = "Тип";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "Css";
+            column.Caption = "Стиль";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "CssPos";
+            column.Caption = "Стиль1";
+            FParams.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "defItems";
+            column.Caption = "Служебная";
+            FParams.Columns.Add(column);
+
+            return FParams;
+        }
+
+        public ClassDocGen NewChildObj()
+        {
+            ClassDocGen newObj = new ClassDocGen();
+            ChildOdjects.Add(newObj);
+            return newObj;
+        }
+        public void AddParam(int npar, string id, string Key, string Note, string Value, string TypeVal, string Css, string CssPos, string defItems)
+        {
+            DataRow dr = Params[npar].NewRow();
+            dr["id"] = id+npar.ToString();
+            dr["Key"] = Key;
+            dr["Note"] = Note;
+            dr["Value"] = Value;
+            dr["Type"] = TypeVal;
+            dr["Css"] = Css;
+            dr["CssPos"] = CssPos;
+            dr["defItems"] = defItems;
+            Params[npar].Rows.Add(dr);
+        }
+
+        public void CopyParam()
+        {
+            if (Params.Count > 0)
+            {
+                Params.Add(NewParams());
+                int lnp = Params.Count - 1;
+                foreach (DataRow dr in Params[0].Rows)
+                {
+                    DataRow dr1 = Params[lnp].NewRow();
+
+                    int ln = dr["id"].ToString().Length - 1;
+                    dr1["id"] = dr["id"].ToString().Substring(1, ln) + Params.Count.ToString(); dr1["Key"] = dr1["Key"];
+                    dr1["Note"] = dr["Note"];
+                    dr1["Value"] = dr["Value"];
+                    dr1["Type"] = dr["Type"];
+                    dr1["Css"] = dr["Css"];
+                    dr1["CssPos"] = dr["CssPos"];
+                    dr1["defItems"] = dr["defItems"];
+
+                    Params[lnp].Rows.Add(dr1);
+
+
+                }
+            }
+        }
+
+        public void CopyChild(ClassDocGen doc)
+        {
+            ClassDocGen prnt = doc.Parent;
+            prnt.QtCopy += 1;
+            ClassDocGen newDoc = doc;
+            newDoc.GUID = newDoc.Obj + "_" + prnt.QtCopy.ToString();
+            int idx = prnt.ChildOdjects.IndexOf(doc);
+            prnt.ChildOdjects.Insert(idx+1,newDoc);
+        }
+
+        public ClassDocGen FindByObj(ClassDocGen obj, string Obj)
+        {
+            ClassDocGen Result = null;
+            if (obj.Obj == Obj)
+            {
+                Result = obj;
+            }
+            else
+            {
+                foreach (ClassDocGen ChildObj in obj.ChildOdjects)
+                {
+                    if (ChildObj.Obj == Obj)
+                    {
+                        Result = ChildObj;
+                        break;
+                    }
+                    else
+                    {
+                        Result = FindByObj(ChildObj, Obj);
+                        if (Result != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            return Result;
+        }
+
+        public void LoadObjects(string root)
+        {
+
+            using (SqlConnection MyConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+
+                SqlCommand com = new SqlCommand(@"WITH items AS (
+    SELECT id, parentObj, Obj, name, typeObj, IDGroup, Bookmark, Pattern, DefValue, 0 AS Level
+    , CAST(parentObj + '.' + Obj + '.' AS VARCHAR(2000)) AS Path, npp, isMulti 
+    FROM dbo.TemplateDoc 
+    WHERE ParentObj =@Parent
+
+    UNION ALL
+
+    SELECT i.id, i.parentObj,i.Obj, i.name, i.typeObj, i.IDGroup, i.Bookmark, i.Pattern, i.DefValue, Level + 1, CAST(Path + CAST(i.Obj AS VARCHAR(50))+ '.' AS VARCHAR(2000)), i.npp, i.isMulti
+    FROM dbo.TemplateDoc i
+    INNER JOIN items itms ON (itms.Obj = i.ParentObj)
+)
+select po.id, po.level, po.ParentObj, po.Obj,  po.name, po.typeObj, po.IDGroup, po.Bookmark, po.Pattern, po.DefValue, po.level, po.Path, po.npp, isNull(po.isMulti,'False') isMulti from items po
+order by po.level, po.npp", MyConnection);
+                com.CommandType = CommandType.Text;
+                com.Parameters.AddWithValue("@Parent", root);
+                try
+                {
+                    MyConnection.Open();
+                    SqlDataReader reader = com.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+
+                        ClassDocGen ch = new ClassDocGen();
+                        ch.GUID = reader["Obj"].ToString() + "_" + QtCopy.ToString();
+                        ch.Obj = reader["Obj"].ToString();
+                        ch.Name = reader["name"].ToString();
+                        ch.Pattern = reader["pattern"].ToString();
+                        ch.Bookmark = reader["bookmark"].ToString();
+                        ch.IDGroup = reader["IDGroup"].ToString();
+                        ch.typeObj = reader["typeObj"].ToString();
+                        ch.Value = reader["DefValue"].ToString();
+                        ch.isMulti = Convert.ToBoolean(reader["isMulti"].ToString());
+
+                        string ParentObj = reader["ParentObj"].ToString();
+
+                        using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+                        {
+                            var sqlCmd = new SqlCommand(@"SELECT id,ParentObj,DataID,typeValue,Note,defValue,defItems,CssClass, CssClassPos FROM TemplateDocData
+                            WHERE ParentObj=@typeOBJ", sqlConn);
+                            sqlCmd.CommandType = CommandType.Text;
+                            sqlCmd.Parameters.AddWithValue("@typeObj", ch.Obj);
+                            try
+                            {
+                                sqlConn.Open();
+                                SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                                if (readerData.HasRows)
+                                {
+                                    ch.Params.Add(ch.NewParams());
+                                    while (readerData.Read())
+                                    {
+                                        ch.AddParam(0, "GD"+readerData["id"].ToString(), readerData["DataID"].ToString(), readerData["Note"].ToString(), readerData["defValue"].ToString(), readerData["typeValue"].ToString(), readerData["CssClass"].ToString(), readerData["CssClassPos"].ToString(), readerData["defItems"].ToString());
+                                    }
+                                }
+                                readerData.Close();
+                                sqlConn.Close();
+                            }
+                            catch
+                            {
+
+                            }
+                        }
+
+                        if (reader["level"].ToString() != "0")
+                        {
+                            ClassDocGen parnt = FindByObj(this, ParentObj);
+                            if (parnt != null)
+                            {
+                                ch.Parent = parnt;
+                                parnt.ChildOdjects.Add(ch);
+                            }
+                        }
+                        else
+                        {
+                            this.ChildOdjects.Add(ch);
+                        }
+
+                    }
+                    reader.Close();
+                    MyConnection.Close();
+                }
+                catch
+                {
+                    // если произошли ошибки 
+                }
+            }
+
+        }
+        public string GetParam(int npar, string Key)
+        {
+            string value = "";
+            foreach (DataRow r in Params[0].Rows)
+            {
+                if (Key.ToUpper().Trim() == r["Key"].ToString().ToUpper().Trim())
+                {
+                    value = r["Value"].ToString();
+                    break;
+                }
+            }
+            return value;
+        }
+
+
+    }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="portalFGU59">
+</Property><Property Name="Solution File" Value="H:\Inetpub\wwwroot\portalFGU59\portalFGU59.sln">
+</Property><Property Name="Date" Value="7 мая 2012 г.">
+</Property><Property Name="Time" Value="22:25">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="portalFGU59.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="portalFGU59.sln" Description="Converted">
+</Event></UpgradeLog>

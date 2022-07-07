@@ -1,0 +1,748 @@
+﻿//using AngleSharp.Dom;
+//using AngleSharp.Dom.Html;
+//using AngleSharp.Parser.Html;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+//using System.Windows.Forms;
+
+namespace EGRNUtility
+{
+    public class EGRN
+    {
+        public string pkurp = "http://pkurp-app-balancer-01.egron.test";
+        public string ppoz = "http://ppoz-service-bal-01.egron.test:9001";
+        public string pkpvd = "http://10.59.142.99";
+        public string pkpvdmfc = "http://10.59.142.199";
+
+        public string current_system = "ppoz";
+
+        public string httpLocation = "";
+
+        public string valRelayState = "";
+        public string valSAMLRequest = "";
+        public string valSAMLResponse = "";
+        public string valAction = "";
+
+        public List<Cookie> ListCookiesChrome = new List<Cookie>();
+
+        public string usr = "";
+        public string pswd = "";
+
+        public delegate void ProcessListReq(string JsonREQ);
+        // Создаем переменную делегата
+        public ProcessListReq _processReq;
+
+        // Регистрируем делегат
+        void RegisterHandler(ProcessListReq processReq)
+        {
+            _processReq = processReq;
+        }
+
+
+        //public void UpdateSAMDOM(string resp)
+        //{
+        //    var parser = new HtmlParser();
+        //    IHtmlDocument document = parser.Parse(resp);
+
+        //    IHtmlCollection<AngleSharp.Dom.IElement> Elms = document.GetElementsByName("RelayState");
+        //    if (Elms.Length > 0)
+        //    {
+        //        valRelayState = ((IHtmlInputElement)Elms[0]).Value;
+        //    }
+        //    Elms = document.GetElementsByName("SAMLRequest");
+        //    if (Elms.Length > 0)
+        //    {
+        //        valSAMLRequest = ((IHtmlInputElement)Elms[0]).Value;
+        //    }
+        //    Elms = document.GetElementsByName("SAMLResponse");
+        //    if (Elms.Length > 0)
+        //    {
+        //        valSAMLResponse = ((IHtmlInputElement)Elms[0]).Value;
+        //    }
+        //    if (document.Forms.Length > 0)
+        //    {
+        //        valAction = document.Forms[0].Action;
+        //    }
+
+        //}
+
+        public void UpdateSAM(string resp)
+        {
+            string form = resp;
+
+            if (form.IndexOf("<form") >= 0)
+            {
+                form = form.Substring(resp.IndexOf("<form"));
+                int p = form.IndexOf(">");
+                form = form.Substring(1, p);
+                if (form.IndexOf("action") >= 0)
+                {
+                    string rzd = form.Substring(form.IndexOf("action=") + 7, 1);
+                    valAction = form.Substring(form.IndexOf("action=") + 8);
+                    valAction = valAction.Substring(0, valAction.IndexOf(rzd));
+                }
+            }
+
+
+            while (resp.IndexOf("<input") >= 0)
+            {
+                resp = resp.Substring(resp.IndexOf("<input"));
+                int p = resp.IndexOf(">");
+                string tagInput = resp.Substring(0, p) ;
+                resp = resp.Substring(p + 1);
+                if (tagInput.IndexOf("RelayState")>=0)
+                {
+                    string rzd = tagInput.Substring(tagInput.IndexOf("value=") + 6, 1);
+                    valRelayState = tagInput.Substring(tagInput.IndexOf("value=") + 7);
+                    valRelayState = valRelayState.Substring(0, valRelayState.IndexOf(rzd));
+                }
+                if (tagInput.IndexOf("SAMLRequest") >= 0)
+                {
+                    string rzd = tagInput.Substring(tagInput.IndexOf("value=") + 6, 1);
+                    valSAMLRequest = tagInput.Substring(tagInput.IndexOf("value=") + 7);
+                    valSAMLRequest = valSAMLRequest.Substring(0, valSAMLRequest.IndexOf(rzd));
+
+                }
+                if (tagInput.IndexOf("SAMLResponse") >= 0)
+                {
+                    string rzd = tagInput.Substring(tagInput.IndexOf("value=") + 6, 1);
+                    valSAMLResponse = tagInput.Substring(tagInput.IndexOf("value=") + 7);
+                    valSAMLResponse = valSAMLResponse.Substring(0, valSAMLResponse.IndexOf(rzd));
+
+                }
+            }
+
+        }
+
+
+
+        public void AddCookiesToRequest(ref HttpWebRequest request, string Domain="")
+        {
+            if (ListCookiesChrome.Count > 0)
+            {
+                foreach (Cookie cc in ListCookiesChrome)
+                {
+                    if ((Domain == "") || (cc.Domain == Domain))
+                    {
+                        System.Net.Cookie cc1 = new System.Net.Cookie(cc.Name, cc.Value, cc.Path, cc.Domain);
+                        request.CookieContainer.Add(cc1);
+                    }
+                }
+            }
+        }
+
+        public void SaveCookiesFromRequest(HttpWebResponse response)
+        {
+            //ListCookiesChrome.Clear();
+            foreach (Cookie c in response.Cookies)
+            {
+                int CookieExists = -1;
+                for (int i =0; i<ListCookiesChrome.Count;i++)
+                {
+                    Cookie c1 = ListCookiesChrome[i];
+                    if ((c1.Name==c.Name)&&(c1.Path==c.Path)&&(c1.Domain==c.Domain))
+                    {
+                        CookieExists = i;
+                        break;
+                    }
+                }
+                if (CookieExists>=0)
+                {
+                    ListCookiesChrome[CookieExists]=c;
+                }
+                else
+                {
+                    ListCookiesChrome.Add(c);
+                }
+            }
+        }
+
+        public string Get(string url, out string status, bool SaveCookies=false, bool ReLogin=true, string Domain="")
+        {
+            string result = "";
+            try
+            {
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.UserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/66.0.3359.139 Chrome/66.0.3359.139 Safari/537.36";
+                request.Method = "GET";
+                request.Timeout = 3600000;
+
+                request.CookieContainer = new CookieContainer();
+                AddCookiesToRequest(ref request, Domain);
+
+                HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    result = streamReader.ReadToEnd();
+                }
+                if (SaveCookies)
+                {
+                    SaveCookiesFromRequest(httpResponse);
+                }
+                status = httpResponse.StatusCode+": "+ httpResponse.StatusDescription;
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse errRsp = (HttpWebResponse)e.Response;
+                if (errRsp.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    if (ReLogin)
+                    {
+                        if (LoginEGRN())
+                        {
+                            result = Get(url, out status, SaveCookies, false, Domain);
+                            return result;
+                        }
+
+                    }
+                }
+                status = errRsp.StatusCode.ToString() + ": " + errRsp.StatusDescription;
+                result = "";
+                if (SaveCookies)
+                {
+                    SaveCookiesFromRequest((HttpWebResponse)e.Response);
+                }
+
+            }
+            return result;
+        }
+
+        private string GetDomain(string url)
+        {
+            Uri myUri = new Uri(url);
+            return myUri.Host; 
+        }
+
+        public string Post(string url, string param, out string status, bool json = false, bool SaveCookies = false, string Domain = "", bool ReLogin = true)
+        {
+            string result = "";
+            status = "";
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Timeout = 3600000;
+                request.Method = "POST";
+                request.AllowAutoRedirect = false;
+                request.CookieContainer = new CookieContainer();
+                AddCookiesToRequest(ref request, Domain);
+
+                string postData = param;
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                if (json)
+                    request.ContentType = "application/json;charset=utf-8";
+                else
+                    request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string[] gloc = response.Headers.GetValues("Location");
+                if (gloc!=null)
+                {
+                    httpLocation = gloc[0];
+                }
+                else
+                {
+                    httpLocation = "";
+                }
+                if (SaveCookies)
+                {
+                    SaveCookiesFromRequest(response);
+                }
+
+                dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                string responseFromServer = reader.ReadToEnd();
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+
+                status = response.StatusCode + ": " + response.StatusDescription;
+                result = responseFromServer;
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse errRsp = (HttpWebResponse)e.Response;
+                if (errRsp != null)
+                {
+                    if (errRsp.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        if (ReLogin)
+                        {
+                            if (LoginEGRN())
+                            {
+                                result = Post(url, param, out status, json, SaveCookies, Domain, false);
+                                return result;
+                            }
+
+                        }
+                    }
+                    status = errRsp.StatusCode.ToString() + ": " + errRsp.StatusDescription;
+                    result = "";
+                    if (SaveCookies)
+                    {
+                        SaveCookiesFromRequest((HttpWebResponse)e.Response);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            return result;
+        }
+
+        public string Put(string url, string param, out string status, bool json = false, bool SaveCookies = false, string Domain = "", bool ReLogin = true)
+        {
+            string result = "";
+            status = "";
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Timeout = 3600000;
+                request.Method = "PUT";
+                request.AllowAutoRedirect = false;
+                request.CookieContainer = new CookieContainer();
+                AddCookiesToRequest(ref request, Domain);
+
+                string postData = param;
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                if (json)
+                    request.ContentType = "application/json;charset=utf-8";
+                else
+                    request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string[] gloc = response.Headers.GetValues("Location");
+                if (gloc != null)
+                {
+                    httpLocation = gloc[0];
+                }
+                else
+                {
+                    httpLocation = "";
+                }
+                if (SaveCookies)
+                {
+                    SaveCookiesFromRequest(response);
+                }
+
+                dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                string responseFromServer = reader.ReadToEnd();
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+
+                status = response.StatusCode + ": " + response.StatusDescription;
+                result = responseFromServer;
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse errRsp = (HttpWebResponse)e.Response;
+                if (errRsp != null)
+                {
+                    if (errRsp.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        if (ReLogin)
+                        {
+                            if (LoginEGRN())
+                            {
+                                result = Post(url, param, out status, json, SaveCookies, Domain, false);
+                                return result;
+                            }
+
+                        }
+                    }
+                    status = errRsp.StatusCode.ToString() + ": " + errRsp.StatusDescription;
+                    result = "";
+                    if (SaveCookies)
+                    {
+                        SaveCookiesFromRequest((HttpWebResponse)e.Response);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            return result;
+        }
+
+
+        public string GetFile(string url, string fname, out string status, string Domain = "", bool ReLogin=true)
+        {
+            string result = "";
+            try
+            {
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.UserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/66.0.3359.139 Chrome/66.0.3359.139 Safari/537.36";
+                request.Method = "GET";
+                request.Timeout = 3600000;
+
+                request.CookieContainer = new CookieContainer();
+                AddCookiesToRequest(ref request, Domain);
+
+                HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse();
+
+
+                Stream stream = httpResponse.GetResponseStream();
+//                FileStream file = new FileStream(fname, FileMode.Create, FileAccess.Write);
+
+                using (var fs = File.Create(fname))
+                {
+                    // Copy all bytes from the responsestream to the filestream
+                    stream.CopyTo(fs);
+                }
+
+                status = httpResponse.StatusCode + ": " + httpResponse.StatusDescription;
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse errRsp = (HttpWebResponse)e.Response;
+                if (errRsp.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    if (ReLogin)
+                    {
+                        if (LoginEGRN())
+                        {
+                            result = GetFile(url, fname, out status, Domain,ReLogin);
+                            return result;
+                        }
+
+                    }
+                }
+                status = errRsp.StatusCode.ToString() + ": " + errRsp.StatusDescription;
+                result = "";
+
+            }
+            return result;
+        }
+
+
+
+        public string UploadFile(string url, string[] files, string[,] FormData, out string stats)
+        {
+            string result = "";
+            string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.CookieContainer = new CookieContainer();
+            AddCookiesToRequest(ref request, "");
+            request.Accept = "application/json, text/plain, */*";
+            request.ContentType = "multipart/form-data; boundary=" + boundary;
+            request.UserAgent = " Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36";
+            request.AllowAutoRedirect = true;
+            request.KeepAlive = true;
+            request.Headers.Add("Accept-Encoding: gzip,deflate");
+            request.Headers.Add("Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4");
+            request.Method = "POST";
+            MemoryStream requestStream = new MemoryStream();
+
+
+            StringBuilder sb = new StringBuilder();
+
+//            int ContentLength = 0;
+
+            for (int i = 0; i < FormData.GetLength(0); i++)
+            {
+                sb.AppendLine("--" + boundary);
+                sb.AppendLine("Content-Disposition: form-data; name=\"" + FormData[i, 0] + "\"");
+                sb.AppendLine("");
+                sb.AppendLine(FormData[i, 1]);
+            }
+            byte[] nach = Encoding.UTF8.GetBytes(sb.ToString());
+            byte[] stri = Encoding.UTF8.GetBytes(Environment.NewLine);
+//            ContentLength += nach.Length+ stri.Length;
+            requestStream.Write(nach, 0, nach.Length);
+            requestStream.Write(stri, 0, stri.Length);
+
+            for (int i=0;i<files.Length;i++)
+            {
+                if (File.Exists(files[i]))
+                {
+                    string CType = "application/octet-stream";
+                    string tFile = "file";
+                    if (Path.GetExtension(files[i]).ToUpper() == ".PDF")
+                    {
+                        CType = "application/pdf";
+                    }
+                    if (Path.GetExtension(files[i]).ToUpper() == ".XML")
+                    {
+                        CType = "text/xml";
+                    }
+                    if (Path.GetExtension(files[i]).ToUpper() == ".SIG")
+                    {
+                        tFile = "signFile";
+                    }
+
+
+                    sb.Clear();
+                    sb.AppendLine("--" + boundary);
+                    sb.AppendLine("Content-Disposition: form-data; name=\"" + tFile + "\"; filename=\"" + Path.GetFileName(files[i]) + "\"");
+                    sb.AppendLine("Content-Type: " + CType);
+                    sb.AppendLine("");
+                    byte[] hFile = Encoding.UTF8.GetBytes(sb.ToString());
+                    byte[] bFile = File.ReadAllBytes(files[i]);
+                    //ContentLength += hFile.Length+bFile.Length+stri.Length;
+                    requestStream.Write(hFile, 0, hFile.Length);
+                    requestStream.Write(bFile, 0, bFile.Length);
+                    requestStream.Write(stri, 0, stri.Length);
+                }
+            }
+
+            byte[] str2e = Encoding.UTF8.GetBytes("--" + boundary+"--");
+            //ContentLength += str2e.Length + stri.Length;
+            requestStream.Write(str2e, 0, str2e.Length);
+            requestStream.Write(stri, 0, stri.Length);
+
+            request.ContentLength = requestStream.Length;
+            Stream RStream = request.GetRequestStream();
+            requestStream.Position = 0;
+            byte[] tempBuffer = new byte[requestStream.Length];
+            requestStream.Read(tempBuffer, 0, tempBuffer.Length);
+            requestStream.Close();
+            RStream.Write(tempBuffer, 0, tempBuffer.Length);
+            RStream.Close();
+
+            try
+            {
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    string responseFromServer = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+
+                    stats = response.StatusCode + ": " + response.StatusDescription;
+                    result = responseFromServer;
+                }
+            }
+            catch (WebException ex)
+            {
+                stats = ex.Message;
+                result = "";
+            }
+            return result;
+
+        }
+
+
+        public bool LoginEGRN()
+        {
+            bool result = false;
+            switch (current_system)
+            {
+                case "ppoz":
+                    result = LoginPPOZ();
+                    break;
+                case "pkurp":
+                    result = LoginPKURP();
+                    break;
+                case "pkpvd":
+                    result = LoginPKPVD();
+                    break;
+                case "pkpvdmfc":
+                    result = LoginPPOZ();
+                    break;
+            }
+            return result;
+        }
+
+
+
+        public bool LoginPPOZ()
+        {
+            string stats;
+            string Domain_egrn = GetDomain(ppoz);
+
+            string resp = Get(ppoz+ "/manager//users/current", out stats, true, false,"XXXX");
+            resp = Get(ppoz+"/manager//login?returi="+ppoz+"/", out stats, true, false,"XXXX");
+
+            UpdateSAM(resp);
+            string param = "SAMLRequest=" + HttpUtility.UrlEncode(valSAMLRequest) + "&" + "RelayState=" + HttpUtility.UrlEncode(valRelayState);
+
+            string Domain_cia = GetDomain(valAction);
+            resp = Post(valAction, param, out stats, false, true, "", false);
+
+            param = "userLogin=" + usr + "&userPassword=" + pswd;
+            resp = Post("http://"+ Domain_cia + ":8080/idp/checkPassword", param, out stats, false, true, Domain_cia, false);
+
+            if (resp.IndexOf("Превышено количество одновременных сессий пользователя. Закрыть предыдущую сессию и продолжить?") >= 0)
+            {
+                resp = Post("http://"+Domain_cia+ ":8080/idp/checkPassword?forceAuth=true", param, out stats, false, true,Domain_cia, false);
+                UpdateSAM(resp);
+            }
+            else
+            {
+                UpdateSAM(resp);
+            }
+
+            param = "SAMLResponse=" + HttpUtility.UrlEncode(valSAMLResponse) + "&" + "RelayState=" + HttpUtility.UrlEncode(valRelayState);
+            resp = Post(valAction, param, out stats,false, true,Domain_egrn, false);
+
+            resp = Get(ppoz + "/manager//users/current", out stats, false, false, Domain_egrn);
+            int CountCookies = ListCookiesChrome.Count;
+
+            for (int i=CountCookies-1;i>=0;i--)
+            {
+                Cookie c = ListCookiesChrome[i];
+                if (c.Domain==Domain_cia)
+                {
+                    ListCookiesChrome.Remove(c);
+                }
+            }
+
+            return (resp!="");
+        }
+
+        public bool LoginPKURP()
+        {
+            string stats;
+            string Domain_egrn = GetDomain(pkurp);
+
+            string resp = Get(pkurp + "/login", out stats, true, false, "XXXX");
+            resp = Get(pkurp+"/users/auth/sia", out stats, true, false, "XXXX");
+
+            UpdateSAM(resp);
+            string param = "SAMLRequest=" + HttpUtility.UrlEncode(valSAMLRequest) + "&" + "RelayState=" + HttpUtility.UrlEncode(valRelayState);
+
+            string Domain_cia = GetDomain(valAction);
+            resp = Post(valAction, param, out stats, false, true, "", false);
+
+            param = "userLogin=" + usr + "&userPassword=" + pswd;
+            resp = Post("http://" + Domain_cia + ":8080/idp/checkPassword", param, out stats, false, true, Domain_cia, false);
+
+            if (resp.IndexOf("Превышено количество одновременных сессий пользователя. Закрыть предыдущую сессию и продолжить?") >= 0)
+            {
+                resp = Post("http://" + Domain_cia + ":8080/idp/checkPassword?forceAuth=true", param, out stats, false, true, Domain_cia, false);
+                UpdateSAM(resp);
+            }
+            else
+            {
+                UpdateSAM(resp);
+            }
+
+            param = "SAMLResponse=" + HttpUtility.UrlEncode(valSAMLResponse) + "&" + "RelayState=" + HttpUtility.UrlEncode(valRelayState);
+            resp = Post(valAction, param, out stats, false, true, Domain_egrn, false);
+
+            resp = Get(ppoz + "/request", out stats, false, false, Domain_egrn);
+            int CountCookies = ListCookiesChrome.Count;
+
+            for (int i = CountCookies - 1; i >= 0; i--)
+            {
+                Cookie c = ListCookiesChrome[i];
+                if (c.Domain == Domain_cia)
+                {
+                    ListCookiesChrome.Remove(c);
+                }
+            }
+
+            return (resp != "");
+        }
+
+        public bool LoginPKPVD()
+        {
+            string stats;
+            string Domain_egrn = GetDomain(pkpvd);
+
+            string resp = Get(pkpvd, out stats, true, false, "XXXX");
+            resp = Get(pkpvd+ "/api/rs/login?returi=http://" + pkpvd + "/help", out stats, true, false, "XXXX");
+
+            UpdateSAM(resp);
+            string param = "SAMLRequest=" + HttpUtility.UrlEncode(valSAMLRequest) + "&" + "RelayState=" + HttpUtility.UrlEncode(valRelayState);
+
+            string Domain_cia = GetDomain(valAction);
+            resp = Post(valAction, param, out stats, false, true, "", false);
+
+            param = "userLogin="+usr+"&userPassword="+pswd;
+            resp = Post("http://" + Domain_cia + ":8080/idp/checkPassword", param, out stats, false, true, Domain_cia, false);
+
+            if (resp.IndexOf("Превышено количество одновременных сессий пользователя. Закрыть предыдущую сессию и продолжить?") >= 0)
+            {
+                resp = Post("http://" + Domain_cia + ":8080/idp/checkPassword?forceAuth=true", param, out stats, false, true, Domain_cia, false);
+                UpdateSAM(resp);
+            }
+            else
+            {
+                UpdateSAM(resp);
+            }
+
+            param = "SAMLResponse=" + HttpUtility.UrlEncode(valSAMLResponse) + "&" + "RelayState=" + HttpUtility.UrlEncode(valRelayState);
+            resp = Post(valAction, param, out stats, false, true, Domain_egrn, false);
+
+            resp = Get(pkpvd, out stats, false, false, Domain_egrn);
+            int CountCookies = ListCookiesChrome.Count;
+
+            for (int i = CountCookies - 1; i >= 0; i--)
+            {
+                Cookie c = ListCookiesChrome[i];
+                if (c.Domain == Domain_cia)
+                {
+                    ListCookiesChrome.Remove(c);
+                }
+            }
+
+            return (resp != "");
+        }
+
+        public void ReadRequests(string JsonParam)
+        {
+            string stats = "";
+            int NumReq = 50;
+            int NumPage = 0;
+            while (NumReq == 50)
+            {
+                //MessageBox.Show(numAction + " page:" + NumPage.ToString());
+
+                string resp = Post(ppoz + "/manager/requests", JsonParam.Replace("[PAGE]", NumPage.ToString()), out stats, true);
+                try
+                {
+                    JObject json = JObject.Parse(resp);
+                    JArray Areqs = (JArray)json["requests"];
+                    NumReq = Areqs.Count();
+                    if (NumReq > 0)
+                    {
+                        for (int i = Areqs.Count - 1; i >= 0; i--)
+                        {
+                            string c2 = Areqs[i]["appealNumber"].ToString();
+                            string JsonREQ = Get(ppoz + "/manager/requests/byId?id=" + c2, out stats);
+                            if (_processReq != null)
+                            {
+                                _processReq(JsonREQ);
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    NumReq = 0;
+                }
+                NumPage += 1;
+            }
+
+
+        }
+
+    }
+}

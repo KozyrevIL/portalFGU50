@@ -1,0 +1,233 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Data.OracleClient;
+
+/// <summary>
+/// Summary description for Images
+/// </summary>
+public class OTUTI
+{
+    public OTUTI()
+	{
+		//
+		// TODO: Add constructor logic here
+		//
+	}
+  
+    static public void OTUTI_UpdateItems
+        (
+            int id_otuti_journal,
+            String items
+        )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("OTUTI_UpdateItems", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameteritems = new SqlParameter("@items", SqlDbType.NVarChar, 50);
+        parameteritems.Value = items;
+        myCommand.Parameters.Add(parameteritems);
+
+        SqlParameter parameterid_otuti_journal = new SqlParameter("@id_otuti_journal", SqlDbType.Int);
+        parameterid_otuti_journal.Value = id_otuti_journal;
+        myCommand.Parameters.Add(parameterid_otuti_journal);
+
+       
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    static public void OTUTI_UpdateItemsOTI
+        (
+            int id_otuti_journal,
+            String items
+        )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("OTUTI_UpdateItemsOTI", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameteritems = new SqlParameter("@items", SqlDbType.NVarChar, 50);
+        parameteritems.Value = items;
+        myCommand.Parameters.Add(parameteritems);
+
+        SqlParameter parameterid_otuti_journal = new SqlParameter("@id_otuti_journal", SqlDbType.Int);
+        parameterid_otuti_journal.Value = id_otuti_journal;
+        myCommand.Parameters.Add(parameterid_otuti_journal);
+
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+
+    public SqlDataReader OTUTI_ReportSelect
+     (
+         int id_otuti_journal
+         
+     )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("OTUTI_ReportSelect", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid_otuti_journal = new SqlParameter("@id_otuti_journal", SqlDbType.Int);
+        parameterid_otuti_journal.Value = id_otuti_journal;
+        myCommand.Parameters.Add(parameterid_otuti_journal);
+
+        myConnection.Open();
+
+        return myCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+    }
+    /// <summary>
+    /// Сохранение информации о сгенерированном реестре
+    /// </summary>
+    /// <param name="date_reestr"></param>
+    /// <param name="number_reestr"></param>
+    /// <param name="id_sotrudnik"></param>
+    /// <param name="name_otuti"></param>
+    /// <param name="array_id_otuti"></param>
+    static public void OTUTI_reestrInsert
+        (
+            DateTime date_reestr,
+            String number_reestr,
+            int id_sotrudnik,
+            String name_otuti,
+	        String array_id_otuti
+        )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("OTUTI_reestrInsert", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterdate_reestr = new SqlParameter("@date_reestr", SqlDbType.DateTime);
+        parameterdate_reestr.Value = date_reestr;
+        myCommand.Parameters.Add(parameterdate_reestr);
+
+        SqlParameter parameternumber_reestr = new SqlParameter("@number_reestr", SqlDbType.NVarChar, 15);
+        parameternumber_reestr.Value = number_reestr;
+        myCommand.Parameters.Add(parameternumber_reestr);
+
+        SqlParameter parameterid_sotrudnik = new SqlParameter("@id_sotrudnik", SqlDbType.Int);
+        parameterid_sotrudnik.Value = id_sotrudnik;
+        myCommand.Parameters.Add(parameterid_sotrudnik);
+
+        SqlParameter parametername_otuti = new SqlParameter("@name_otuti", SqlDbType.NVarChar, 50);
+        parametername_otuti.Value = name_otuti;
+        myCommand.Parameters.Add(parametername_otuti);
+
+        SqlParameter parameterarray_id_otuti = new SqlParameter("@array_id_otuti", SqlDbType.NVarChar, 255);
+        parameterarray_id_otuti.Value = array_id_otuti;
+        myCommand.Parameters.Add(parameterarray_id_otuti);
+
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+
+
+    }
+    /// <summary>
+    /// Получение текущего номера реестра
+    /// </summary>
+    /// <returns></returns>
+    public static string OTUTI_reestrSelect()
+    {
+        using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"].ConnectionString))
+        {
+            conn.Open();
+            try
+            {
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "OTUTI_reestrSelectNumber";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    
+                    return (string)cmd.ExecuteScalar();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+    }
+    public OracleDataReader OTUTY_reestrGKN(String cad_number)
+    {
+        try
+        {
+            //OracleConnection sqc = new OracleConnection("Data Source=10.59.141.18:1521/r59gzk0;Persist Security Info=True;User ID=system;Password=oracle_01_22;Unicode=True");
+
+            //String textSql = @"SELECT   a.request_number, a.request_name,          
+            //                        nvl(nvl(nvl(ul.NAME, s.name), trim(g.last_name || ' ' || g.first_name || ' ' || g.middle_name)), trim(f.last_name || ' ' || f.first_name || ' ' || f.middle_name)) FIO, 
+            //                        nvl(nvl(b.email, b.delivery_destination), ul.email) email, b.phone
+            //               FROM    request.request a,
+            //                       request.request_declarant b, zkoks.right_owner_fl f,
+            //                       zkoks.right_owner_ul ul, zkoks.right_owner_sub s,
+            //                      zkoks.right_owner_fl g
+            //                WHERE
+            //                        a.id = b.request_id
+            //                        AND b.declarant_fl_def_id = f.id(+)
+            //                        AND b.declarant_ul_def_id = ul.id(+)
+            //                        AND b.declarant_gov_def_id = s.id(+)
+            //                        AND b.agent_id = g.id(+)
+            //                        AND B.AGENT_ID(+) is not null
+            //                        AND a.request_number = '" + cad_number + "'";
+
+            OracleConnection sqc = new OracleConnection("Data Source=10.59.141.18:1521/r59gzk0;Persist Security Info=True;User ID=system;Password=oracle_01_22;Unicode=True");
+
+            String textSql = @"SELECT  a.request_number, a.request_name,                      
+             nvl(nvl((select trim(g.last_name || ' ' || g.first_name || ' ' || g.middle_name)  from request.request_declarant d, zkoks.right_owner_fl g where d.request_id = a.id and d.agent_id = g.id and rownum < 2),  nvl(ul.NAME, s.name)),  trim(f.last_name || ' ' || f.first_name || ' ' || f.middle_name)) fio,                                        
+             nvl((select d.email  from request.request_declarant d, zkoks.right_owner_fl g where d.request_id = a.id and d.agent_id = g.id and rownum < 2),  nvl(nvl(b.email, b.delivery_destination), ul.email)) email             
+                FROM  request.request a,
+             request.request_declarant b, zkoks.right_owner_fl f,
+             zkoks.right_owner_ul ul, zkoks.right_owner_sub s
+                WHERE a.id = b.request_id
+              AND b.declarant_fl_def_id = f.id(+)
+              AND b.declarant_ul_def_id = ul.id(+)
+              AND b.declarant_gov_def_id = s.id(+)
+              AND b.agent_id is null
+              AND a.request_number =  '" + cad_number + "'";
+
+            OracleCommand command = new OracleCommand(textSql, sqc);
+            sqc.Open();
+            return command.ExecuteReader(CommandBehavior.CloseConnection);
+        }
+        catch
+        {
+
+            return null;
+        }
+        finally { }
+
+
+    }
+}

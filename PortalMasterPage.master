@@ -1,0 +1,84 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="PortalMasterPage.master.cs"
+	Inherits="PortalMasterPage" %>
+
+<%@ Register src="UC/LogonPanel.ascx" tagname="LogonPanel" tagprefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title>Портал ФБУ Кадастровая палата по Пермскому краю</title>
+	<link href="PortalMasterPage.css" rel="stylesheet" type="text/css" />
+	<link href="portalFGU59.css" rel="stylesheet" type="text/css" />
+	<asp:ContentPlaceHolder ID="head" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<table class="MainPageTable" rules="none" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="MainPageHeader" align="left" style="text-align: left" rowspan="3" valign="bottom">
+				<img alt="Логотип РФ" src="images/logo4.gif" style="width: 190px; height: 123px" />
+			</td>
+			<td class="MainPageHeaderTop" style="text-align: left" colspan="2">
+				<h2>
+					ФБУ &quot;Кадастравая палата&quot; по Пермскому краю
+				</h2>
+			</td>
+		</tr>
+		<tr>
+			<td class="MainPageHeaderTop" style="text-align: left">
+				<asp:Label ID="LabelLogonText" runat="server" SkinID="Label_MainHeader_Username"></asp:Label><br />
+				<asp:Label ID="LabelOtdel" runat="server" Font-Italic="False" SkinID="Label_MainHeader_Otdelname"></asp:Label>
+			</td>
+			<td class="MainPageHeader" style="vertical-align: bottom; text-align: right" rowspan="2">
+				<uc1:LogonPanel ID="LogonPanel1" runat="server" />
+			</td>
+		</tr>
+		<tr>
+			<td class="MainPageHeader" style="text-align: left">
+				<asp:SiteMapPath ID="SiteMapPath1" runat="server">
+					<NodeStyle Font-Underline="False" ForeColor="White" />
+				</asp:SiteMapPath>
+			</td>
+		</tr>
+		<tr style="height: 500px">
+			<td align="left" valign="top" class="MainPageLeftSider">
+				<asp:TreeView ID="TreeView1" runat="server" DataSourceID="SiteMapDataSource1" 
+					ImageSet="XPFileExplorer" NodeIndent="15">
+					<ParentNodeStyle Font-Bold="False" />
+					<HoverNodeStyle Font-Underline="True" ForeColor="#6666AA" />
+					<SelectedNodeStyle BackColor="#B5B5B5" Font-Underline="False" 
+						HorizontalPadding="0px" VerticalPadding="0px" />
+					<DataBindings>
+						<asp:TreeNodeBinding DataMember="SiteMapNode" NavigateUrlField="Url" 
+							SelectAction="Expand" TextField="Title" ToolTipField="Description" 
+							ValueField="Title" />
+					</DataBindings>
+					<NodeStyle Font-Names="Tahoma" Font-Size="8pt" ForeColor="Black" 
+						HorizontalPadding="2px" NodeSpacing="0px" VerticalPadding="2px" />
+				</asp:TreeView>
+				<asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
+			</td>
+			<td align="center" valign="top" colspan="2">
+				<div>
+					<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+					</asp:ContentPlaceHolder>
+				</div>
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="MainPageFooter">
+				&nbsp;
+			</td>
+			<td class="MainPageFooter">
+				Copyright (c) 2011
+			</td>
+			<td class="MainPageFooter">
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

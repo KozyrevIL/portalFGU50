@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mfc_offices>
+  <mfc_office name="Выбор места подачи"	value="-1"></mfc_office>
+  <mfc_office name="Филиал Александровский"	value="Филиал Александровский"></mfc_office>
+  <mfc_office name="Филиал Бардымский"	value="Филиал Бардымский"></mfc_office>
+  <mfc_office name="Филиал Березниковский"	value="Филиал Березниковский"></mfc_office>
+  <mfc_office name="Филиал Березниковский - 2"	value="Филиал Березниковский - 2"></mfc_office>
+  <mfc_office name="Филиал Березниковский - 3"	value="Филиал Березниковский - 3"></mfc_office>
+  <mfc_office name="Филиал Березовский"	value="Филиал Березовский"></mfc_office>
+  <mfc_office name="Филиал Большая Соснова"	value="Филиал Большая Соснова"></mfc_office>
+  <mfc_office name="Филиал Верещагинский"	value="Филиал Верещагинский"></mfc_office>
+  <mfc_office name="Филиал Гайнский"	value="Филиал Гайнский"></mfc_office>
+  <mfc_office name="Филиал Горнозаводский"	value="Филиал Горнозаводский"></mfc_office>
+  <mfc_office name="Филиал Гремячинский"	value="Филиал Гремячинский"></mfc_office>
+  <mfc_office name="Филиал Губахинский"	value="Филиал Губахинский"></mfc_office>
+  <mfc_office name="Филиал Добрянский"	value="Филиал Добрянский"></mfc_office>
+  <mfc_office name="Филиал Еловский"	value="Филиал Еловский"></mfc_office>
+  <mfc_office name="Филиал Ильинский"	value="Филиал Ильинский"></mfc_office>
+  <mfc_office name="Филиал Индустриальный - 2"	value="Филиал Индустриальный - 2"></mfc_office>
+  <mfc_office name="Филиал Карагайский"	value="Филиал Карагайский"></mfc_office>
+  <mfc_office name="Филиал Кизеловский"	value="Филиал Кизеловский"></mfc_office>
+  <mfc_office name="Филиал Кировский - 2"	value="Филиал Кировский - 2"></mfc_office>
+  <mfc_office name="Филиал Кировский - 3"	value="Филиал Кировский - 3"></mfc_office>
+  <mfc_office name="Филиал Косинский"	value="Филиал Косинский"></mfc_office>
+  <mfc_office name="Филиал Кочевский"	value="Филиал Кочевский"></mfc_office>
+  <mfc_office name="Филиал Красновишерский"	value="Филиал Красновишерский"></mfc_office>
+  <mfc_office name="Филиал Краснокамский"	value="Филиал Краснокамский"></mfc_office>
+  <mfc_office name="Филиал Кудымкарский"	value="Филиал Кудымкарский"></mfc_office>
+  <mfc_office name="Филиал Куединский"	value="Филиал Куединский"></mfc_office>
+  <mfc_office name="Филиал Кунгурский"	value="Филиал Кунгурский"></mfc_office>
+  <mfc_office name="Филиал Лысьвенский"	value="Филиал Лысьвенский"></mfc_office>
+  <mfc_office name="Филиал Мотовилихинский"	value="Филиал Мотовилихинский"></mfc_office>
+  <mfc_office name="Филиал Нытвенский"	value="Филиал Нытвенский"></mfc_office>
+  <mfc_office name="Филиал Октябрьский"	value="Филиал Октябрьский"></mfc_office>
+  <mfc_office name="Филиал Орджоникидзевский"	value="Филиал Орджоникидзевский"></mfc_office>
+  <mfc_office name="Филиал Ординский"	value="Филиал Ординский"></mfc_office>
+  <mfc_office name="Филиал Осинский"	value="Филиал Осинский"></mfc_office>
+  <mfc_office name="Филиал Оханский"	value="Филиал Оханский"></mfc_office>
+  <mfc_office name="Филиал Очерский"	value="Филиал Очерский"></mfc_office>
+  <mfc_office name="Филиал Полазненский"	value="Филиал Полазненский"></mfc_office>
+  <mfc_office name="Филиал Свердловский"	value="Филиал Свердловский"></mfc_office>
+  <mfc_office name="Филиал Свердловский - 2"	value="Филиал Свердловский - 2"></mfc_office>
+  <mfc_office name="Филиал Сивинский"	value="Филиал Сивинский"></mfc_office>
+  <mfc_office name="Филиал Соликамский"	value="Филиал Соликамский"></mfc_office>
+  <mfc_office name="Филиал Соликамский - 2"	value="Филиал Соликамский - 2"></mfc_office>
+  <mfc_office name="Филиал Суксунский"	value="Филиал Суксунский"></mfc_office>
+  <mfc_office name="Филиал Уинский"	value="Филиал Уинский"></mfc_office>
+  <mfc_office name="Филиал Усольский"	value="Филиал Усольский"></mfc_office>
+  <mfc_office name="Филиал Усть-Кишертский"	value="Филиал Усть-Кишертский"></mfc_office>
+  <mfc_office name="Филиал Центральный - 2"	value="Филиал Центральный - 2"></mfc_office>
+  <mfc_office name="Филиал Чайковский"	value="Филиал Чайковский"></mfc_office>
+  <mfc_office name="Филиал Частинский"	value="Филиал Частинский"></mfc_office>
+  <mfc_office name="Филиал Чердынский"	value="Филиал Чердынский"></mfc_office>
+  <mfc_office name="Филиал Чернушинский"	value="Филиал Чернушинский"></mfc_office>
+  <mfc_office name="Филиал Чусовской"	value="Филиал Чусовской"></mfc_office>
+  <mfc_office name="Филиал Юрлинский"	value="Филиал Юрлинский"></mfc_office>
+  <mfc_office name="Филиал Юсьвинский"	value="Филиал Юсьвинский"></mfc_office>
+  <mfc_office name="ТОСП АН Альфа"	value="ТОСП АН Альфа"></mfc_office>
+  <mfc_office name="ТОСП АН Альфа г.Березники"	value="ТОСП АН Альфа г.Березники"></mfc_office>
+  <mfc_office name="ТОСП АН Альфа г.Кунгур"	value="ТОСП АН Альфа г.Кунгур"></mfc_office>
+  <mfc_office name="ТОСП АН Альфа г.Соликамск"	value="ТОСП АН Альфа г.Соликамск"></mfc_office>
+  <mfc_office name="ТОСП АН Альфа г.Чайковский"	value="ТОСП АН Альфа г.Чайковский"></mfc_office>
+  <mfc_office name="ТОСП Альняш"	value="ТОСП Альняш"></mfc_office>
+  <mfc_office name="ТОСП Андреево"	value="ТОСП Андреево"></mfc_office>
+  <mfc_office name="ТОСП Архангельское"	value="ТОСП Архангельское"></mfc_office>
+  <mfc_office name="ТОСП Асово"	value="ТОСП Асово"></mfc_office>
+  <mfc_office name="ТОСП Аспа"	value="ТОСП Аспа"></mfc_office>
+  <mfc_office name="ТОСП Ашап"	value="ТОСП Ашап"></mfc_office>
+  <mfc_office name="ТОСП Б. Букор"	value="ТОСП Б. Букор"></mfc_office>
+  <mfc_office name="ТОСП Б.Гондыр"	value="ТОСП Б.Гондыр"></mfc_office>
+  <mfc_office name="ТОСП Бульвар Гагарина"	value="ТОСП Бульвар Гагарина"></mfc_office>
+  <mfc_office name="ТОСП Б.Кусты"	value="ТОСП Б.Кусты"></mfc_office>
+  <mfc_office name="ТОСП Бабка"	value="ТОСП Бабка"></mfc_office>
+  <mfc_office name="ТОСП Банк Москвы"	value="ТОСП Банк Москвы"></mfc_office>
+  <mfc_office name="ТОСП Банк Урал ФД"	value="ТОСП Банк Урал ФД"></mfc_office>
+  <mfc_office name="ТОСП Банк УРАЛСИБ"	value="ТОСП Банк УРАЛСИБ"></mfc_office>
+  <mfc_office name="ТОСП Басино"	value="ТОСП Басино"></mfc_office>
+  <mfc_office name="ТОСП Белоево"	value="ТОСП Белоево"></mfc_office>
+  <mfc_office name="ТОСП Березники"	value="ТОСП Березники"></mfc_office>
+  <mfc_office name="ТОСП Беркутово"	value="ТОСП Беркутово"></mfc_office>
+  <mfc_office name="ТОСП Бершеть"	value="ТОСП Бершеть"></mfc_office>
+  <mfc_office name="ТОСП Бисер"	value="ТОСП Бисер"></mfc_office>
+  <mfc_office name="ТОСП Бичурино"	value="ТОСП Бичурино"></mfc_office>
+  <mfc_office name="ТОСП Богородск"	value="ТОСП Богородск"></mfc_office>
+  <mfc_office name="ТОСП Большая Коча"	value="ТОСП Большая Коча"></mfc_office>
+  <mfc_office name="ТОСП Большая Уса"	value="ТОСП Большая Уса"></mfc_office>
+  <mfc_office name="ТОСП Бондюг"	value="ТОСП Бондюг"></mfc_office>
+  <mfc_office name="ТОСП Бородули"	value="ТОСП Бородули"></mfc_office>
+  <mfc_office name="ТОСП Брод"	value="ТОСП Брод"></mfc_office>
+  <mfc_office name="ТОСП Брюхово"	value="ТОСП Брюхово"></mfc_office>
+  <mfc_office name="ТОСП Буб"	value="ТОСП Буб"></mfc_office>
+  <mfc_office name="ТОСП Бырма"	value="ТОСП Бырма"></mfc_office>
+  <mfc_office name="ТОСП Ваньки"	value="ТОСП Ваньки"></mfc_office>
+  <mfc_office name="ТОСП Васильевское"	value="ТОСП Васильевское"></mfc_office>
+  <mfc_office name="ТОСП Верх-Иньва"	value="ТОСП Верх-Иньва"></mfc_office>
+  <mfc_office name="ТОСП Верхнее Калино"	value="ТОСП Верхнее Калино"></mfc_office>
+  <mfc_office name="ТОСП Верхнечусовские Городки"	value="ТОСП Верхнечусовские Городки"></mfc_office>
+  <mfc_office name="ТОСП Верхние Муллы"	value="ТОСП Верхние Муллы"></mfc_office>
+  <mfc_office name="ТОСП Верх-Юсьва"	value="ТОСП Верх-Юсьва"></mfc_office>
+  <mfc_office name="ТОСП Верх-Язьва"	value="ТОСП Верх-Язьва"></mfc_office>
+  <mfc_office name="ТОСП Вехняя Старица"	value="ТОСП Вехняя Старица"></mfc_office>
+  <mfc_office name="ТОСП Вильва"	value="ТОСП Вильва"></mfc_office>
+  <mfc_office name="ТОСП Вильгорт"	value="ТОСП Вильгорт"></mfc_office>
+  <mfc_office name="ТОСП Висим"	value="ТОСП Висим"></mfc_office>
+  <mfc_office name="ТОСП Вознесенское"	value="ТОСП Вознесенское"></mfc_office>
+  <mfc_office name="ТОСП Воскресенск"	value="ТОСП Воскресенск"></mfc_office>
+  <mfc_office name="ТОСП Всеволодо-Вильва"	value="ТОСП Всеволодо-Вильва"></mfc_office>
+  <mfc_office name="ТОСП Гамово"	value="ТОСП Гамово"></mfc_office>
+  <mfc_office name="ТОСП Голованово"	value="ТОСП Голованово"></mfc_office>
+  <mfc_office name="ТОСП Городище"	value="ТОСП Городище"></mfc_office>
+  <mfc_office name="ТОСП Горшки"	value="ТОСП Горшки"></mfc_office>
+  <mfc_office name="ТОСП Гремяча"	value="ТОСП Гремяча"></mfc_office>
+  <mfc_office name="ТОСП Григорьевское"	value="ТОСП Григорьевское"></mfc_office>
+  <mfc_office name="ТОСП Деменево"	value="ТОСП Деменево"></mfc_office>
+  <mfc_office name="ТОСП Дивья"	value="ТОСП Дивья"></mfc_office>
+  <mfc_office name="ТОСП Дружба"	value="ТОСП Дружба"></mfc_office>
+  <mfc_office name="ТОСП Дубовое"	value="ТОСП Дубовое"></mfc_office>
+  <mfc_office name="ТОСП Дуброво, Еловский р-н"	value="ТОСП Дуброво, Еловский р-н"></mfc_office>
+  <mfc_office name="ТОСП Дуброво, Оханский р-н"	value="ТОСП Дуброво, Оханский р-н"></mfc_office>
+  <mfc_office name="ТОСП Егва"	value="ТОСП Егва"></mfc_office>
+  <mfc_office name="ТОСП Екатерининское"	value="ТОСП Екатерининское"></mfc_office>
+  <mfc_office name="ТОСП Елпачиха"	value="ТОСП Елпачиха"></mfc_office>
+  <mfc_office name="ТОСП Енапаево"	value="ТОСП Енапаево"></mfc_office>
+  <mfc_office name="ТОСП Ергач"	value="ТОСП Ергач"></mfc_office>
+  <mfc_office name="ТОСП Железнодорожный"	value="ТОСП Железнодорожный"></mfc_office>
+  <mfc_office name="ТОСП Заборье"	value="ТОСП Заборье"></mfc_office>
+  <mfc_office name="ТОСП Залесная"	value="ТОСП Залесная"></mfc_office>
+  <mfc_office name="ТОСП Звездный"	value="ТОСП Звездный"></mfc_office>
+  <mfc_office name="ТОСП Зернино"	value="ТОСП Зернино"></mfc_office>
+  <mfc_office name="ТОСП Зипуново"	value="ТОСП Зипуново"></mfc_office>
+  <mfc_office name="ТОСП Зуята"	value="ТОСП Зуята"></mfc_office>
+  <mfc_office name="ТОСП Зюкайка"	value="ТОСП Зюкайка"></mfc_office>
+  <mfc_office name="ТОСП Ивановское"	value="ТОСП Ивановское"></mfc_office>
+  <mfc_office name="ТОСП Ишимово"	value="ТОСП Ишимово"></mfc_office>
+  <mfc_office name="ТОСП Калинино"	value="ТОСП Калинино"></mfc_office>
+  <mfc_office name="ТОСП Калино"	value="ТОСП Калино"></mfc_office>
+  <mfc_office name="ТОСП Карьево"	value="ТОСП Карьево"></mfc_office>
+  <mfc_office name="ТОСП Касиб"	value="ТОСП Касиб"></mfc_office>
+  <mfc_office name="ТОСП Кебраты"	value="ТОСП Кебраты"></mfc_office>
+  <mfc_office name="ТОСП Керчевский"	value="ТОСП Керчевский"></mfc_office>
+  <mfc_office name="ТОСП Ключи"	value="ТОСП Ключи"></mfc_office>
+  <mfc_office name="ТОСП Козьмодемьянск"	value="ТОСП Козьмодемьянск"></mfc_office>
+  <mfc_office name="ТОСП Комарихинский"	value="ТОСП Комарихинский"></mfc_office>
+  <mfc_office name="ТОСП Комсомольский"	value="ТОСП Комсомольский"></mfc_office>
+  <mfc_office name="ТОСП Кондратово"	value="ТОСП Кондратово"></mfc_office>
+  <mfc_office name="ТОСП Кордон"	value="ТОСП Кордон"></mfc_office>
+  <mfc_office name="ТОСП Кормовище"	value="ТОСП Кормовище"></mfc_office>
+  <mfc_office name="ТОСП Кояново"	value="ТОСП Кояново"></mfc_office>
+  <mfc_office name="ТОСП Краснояр-2"	value="ТОСП Краснояр-2"></mfc_office>
+  <mfc_office name="ТОСП Красный Ясыл"	value="ТОСП Красный Ясыл"></mfc_office>
+  <mfc_office name="ТОСП Крылово"	value="ТОСП Крылово"></mfc_office>
+  <mfc_office name="ТОСП Кукуштан"	value="ТОСП Кукуштан"></mfc_office>
+  <mfc_office name="ТОСП Култаево"	value="ТОСП Култаево"></mfc_office>
+  <mfc_office name="ТОСП Култаево - 2"	value="ТОСП ТОСП Култаево - 2"></mfc_office>
+  <mfc_office name="ТОСП Купрос"	value="ТОСП Купрос"></mfc_office>
+  <mfc_office name="ТОСП Кусье-Александровсикй"	value="ТОСП Кусье-Александровсикй"></mfc_office>
+  <mfc_office name="ТОСП Кыласово"	value="ТОСП Кыласово"></mfc_office>
+  <mfc_office name="ТОСП Кын"	value="ТОСП Кын"></mfc_office>
+  <mfc_office name="ТОСП Ленск"	value="ТОСП Ленск"></mfc_office>
+  <mfc_office name="ТОСП Лобаново"	value="ТОСП Лобаново"></mfc_office>
+  <mfc_office name="ТОСП Майкор"	value="ТОСП Майкор"></mfc_office>
+  <mfc_office name="ТОСП Майский"	value="ТОСП Майский"></mfc_office>
+  <mfc_office name="ТОСП Марковский"	value="ТОСП Марковский"></mfc_office>
+  <mfc_office name="ТОСП Медянка"	value="ТОСП Медянка"></mfc_office>
+  <mfc_office name="ТОСП Менделеево"	value="ТОСП Менделеево"></mfc_office>
+  <mfc_office name="ТОСП Мой бизнес"	value="ТОСП Мой бизнес"></mfc_office>
+  <mfc_office name="ТОСП Моховое"	value="ТОСП Моховое"></mfc_office>
+  <mfc_office name="ТОСП Мулянка"	value="ТОСП Мулянка"></mfc_office>
+  <mfc_office name="ТОСП на ст. Чайковская"	value="ТОСП на ст. Чайковская"></mfc_office>
+  <mfc_office name="ТОСП Н-Гаревая"	value="ТОСП Н-Гаревая"></mfc_office>
+  <mfc_office name="ТОСП Неволино"	value="ТОСП Неволино"></mfc_office>
+  <mfc_office name="ТОСП Нердва"	value="ТОСП Нердва"></mfc_office>
+  <mfc_office name="ТОСП Нижнее Галино"	value="ТОСП Нижнее Галино"></mfc_office>
+  <mfc_office name="ТОСП Нижний Пальник"	value="ТОСП Нижний Пальник"></mfc_office>
+  <mfc_office name="ТОСП Никифорово"	value="ТОСП Никифорово"></mfc_office>
+  <mfc_office name="ТОСП Новоильинское"	value="ТОСП Новоильинское"></mfc_office>
+  <mfc_office name="ТОСП Новорождественское"	value="ТОСП Новорождественское"></mfc_office>
+  <mfc_office name="ТОСП Новые Ляды"	value="ТОСП Новые Ляды"></mfc_office>
+  <mfc_office name="ТОСП Ножовка"	value="ТОСП Ножовка"></mfc_office>
+  <mfc_office name="ТОСП Ныроб"	value="ТОСП Ныроб"></mfc_office>
+  <mfc_office name="ТОСП Обвинск"	value="ТОСП Обвинск"></mfc_office>
+  <mfc_office name="ТОСП Оверята"	value="ТОСП Оверята"></mfc_office>
+  <mfc_office name="ТОСП Орел"	value="ТОСП Орел"></mfc_office>
+  <mfc_office name="ТОСП Осинцево"	value="ТОСП Осинцево"></mfc_office>
+  <mfc_office name="ТОСП Острожка"	value="ТОСП Острожка"></mfc_office>
+  <mfc_office name="ТОСП Ошиб"	value="ТОСП Ошиб"></mfc_office>
+  <mfc_office name="ТОСП Ошья"	value="ТОСП Ошья"></mfc_office>
+  <mfc_office name="ТОСП Павловка"	value="ТОСП Павловка"></mfc_office>
+  <mfc_office name="ТОСП Павловский"	value="ТОСП Павловский"></mfc_office>
+  <mfc_office name="ТОСП Пашия"	value="ТОСП Пашия"></mfc_office>
+  <mfc_office name="ТОСП Пелым"	value="ТОСП Пелым"></mfc_office>
+  <mfc_office name="ТОСП Перебор"	value="ТОСП Перебор"></mfc_office>
+  <mfc_office name="ТОСП Перемское"	value="ТОСП Перемское"></mfc_office>
+  <mfc_office name="ТОСП Пермякова"	value="ТОСП Пермякова"></mfc_office>
+ <mfc_office name="ТОСП Перспектива"	value="ТОСП Перспектива"></mfc_office>
+  <mfc_office name="ТОСП Песьянка"	value="ТОСП Песьянка"></mfc_office>
+  <mfc_office name="ТОСП Печмень"	value="ТОСП Печмень"></mfc_office>
+  <mfc_office name="ТОСП Пешнигорт"	value="ТОСП Пешнигорт"></mfc_office>
+  <mfc_office name="ТОСП Платошино"	value="ТОСП Платошино"></mfc_office>
+  <mfc_office name="ТОСП Плеханово"	value="ТОСП Плеханово"></mfc_office>
+  <mfc_office name="ТОСП Поедуги"	value="ТОСП Поедуги"></mfc_office>
+  <mfc_office name="ТОСП Пожва"	value="ТОСП Пожва"></mfc_office>
+  <mfc_office name="ТОСП Покча"	value="ТОСП Покча"></mfc_office>
+  <mfc_office name="ТОСП Полозово"	value="ТОСП Полозово"></mfc_office>
+  <mfc_office name="ТОСП Посад"	value="ТОСП Посад"></mfc_office>
+  <mfc_office name="ТОСП Посер"	value="ТОСП Посер"></mfc_office>
+  <mfc_office name="ТОСП Прикамский"	value="ТОСП Прикамский"></mfc_office>
+  <mfc_office name="ТОСП Путино"	value="ТОСП Путино"></mfc_office>
+  <mfc_office name="ТОСП Родники"	value="ТОСП Родники"></mfc_office>
+  <mfc_office name="ТОСП Рождественск"	value="ТОСП Рождественск"></mfc_office>
+  <mfc_office name="ТОСП Романово"	value="ТОСП Романово"></mfc_office>
+  <mfc_office name="ТОСП Рябинино"	value="ТОСП Рябинино"></mfc_office>
+  <mfc_office name="ТОСП Рябки"	value="ТОСП Рябки"></mfc_office>
+  <mfc_office name="ТОСП Сабарка"	value="ТОСП Сабарка"></mfc_office>
+  <mfc_office name="ТОСП Сараны"	value="ТОСП Сараны"></mfc_office>
+  <mfc_office name="ТОСП Сараши"	value="ТОСП Сараши"></mfc_office>
+  <mfc_office name="ТОСП Сарс"	value="ТОСП Сарс"></mfc_office>
+  <mfc_office name="ТОСП Северный Коммунар"	value="ТОСП Северный Коммунар"></mfc_office>
+  <mfc_office name="ТОСП Северный Коспашский"	value="ТОСП Северный Коспашский"></mfc_office>
+  <mfc_office name="ТОСП Сёла"	value="ТОСП Сёла"></mfc_office>
+  <mfc_office name="ТОСП Семеново"	value="ТОСП Семеново"></mfc_office>
+  <mfc_office name="ТОСП Семсовхоз"	value="ТОСП Семсовхоз"></mfc_office>
+  <mfc_office name="ТОСП Сенькино"	value="ТОСП Сенькино"></mfc_office>
+  <mfc_office name="ТОСП Сепыч"	value="ТОСП Сепыч"></mfc_office>
+  <mfc_office name="ТОСП Серга"	value="ТОСП Серга"></mfc_office>
+  <mfc_office name="ТОСП Сергеевский"	value="ТОСП Сергеевский"></mfc_office>
+  <mfc_office name="ТОСП Серебрянка"	value="ТОСП Серебрянка"></mfc_office>
+  <mfc_office name="ТОСП Сим"	value="ТОСП Сим"></mfc_office>
+  <mfc_office name="ТОСП Скальный"	value="ТОСП Скальный"></mfc_office>
+  <mfc_office name="ТОСП Скобелевка"	value="ТОСП Скобелевка"></mfc_office>
+  <mfc_office name="ТОСП Слудка"	value="ТОСП Слудка"></mfc_office>
+  <mfc_office name="ТОСП Сосновка"	value="ТОСП Сосновка"></mfc_office>
+  <mfc_office name="ТОСП Сосново"	value="ТОСП Сосново"></mfc_office>
+  <mfc_office name="ТОСП Сретенское"	value="ТОСП Сретенское"></mfc_office>
+  <mfc_office name="ТОСП Старый Шагирт"	value="ТОСП Старый Шагирт"></mfc_office>
+  <mfc_office name="ТОСП Стряпунята"	value="ТОСП Стряпунята"></mfc_office>
+  <mfc_office name="ТОСП Суда"	value="ТОСП Суда"></mfc_office>
+  <mfc_office name="ТОСП Сульмаш"	value="ТОСП Сульмаш"></mfc_office>
+  <mfc_office name="ТОСП Сылва"	value="ТОСП Сылва"></mfc_office>
+  <mfc_office name="ТОСП Таборы"	value="ТОСП Таборы"></mfc_office>
+  <mfc_office name="ТОСП Тауш"	value="ТОСП Тауш"></mfc_office>
+  <mfc_office name="ТОСП Теплая гора"	value="ТОСП Теплая гора"></mfc_office>
+  <mfc_office name="ТОСП Тис"	value="ТОСП Тис"></mfc_office>
+  <mfc_office name="ТОСП Тохтуева"	value="ТОСП Тохтуева"></mfc_office>
+  <mfc_office name="ТОСП Троельга"	value="ТОСП Троельга"></mfc_office>
+  <mfc_office name="ТОСП Троицк"	value="ТОСП Троицк"></mfc_office>
+  <mfc_office name="ТОСП Трун"	value="ТОСП Трун"></mfc_office>
+  <mfc_office name="ТОСП Трушники"	value="ТОСП Трушники"></mfc_office>
+  <mfc_office name="ТОСП Тулумбаиха"	value="ТОСП Тулумбаиха"></mfc_office>
+  <mfc_office name="ТОСП Тюй"	value="ТОСП Тюй"></mfc_office>
+  <mfc_office name="ТОСП Тюлькино"	value="ТОСП Тюлькино"></mfc_office>
+  <mfc_office name="ТОСП Тюндюк"	value="ТОСП Тюндюк"></mfc_office>
+  <mfc_office name="ТОСП Тюш"	value="ТОСП Тюш"></mfc_office>
+  <mfc_office name="ТОСП Уральский"	value="ТОСП Уральский"></mfc_office>
+  <mfc_office name="ТОСП Усть-Качка"	value="ТОСП Усть-Качка"></mfc_office>
+  <mfc_office name="ТОСП Усть-Турка"	value="ТОСП Усть-Турка"></mfc_office>
+  <mfc_office name="ТОСП Усть-Черная"	value="ТОСП Усть-Черная"></mfc_office>
+  <mfc_office name="ТОСП Усть-Язьва"	value="ТОСП Усть-Язьва"></mfc_office>
+   <mfc_office name="ТОСП Усольский"	value="ТОСП Усольский"></mfc_office>
+  <mfc_office name="ТОСП Федорки"	value="ТОСП Федорки"></mfc_office>
+  <mfc_office name="ТОСП Федоровск"	value="ТОСП Федоровск"></mfc_office>
+  <mfc_office name="ТОСП Ферма"	value="ТОСП Ферма"></mfc_office>
+  <mfc_office name="ТОСП Фоки"	value="ТОСП Фоки"></mfc_office>
+  <mfc_office name="ТОСП Фролы"	value="ТОСП Фролы"></mfc_office>
+  <mfc_office name="ТОСП Центральный Коспашский"	value="ТОСП Центральный Коспашский"></mfc_office>
+  <mfc_office name="ТОСП Чермоз"	value="ТОСП Чермоз"></mfc_office>
+  <mfc_office name="ТОСП Черновское"	value="ТОСП Черновское"></mfc_office>
+  <mfc_office name="ТОСП Шабуры"	value="ТОСП Шабуры"></mfc_office>
+  <mfc_office name="ТОСП Шадейка"	value="ТОСП Шадейка"></mfc_office>
+  <mfc_office name="ТОСП Шахта"	value="ТОСП Шахта"></mfc_office>
+  <mfc_office name="ТОСП Шерья"	value="ТОСП Шерья"></mfc_office>
+  <mfc_office name="ТОСП Шумихинский"	value="ТОСП Шумихинский"></mfc_office>
+  <mfc_office name="ТОСП Щучье-Озеро"	value="ТОСП Щучье-Озеро"></mfc_office>
+  <mfc_office name="ТОСП Юбилейный"	value="ТОСП Юбилейный"></mfc_office>
+  <mfc_office name="ТОСП Юг"	value="ТОСП Юг"></mfc_office>
+  <mfc_office name="ТОСП Юговское"	value="ТОСП Юговское"></mfc_office>
+  <mfc_office name="ТОСП Юго-Камский"	value="ТОСП Юго-Камский"></mfc_office>
+  <mfc_office name="ТОСП Южный Коспашский"	value="ТОСП Южный Коспашский"></mfc_office>
+  <mfc_office name="ТОСП Юксеево"	value="ТОСП Юксеево"></mfc_office>
+  <mfc_office name="ТОСП Яйва"	value="ТОСП Яйва"></mfc_office>
+  <mfc_office name="ТОСП Ярино"	value="ТОСП Ярино"></mfc_office>
+  <mfc_office name="ТОСП Ярино"	value="ТОСП Ярино"></mfc_office>
+   <mfc_office name="ТОСП ТЦ ЛЕТО" value="ТОСП ТЦ ЛЕТО"></mfc_office>
+   <mfc_office name="ТОСП ТЦ Авеню" value="ТОСП ТЦ Авеню"></mfc_office>
+  
+  
+
+
+  <mfc_office name="Иное"	value="Иное"></mfc_office>
+
+</mfc_offices>
+	
+
+	

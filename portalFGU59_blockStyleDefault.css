@@ -1,0 +1,41 @@
+﻿body {
+    margin:0;
+    font-size:0.9em;
+}
+
+.article--news-block {
+    border:1px solid #000339;
+    margin:1% 0;
+    padding:1%;
+    width:30%;
+    min-width:300px;
+    height:300px;
+    overflow:hidden;
+}
+
+/*.news-block--content--text {
+    z-index:0;
+}*/
+
+/*.article--news-block.gigante {
+  width: 100%;
+  height:auto;
+}*/
+
+/*.link-nostyle {
+    text-decoration:none;
+    color:black;
+}*/
+
+/*#masonry:after {
+  content: '';
+  display: block;
+  clear: both;
+}*/
+.show {
+    visibility: hidden;
+}
+
+.gutter-sizer {
+    width:3%;
+}

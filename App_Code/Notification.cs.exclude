@@ -1,0 +1,128 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+
+namespace EGRNUtility
+{
+    public class Notification
+    {
+        
+        public string date;
+        public string points_act;
+        public string FamilyName;
+        public string FirstName;
+        public string Patronymic;
+        public string NCertificate;
+
+        private EGRN EGRNConnect;
+        public string ppoz = "http://ppoz-service-bal-01.prod.egrn:9001";
+        public void GetInfo(string num)
+        {
+            string stats, fileStoragePath = "";
+            points_act = "";
+            FamilyName = "";
+            FirstName = "";
+            Patronymic = "";
+            NCertificate = "";
+            string JsonREQ = EGRNConnect.Get(ppoz + "/manager/requests/byId?id=" + num, out stats);
+            JObject o = JObject.Parse(JsonREQ);
+          
+            JArray Jfiles = (JArray)o["otherFiles"];
+            for (int i = 0; i < Jfiles.Count; i++)
+            {
+                string nameFile = Jfiles[i]["name"].ToString();
+
+                if (nameFile.IndexOf("Протокол проверки электронной подписи заявления") >= 0)
+                {
+                    string fPath = Jfiles[i]["fileStoragePath"].ToString();
+                    string resp = EGRNConnect.Get(EGRNConnect.ppoz + "/filestorage/" + fPath + "?attachment=false", out stats);
+
+                    if (resp.IndexOf("Данные о кадастровом инженере из файла") > 0)
+                    {
+                        resp = resp.Substring(resp.IndexOf("Данные о кадастровом инженере из файла"));
+                        resp = resp.Substring(resp.IndexOf("<div"));
+                        resp = resp.Substring(0, resp.IndexOf("<div class=\"row\">"));
+                      
+                        
+                        while (resp.IndexOf("<div class=\"right\">") >= 0)
+                        {
+                            if (GetBetweenTag(resp, "<div class=\"left\">", "</div>") == "Фамилия") FamilyName = GetBetweenTag(resp, "<div class=\"right\">", "</div>");
+                            if (GetBetweenTag(resp, "<div class=\"left\">", "</div>") == "Имя") FirstName = GetBetweenTag(resp, "<div class=\"right\">", "</div>");
+                            if (GetBetweenTag(resp, "<div class=\"left\">", "</div>") == "Отчество") Patronymic = GetBetweenTag(resp, "<div class=\"right\">", "</div>");
+                            if (GetBetweenTag(resp, "<div class=\"left\">", "</div>") == "Номер квалификационного аттестата кадастрового инженера") NCertificate = GetBetweenTag(resp, "<div class=\"right\">", "</div>");
+                            resp = resp.Substring(resp.IndexOf("<div class=\"right\">") + 18);
+                        }
+
+                        
+                    }
+
+                }
+            }
+                                                             
+
+            JToken file = o["resultFiles"];
+            foreach (var pair in file)
+            {
+                if (pair["name"].ToString() == "Уведомление.xml") { fileStoragePath = pair["fileStoragePath"].ToString(); break; }
+            }
+            
+
+            if (fileStoragePath != "")
+            {
+                string pathToHtml = "http://ppoz-service-bal-01.prod.egrn:9001/filestorage/" + fileStoragePath + "?attachment=false";
+                WebClient client = new WebClient();
+                var data = client.DownloadData(pathToHtml);
+                string html = Encoding.UTF8.GetString(data);
+                XDocument doc;
+                using (var sr = new StringReader(html))
+                    doc = XDocument.Load(sr);
+                try
+                {
+                    date = doc.Element("notification").Element("common_data").Element("date").Value.ToString();
+
+                }
+                catch { date = ""; }
+                try
+                {
+
+                    points_act = doc.Element("notification").Element("common_data").Element("points_act").Value.ToString();
+                }
+                catch { points_act = ""; }
+            }
+            
+
+
+
+
+
+        }
+       
+        private string GetBetweenTag(string t, string t1, string t2)
+        {
+            string r = "";
+            try
+            {
+                r = t.Substring(t.IndexOf(t1) + t1.Length, t.IndexOf(t2, t.IndexOf(t1) + 1) - (t.IndexOf(t1) + t1.Length));
+            }
+            catch
+            {
+                r = "";
+            }
+            return r;
+        }
+        public EGRN workEGRN
+        {
+            set { EGRNConnect = value; }
+            get { return EGRNConnect; }
+        }
+    }
+}

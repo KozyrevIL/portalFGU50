@@ -1,0 +1,207 @@
+﻿using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using Microsoft.Office.Interop.Word;
+
+
+    public class WorkWordDoc
+    {
+        public string fname = "";
+        public string fnamepdf = "";
+        public Application oWord;
+        public Document oDoc;
+
+        public WorkWordDoc(string typeDoc, string pathdoc)
+        {
+            oWord = new Application();
+            fname = SaveDocTemplate(typeDoc, pathdoc);
+            fnamepdf = Path.ChangeExtension(fname, ".pdf");
+
+         //   oWord.Visible = true;
+        }
+        protected string SaveDocTemplate(string typeDOC, string pathdoc)
+        {
+            String items = Guid.NewGuid().ToString();
+            string filePath = Path.Combine(pathdoc, items + ".docx");
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand(@"SELECT docbody FROM DocList  WHERE Obj=@typeOBJ", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@typeObj", typeDOC);
+                try
+                {
+                    sqlConn.Open();
+                    byte[] fileByteArray = (byte[])sqlCmd.ExecuteScalar();
+                    FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                    BinaryWriter binWriter = new BinaryWriter(fileStream);
+                    binWriter.Write(fileByteArray);
+                    binWriter.Close();
+                    fileStream.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+                    filePath = "";
+                }
+            }
+
+            if (filePath != "")
+            {
+                oDoc = oWord.Documents.Open(filePath);
+            }
+            return filePath;
+        }
+        public void CopyTemplateParams(string oNameBookMark, int qtyCopy)
+        {
+            for (int i = qtyCopy; i > 1; i--)
+            {
+                object oSBookMark = oNameBookMark;
+                Range Curr = oDoc.Bookmarks.get_Item(ref oSBookMark).Range;
+                string ObjToInsert = oDoc.Bookmarks.get_Item(ref oSBookMark).Range.XML;
+                ObjToInsert = ObjToInsert.Replace("]", i.ToString() + "]");
+                Curr.Select();
+                int start = oWord.Selection.End;
+                oWord.Selection.Start = start;
+                oWord.Selection.End = start;
+                oWord.Selection.InsertXML(ObjToInsert);
+            }
+        }
+        public object ChangeBookmark(string oNameBookMark, string newText, bool Change = true)
+        {
+            object CopyBookMark = null;
+            bool first = true;
+            if (oNameBookMark.Trim() != "")
+            {
+                string[] ListBookMark = oNameBookMark.Split(',');
+                try
+                {
+                    foreach (string NameBookMark in ListBookMark)
+                    {
+                        switch (NameBookMark[0])
+                        {
+                            case '+':
+                                string SourseBookMark = ListBookMark[0];
+                                string TargetBookMark = NameBookMark.Substring(1, NameBookMark.Length - 1);
+                                object oSBookMark = SourseBookMark;
+                                object oTBookMark = TargetBookMark;
+                                try
+                                {
+                                    string ChangeText = oDoc.Bookmarks.get_Item(ref oSBookMark).Range.Text;
+                                    oDoc.Bookmarks.get_Item(ref oTBookMark).Range.Text = ChangeText;
+                                }
+                                catch
+                                {
+                                    oDoc.Bookmarks.get_Item(ref oTBookMark).Range.Text = "";
+                                }
+
+                                break;
+                            default:
+                                try
+                                {
+                                    object oBookMark = NameBookMark;
+                                    if (first)
+                                    {
+                                        CopyBookMark = oDoc.Bookmarks.get_Item(ref oBookMark).Range.Duplicate;
+                                    }
+                                    if (Change)
+                                    {
+                                        oDoc.Bookmarks.get_Item(ref oBookMark).Range.Text = newText;
+                                    }
+                                }
+                                catch
+                                { }
+                                break;
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            return CopyBookMark;
+        }
+        public void ChangePattern(string oPattern, string newText)
+        {
+            try
+            {
+                Find Replace = oDoc.Content.Find;
+
+                //            FindText = ТекстПоиска;     // что искать - имя_шаблона
+                bool MatchCase = false;                 // использовать регулярные выражения        
+                bool MatchWholeWord = true;          // искать слово целиком
+                bool MatchWildcards = false;            // испоьзовать регулярные выражения 
+                object MatchSoundsLike = null;   // искать созвучные 
+                object MatchAllWordForms = null; // искать все формы слова
+                bool Forward = true;                 // искать вперед
+                object Wrap = null;              // что должен вернуть Find-объект 
+                bool Format_ = false;                   // использовать форматирование
+                                                        //            string ReplaceWith = ТекстЗамены;              // текст, на который надо заменить имя_шаблона
+                                                        // кратко:        
+                WdReplace wdRepl = WdReplace.wdReplaceAll;
+                                                        //Replace.Execute(FindText,Ложь,Истина,Ложь,,,Истина,,Ложь,ReplaceWith );        
+
+                Replace.Execute(oPattern,
+                    MatchCase,
+                    MatchWholeWord,
+                    MatchWildcards,
+                    MatchSoundsLike,
+                    MatchAllWordForms,
+                    Forward,
+                    Wrap,
+                    Format_,
+                    newText,
+                    wdRepl);
+
+                foreach (Shape shp in oDoc.Shapes)
+                {
+
+                    if (shp.TextFrame.HasText != 0)
+                    {
+                        Find ReplaceShp = shp.TextFrame.TextRange.Find;
+                        ReplaceShp.Execute(oPattern,
+                            MatchCase,
+                            MatchWholeWord,
+                            MatchWildcards,
+                            MatchSoundsLike,
+                            MatchAllWordForms,
+                            Forward,
+                            Wrap,
+                            Format_,
+                            newText,
+                            wdRepl);
+                    }
+                }
+
+
+            }
+            catch
+            {
+
+            }
+
+        }
+        public void Export2PDF()
+        {
+            oDoc.ExportAsFixedFormat(fnamepdf, WdExportFormat.wdExportFormatPDF);
+        }
+        public void Clear()
+        {
+//            oDoc.Save();
+            oDoc.Close(false);
+            oWord.Quit();
+
+            try
+            {
+                File.Delete(fname);
+                //if (File.Exists(fnamepdf))
+                //{
+                //    File.Delete(fnamepdf);
+                //}
+            }
+            catch
+            { }
+        }
+    }

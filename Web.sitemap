@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+	<siteMapNode title="Портал ФБУ КП"  description="Главная страница портала ФБУ КП по Пермскому краю" >
+		<siteMapNode title="Новости ФБУ КП"  description="Новости портала ФБУ КП по Пермскому краю" >
+			<siteMapNode url="~/Default2.aspx" title="Новости ФБУ КП"  description="Новости портала ФБУ КП по Пермскому краю" />
+			<siteMapNode url="news_arhiv.aspx" title="Архив новостей" description="Архив новостей портала ФБУ КП по Пермскому краю" />
+		</siteMapNode>
+		<siteMapNode title="Планировщик" description="Планировщик" >
+			<siteMapNode url="~/organizer.aspx" title="Просмотр событий"  description="Просмотр событий" />
+		</siteMapNode>
+		<siteMapNode title="Документооборот" description="Документооборот" >
+			<siteMapNode title="Документы" description="Документы" url="~/doc.aspx"></siteMapNode>
+		</siteMapNode>
+		<siteMapNode title="БИБЛИОТЕКА ДОКУМЕНТОВ, ОТЧЕТОВ" description="Библиотека документов, отчетов">
+			<siteMapNode url="~/docs_links.aspx" title="Документы, отчеты" description="Документы, отчеты">
+			</siteMapNode>
+			<siteMapNode url="~/docs_links2.aspx" title="Нормативные правовые акты" description="Нормативные правовые акты">
+			</siteMapNode>
+			<siteMapNode url="~/docs_links3.aspx" title="Заявления, запросы на ИПГУ"
+				description="Заявления, запросы на ИПГУ"></siteMapNode>
+			<siteMapNode url="~/docs_links4.aspx" title="Приказы ФБУ КП" description="Приказы ФБУ КП">
+			</siteMapNode>
+			<siteMapNode url="~/docs_links5.aspx" title="Разъяснения ФБУ КП" description="Разъяснения ФБУ КП">
+			</siteMapNode>
+			<siteMapNode url="~/docs_links7.aspx" title="Обращения ФБУ КП" description="Обращения ФБУ КП">
+			</siteMapNode>
+			<siteMapNode url="~/docs_links6.aspx" title="Телефонный справочники" description="Телефонный справочники">
+			</siteMapNode>
+		</siteMapNode>
+		<siteMapNode title="Справочники" ToolTip="Справочники" description="Справочники">
+			<siteMapNode title="Филиалы" description="Филиалы" url="~/filial.aspx"></siteMapNode>
+			<siteMapNode title="Телефоны и email" description="Телефоны и email" url="~/spravochnik.aspx">
+			</siteMapNode>
+			<siteMapNode title="Комьютеры и орг.техника" description="Комьютеры и орг.техника">
+				<siteMapNode url="~/comp_bd.aspx" title="Компьютеры" description="Компьютеры">
+				</siteMapNode>
+				<siteMapNode url="~/printers_bd.aspx" title="Принтеры" description="Принтеры">
+				</siteMapNode>
+			</siteMapNode>
+		</siteMapNode>
+		<siteMapNode title="Мониторинг" description="Мониторинг">
+			<siteMapNode url="~/monitoring_vpn.aspx" title="VPN" description="VPN"></siteMapNode>
+			<siteMapNode url="~/analiz_gkn.aspx" title="ПВД" description="Мониторинг ПВД">
+			</siteMapNode>
+			<siteMapNode url="~/ipref_scan.aspx" title="Пропускной способности" description="Пропускной способности">
+			</siteMapNode>
+		</siteMapNode>
+		<siteMapNode title="Отчеты" description="Отчеты">
+			<siteMapNode url="~/journal_antivir.aspx" title="Журнал обновл. антивир. защиты"
+				description="Журнал обновл. антивир. защиты"></siteMapNode>
+			<siteMapNode title="Журнал учет баз" description="Журнал учет баз" url="~/journal_data_base.aspx">
+			</siteMapNode>
+			<siteMapNode url="~/journal_portal_rosreestr.aspx" title="Обновление на портале ЦА Росреестр"
+				description="Обновление на портале ЦА Росреестр"></siteMapNode>
+			<siteMapNode title="Сервис" description="Сервис" >
+				<siteMapNode url="~/journal_duty_servers.aspx" title="Журнал дежурства в серверной"
+					description="Журнал дежурстава в серверной"></siteMapNode>
+				<siteMapNode url="~/journal_serv_tech.aspx" title="Журнал обслуживания техники"
+					description="Журнал обслуживания техники"></siteMapNode>
+			</siteMapNode>
+			<siteMapNode title="Связь" description="Связь" >
+				<siteMapNode url="~/journal_phone.aspx" title="Журнал телефонии" description="Журнал проверки IP тел.">
+				</siteMapNode>
+				<siteMapNode url="~/journal_email.aspx" title="Журнал проверки эл.почты"
+					description="Журнал проверки эл.почты"></siteMapNode>
+				<siteMapNode url="~/journal_vpn.aspx" title="Журнал проверки VPN" description="Журнал проверки VPN">
+				</siteMapNode>
+			</siteMapNode>
+			<siteMapNode title="Резервное копирование" description="Резервное копирование" >
+				<siteMapNode url="~/journal_backup_fil.aspx" title="Журнал рез.копир. филиалов"
+					description="Журнал антивирусной защиты"></siteMapNode>
+				<siteMapNode url="~/journal_backup.aspx" title="Журнал резервного копирования"
+					description="Журнал резервного копирования"></siteMapNode>
+			</siteMapNode>
+			<siteMapNode title="КОМПЬЮТЕРЫ, ПРИНТЕРЫ" description="КОМПЬЮТЕРЫ,ПРИНТЕРЫ" >
+				<siteMapNode url="~/report_comp.aspx" title="Кол-во компьютеров в филиалах"
+					description="Кол-во компьютеров в филиалах"></siteMapNode>
+				<siteMapNode url="~/report_printers.aspx" title="Кол-во принтеров в филиалах"
+					description="Кол-во принтеров в филиалах"></siteMapNode>
+			</siteMapNode>
+			<siteMapNode title="Контрольная форма по приему" description="Контрольная форма по приему">
+				<siteMapNode url="~/controlFormPriem.aspx" title="Просмотр" description="Просмотр">
+				</siteMapNode>
+				<siteMapNode url="~/Admin/usersControlForm.aspx" title="Добавление" description="Контрольная форма по приему">
+				</siteMapNode>
+			</siteMapNode>
+		</siteMapNode>
+		<siteMapNode title="Тесты" description="Тесты">
+			<siteMapNode url="~/tests/tests.aspx" title="Пройти тестирование" description="Пройти тестирование">
+			</siteMapNode>
+		</siteMapNode>
+		<siteMapNode url="~/forum/add_post.aspx" title="Вопрос-ответ (Форум)" description="Вопрос-ответ (Форум)">
+		</siteMapNode>
+		<siteMapNode title="Информационный обмен" description="Информационный обмен">
+			<siteMapNode url="~/informobmen.aspx" title="Просмотр" description="Просмотр">
+			</siteMapNode>
+			<siteMapNode url="~/Admin/admin_registr.aspx" title="Добавление" description="Добавление">
+			</siteMapNode>
+		</siteMapNode>
+		<siteMapNode title="Статус заявления онлайн" description="Статус заявления онлайн">
+			<siteMapNode url="~/status_request.aspx" title="Просмотр" description="Просмотр">
+			</siteMapNode>
+		</siteMapNode>
+
+	</siteMapNode>
+</siteMap>

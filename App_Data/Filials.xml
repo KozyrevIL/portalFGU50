@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<filials>
+  <filial name="Выбор района" value="-1"></filial>
+
+  <filial name="Дзержинский (ЦА)" value="Дзержинский (ЦА)"></filial>
+  <filial name="Седова (ЦА)" value="Седова (ЦА)"></filial>
+  <filial name="Индустриальный" value="Индустриальный"></filial>
+  <filial name="Кировский, Дзержинский (правый)" value="Кировский, Дзержинский (правый)"></filial>
+  <filial name="Ленинский, Дзержинский (левый)" value="Ленинский, Дзержинский (левый)"></filial>
+  <filial name="Мотовилихинский" value="Мотовилихинский"></filial>
+  <filial name="Орджоникидзевский" value="Орджоникидзевский"></filial>
+  <filial name="Свердловский" value="Свердловский"></filial>
+  <filial name="Пермский" value="Пермский"></filial>
+  <filial name="Александровский" value="Александровский"></filial>
+  <filial name="Бардымский" value="Бардымский"></filial>
+   <filial name="Березниковский" value="Березниковский"></filial>
+<filial name="Березовский" value="Березовский"></filial>
+<filial name="Большесосновский" value="Большесосновский"></filial>
+  <filial name="Верещагинский" value="Верещагинский"></filial>
+  <filial name="Гайнский" value="Гайнский"></filial>
+  <filial name="Горнозаводский" value="Горнозаводский"></filial>
+  <filial name="Гремячинский" value="Гремячинский"></filial>
+  <filial name="Губахинский" value="Губахинский"></filial>
+  <filial name="Добрянский" value="Добрянский"></filial>
+  <filial name="Еловский" value="Еловский"></filial>
+  <filial name="Ильинский" value="Ильинский"></filial>
+  <filial name="Косинский" value="Косинский"></filial>
+  <filial name="Карагайский" value="Карагайский"></filial>
+  <filial name="Кишертский" value="Кишертский"></filial>
+  <filial name="Кизел" value="Кизел"></filial>
+  <filial name="Кочевский" value="Кочевский"></filial> 
+  <filial name="Краснокамский" value="Краснокамский"></filial> 
+<filial name="Кудымкарский" value="Кудымкарский"></filial>
+
+<filial name="Куединский" value="Куединский"></filial>
+<filial name="Кунгурский" value="Кунгурский"></filial>
+ 
+<filial name="Лысьвенский" value="Лысьвенский"></filial>
+ <filial name="Нытвенский" value="Нытвенский"></filial> 
+  <filial name="Октябрьский" value="Октябрьский"></filial>
+<filial name="Ординский" value="Ординский"></filial>
+<filial name="Осинский" value="Осинский"></filial>
+<filial name="Оханский" value="Оханский"></filial>
+<filial name="Очерский" value="Очерский"></filial>
+  <filial name="Сивинский" value="Сивинский"></filial>
+  <filial name="Соликамский" value="Соликамский"></filial>
+  <filial name="Суксунский" value="Суксунский"></filial>
+  <filial name="Уинский" value="Уинский"></filial>
+  <filial name="Усольский" value="Усольский"></filial>
+<filial name="Чайковский" value="Чайковский"></filial>
+<filial name="Частинский" value="Частинский"></filial>
+<filial name="Чердынский" value="Чердынский"></filial>
+<filial name="Чернушинский" value="Чернушинский"></filial>
+<filial name="Чусовской" value="Чусовской"></filial>
+<filial name="Юрлинский" value="Юрлинский"></filial>
+<filial name="Юсьвинский" value="Юсьвинский"></filial>
+</filials>
+	
+
+	

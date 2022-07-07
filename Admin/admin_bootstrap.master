@@ -1,0 +1,63 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin_bootstrap.master.cs" Inherits="Admin_admin_bootstrap" %>
+
+
+<%@ Register Src="~/UC/admin_banner.ascx" TagPrefix="uc1" TagName="admin_banner" %>
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head runat="server">
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="./../css/bootstrap-fgu59.css" rel="stylesheet" />
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />
+  <%--  <link href="../fonts/glyphicons-halflings-regular.woff" rel="stylesheet" />--%>
+
+
+    
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+            
+       
+
+
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="../jQuery/jquery-3.0.0.min.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../js/bootstrap.min.js"></script>
+
+        <div class="header">
+
+            <uc1:admin_banner ID="admin_banner1" runat="server" />
+        </div>
+        <div class="container-fluid">
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+
+        </div>
+
+
+    </form>
+
+
+    <script type="text/javascript">
+     $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin.master.cs" Inherits="Admin_admin" %>
+
+<%@ Register src="../UC/admin_banner.ascx" tagname="admin_banner" tagprefix="uc1" %>
+<%@ Register src="../UC/menu_admin_vert.ascx" tagname="menu_admin_vert" tagprefix="uc2" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Безымянная страница</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../portalFGU59.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+      
+    
+            <table cellpadding="0" cellspacing="0" border="0" width=100%>
+        <tr>
+            <td height="99">
+                <uc1:admin_banner ID="admin_banner1" runat="server" />
+            </td>
+        </tr>
+        
+        <tr>
+            <td height=594px align=left valign=top bgcolor=white>
+            <table cellpadding=0 cellspacing=0 border=1 width=100%>
+                <tr>
+                    <td width=20% align=left valign=top>
+                        <uc2:menu_admin_vert ID="menu_admin_vert1" runat="server" />
+                    </td>
+                    <td width=80% valign=top align=left>
+                    <div class="posForm">
+                        <table cellpadding=0 cellspacing=0 width=597 class="formText">
+                            <tr>
+                                <td style="height: 15px"></td><td style="height: 15px; width: 500px;"></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="2" height="36" valign="top">
+                                    &nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td height=36  colspan=2 align=left valign=top>
+                                    &nbsp;</td>
+                            </tr>
+                        </table>
+                      </div>
+                    </td>
+                </tr>
+            </table>
+                &nbsp;&nbsp;
+            </td>
+        </tr>
+     
+        <tr><td height=28px bgcolor="#85A4C3"></td></tr>
+        <tr><td height=6px background="../images/background2.gif"></td></tr>
+        <tr><td height=32px bgcolor="#1E5A92">
+            <asp:SqlDataSource ID="SqlDataSourceCounts" runat="server" ConnectionString="<%$ ConnectionStrings:portalFGU59ConnectionString %>"
+                DeleteCommand="CountsDelete" DeleteCommandType="StoredProcedure" SelectCommand="CountsSelectAll"
+                SelectCommandType="StoredProcedure" UpdateCommand="CountsUpdate" UpdateCommandType="StoredProcedure">
+                <DeleteParameters>
+                    <asp:Parameter Name="numerators" Type="String" />
+                    <asp:Parameter Name="id_object_str" Type="String" />
+                </DeleteParameters>
+                <UpdateParameters>
+                    <asp:Parameter Name="counts" Type="Int32" />
+                    <asp:Parameter Name="numerators" Type="String" />
+                    <asp:Parameter Name="id_object_str" Type="String" />
+                </UpdateParameters>
+            </asp:SqlDataSource>
+        </td></tr>
+    </table>
+    
+ 
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

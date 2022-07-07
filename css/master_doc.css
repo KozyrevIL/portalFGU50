@@ -1,0 +1,37 @@
+﻿body {
+}
+.menu_banner
+{
+    background-color:cornflowerblue;
+    color: white !important;
+}
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #ffffff;
+}
+.base_well {
+    padding:15px 15px 15px 44px;
+}
+.textbox_big
+{
+    width:500px;
+}
+.textbox_medium
+{
+    width:300px;
+}
+.textbox_small
+{
+    width:100px;
+}
+.checkbox, .radio {
+    
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.checkbox label, .radio label {
+    min-height: 0px;
+    padding-left: 11px;
+}

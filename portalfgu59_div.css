@@ -1,0 +1,80 @@
+﻿body 
+{
+    
+    font-family:Verdana;
+    font-size:11px;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+
+/* Страница  
+----------------------------------------------------------*/
+.page
+{
+    width: 100%;
+    background-color: #F5F5F5;
+    
+    
+    text-align:center;
+    
+}
+/* Баннер
+----------------------------------------------------------*/
+.banner
+{
+    
+    margin: 0px;
+    padding: 0px;
+    background: #1E5A92;
+    width: 100%;
+    height:38px;
+    text-align:left;
+}
+.banner_boottom1
+{
+    
+    background-color:#9999CC;
+    width: 100%;
+    height:28px;
+    text-align:left;
+    
+    
+}
+.banner_boottom2
+{
+    
+    background-color:#ffffff;
+    width: 100%;
+    height:28px;
+    text-align:left;
+    border: 1px solid #cccccc
+    
+    
+}
+.banner_pos
+{
+    
+    text-align:left;
+    padding-left:50px;
+     padding-bottom:50px;
+    display:table-cell;
+   
+}
+.banner_pos1
+{
+    
+    text-align:left;
+    padding-left:50px;
+     
+    display:table-cell;
+}
+.logo_text
+{
+     font-family:Verdana;
+	font-size:14px;
+	font-weight:bold;
+	color:#ffffff;
+}
+

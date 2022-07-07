@@ -1,0 +1,51 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin_new_as_leftcol2.master.cs" Inherits="Admin_admin_new_as_leftcol2" %>
+
+<%@ Register src="../UC/admin_banner.ascx" tagname="admin_banner" tagprefix="uc1" %>
+
+<%@ Register src="../UC/menu_admin_vert.ascx" tagname="menu_admin_vert" tagprefix="uc2" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        
+            <title></title>
+            <link href="../portalFGU59.css" rel="stylesheet" type="text/css" />
+           
+        
+    </asp:ContentPlaceHolder>
+
+    
+
+</head>
+<body leftmargin="0" topmargin="0">
+    <form id="form1" runat="server">
+        <div>
+
+            <div id="page">
+                <uc1:admin_banner ID="admin_banner1" runat="server" />
+
+                <div id="leftCol" style="background-color: #EDEDED; border-right: 1px solid #B1B1B1; padding: 5px 10px 5px 10px; float: left; width: 300px">
+                    <uc2:menu_admin_vert ID="menu_admin_vert1" runat="server" />
+                </div>
+
+                <div id="centerCol" style="margin: 10px; padding: 0px 0px 10px 0px; float: left;">
+                    <div class="formTextTest">
+                        <div id="formInputData" style="border: 1px solid #FED17E; background-color: #FEF6E1; padding: 10px 10px 10px 10px;">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolderCentar" runat="server"></asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+                    <div id="formOutPutData" style="margin-top: 10px;">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolderOutput" runat="server"></asp:ContentPlaceHolder>
+                    </div>
+                </div>
+
+                <div style="clear: both"></div>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,240 @@
+﻿<%--
+Шаблон обложки по умолчанию. Следующие виды обложек выступают исключительно в качестве примеров.
+
+1. Именованная обложка элементов управления. SkinId должен быть уникальным, поскольку дублирующие значения SkinId для элементов управления одного типа в одной теме не допускаются.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+ <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Обложка по умолчанию. SkinId не определен. В одной теме допускается использование только одной обложки по умолчанию для элементов управления одного типа.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+<asp:GridView  runat="server" SkinId="small"
+  
+                CellPadding="1" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView4"/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView4" />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView4"  />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView4"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView4"  />
+                <EditRowStyle BackColor="#999999" Font-Names="Tahoma" Font-Size=9px ForeColor=Black  />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView4" />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server" SkinId="normal"
+  
+                CellPadding="3" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3"/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3"  />
+                <SelectedRowStyle BackColor="#E2DED6" ForeColor="#333333" CssClass="textGridView3"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView3"  />
+                <EditRowStyle BackColor="#999999" Font-Names="Tahoma" Font-Size=9px ForeColor=Black  />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server" SkinId="normal_bold"
+  
+                CellPadding="3" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" CssClass="textGridView3"/>
+                <RowStyle BackColor="white" Font-Bold="True" Font-Size=12px ForeColor="#333333" CssClass="textGridView3" />
+                                        
+                <PagerStyle BackColor="#284775" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3"  />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Size=12px Font-Bold="True" ForeColor="#333333" CssClass="textGridView3"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView3"  />
+                <EditRowStyle BackColor="#999999" Font-Names="Tahoma" Font-Size=12px ForeColor=Black  />
+                <AlternatingRowStyle BackColor="White" ForeColor="#333333" CssClass="textGridView3" />
+             
+  </asp:GridView>
+   <asp:GridView  runat="server" SkinId="middle"
+  
+                CellPadding="3" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3"/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3"  />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView3"  />
+                <EditRowStyle CssClass="textGridView3" />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" />
+             
+  </asp:GridView>
+    <asp:GridView  runat="server" SkinId="middle_no_alter"
+  
+                CellPadding="3" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3"/>
+                <RowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3"  />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView3"  />
+                <EditRowStyle CssClass="textGridView3" />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server"  SkinID="Grid_small"
+  
+                CellPadding="2" 
+                ForeColor="#333333"  
+                AllowPaging="True" 
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                PageSize="20">
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3" Font-Size=10px/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" Font-Size=12px />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3" Font-Size=10px />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left" CssClass="textGridView3" Font-Size=10px />
+                <EditRowStyle BackColor="#999999" CssClass="textGridView3" Font-Size=10px />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" Font-Size=10px />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server"   SkinID="Grid_small20"
+  
+                CellPadding="2" 
+                ForeColor="#333333"  
+                AllowPaging="True" 
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                PageSize="20">
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3" Font-Size=10px/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3" Font-Size=10px />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left" CssClass="textGridView3" Font-Size=10px />
+                <EditRowStyle BackColor="#999999" CssClass="textGridView3" Font-Size=10px />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" Font-Size=10px />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server"   SkinID="Grid_small50"
+  
+                CellPadding="2" 
+                ForeColor="#333333"  
+                AllowPaging="True" 
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                PageSize="50">
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3" Font-Size=10px/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3" Font-Size=10px />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left" CssClass="textGridView3" Font-Size=10px />
+                <EditRowStyle BackColor="#999999" CssClass="textGridView3" Font-Size=10px />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" Font-Size=10px />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server"   SkinID="Grid_small50_NumTopBottom"
+  
+                CellPadding="2" 
+                ForeColor="#333333"  
+                AllowPaging="True" 
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                PageSize="50">
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3" Font-Size=10px/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3" Font-Size=10px />
+                <pagersettings position="TopAndBottom"/>
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left" CssClass="textGridView3" Font-Size=10px />
+                <EditRowStyle BackColor="#999999" CssClass="textGridView3" Font-Size=10px />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" Font-Size=10px />
+             
+  </asp:GridView>
+  <asp:GridView  runat="server"   SkinID="Grid_small20_nopage"
+  
+                CellPadding="2" 
+                ForeColor="#333333"  
+                AllowPaging="False" 
+                AllowSorting="True" 
+                AutoGenerateColumns="False">
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3" Font-Size=10px/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3" Font-Size=10px />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left" CssClass="textGridView3" Font-Size=10px />
+                <EditRowStyle BackColor="#999999" CssClass="textGridView3" Font-Size=10px />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" Font-Size=10px />
+             
+  </asp:GridView>
+    <asp:GridView  runat="server"   SkinID="Grid_small_no_pager"
+  
+                CellPadding="2" 
+                ForeColor="#333333"  
+                AllowPaging="False" 
+                AllowSorting="True" 
+                AutoGenerateColumns="False">
+
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView3" Font-Size=10px/>
+                <RowStyle BackColor="#DFEDFD" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView3" Font-Size=10px />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView3" Font-Size=10px />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left" CssClass="textGridView3" Font-Size=10px />
+                <EditRowStyle BackColor="#999999" CssClass="textGridView3" Font-Size=10px />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView3" Font-Size=10px />
+             
+  </asp:GridView>
+ <asp:GridView  runat="server" SkinId="big"
+  
+                CellPadding="5" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView14"/>
+                <RowStyle BackColor="White" ForeColor="#333333" CssClass="textGridView14" />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView14"  />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView14"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView14"  />
+                <EditRowStyle CssClass="textGridView14" BackColor="#c4fac9" />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView14" />
+             
+  </asp:GridView>
+ <asp:GridView  runat="server" SkinId="big2"
+  
+                CellPadding="5" 
+                ForeColor="#333333"  
+                AllowSorting="True" 
+                AutoGenerateColumns="False" 
+                >
+                <FooterStyle BackColor="#5D7B9D"  Font-Bold="True" ForeColor="White" CssClass="textGridView14"/>
+                <RowStyle BackColor="White" ForeColor="#333333" CssClass="textGridView14" />
+                                        
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" CssClass="textGridView14"  />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" CssClass="textGridView14"  />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="left"  CssClass="textGridView14"  />
+                <EditRowStyle CssClass="textGridView14" BackColor="#c4fac9" ForeColor="#0000ee"  BorderColor="#0000ee" BorderWidth="1px"     />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" CssClass="textGridView14" />
+             
+  </asp:GridView>

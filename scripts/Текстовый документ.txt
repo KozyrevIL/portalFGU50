@@ -1,0 +1,25 @@
+ALTER procedure [dbo].[ComputerSelect]
+
+as
+
+Select 
+	
+	c.id_computer,
+	c.id_processor,
+	c.cooler,
+	c.id_motherboard,
+	c.id_video,
+	c.id_osu,
+	c.id_hdd,
+	c.DVD,
+	c.id_box,
+	c.keyboard,
+	c.mouse,
+	c.other_device,
+	c.comments_computer,
+	v_osu,
+	v_hdd,
+	p.name_core
+
+from Computer c, Osu o, Hdd h, Processor p
+where c.id_osu=o.id_osu and c.id_hdd=h.id_hdd and c.id_processor=p.id_processor

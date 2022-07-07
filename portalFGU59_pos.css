@@ -1,0 +1,70 @@
+﻿
+body, html {
+margin:0px; 
+padding:0px;
+text-align:center; 
+}
+#container{
+margin:0 auto;  
+text-align:left;  
+min-width:550px;  
+width:expression(   
+(document.compatMode && document.compatMode == 'CSS1Compat')
+?
+(
+document.documentElement.clientWidth < 550
+?
+"550px"
+:
+"auto"
+)
+:
+(
+document.body.clientWidth < 550
+?
+"550px"
+:
+"auto"
+)
+);
+}
+
+#menu{
+width:100%;
+ border-color:Black;
+  border-width:1px;
+   border-style:solid;
+    height:30px;
+     background-color:#CCCCCC;
+}
+
+
+#left{
+
+width:150px;  
+float:left; 
+}
+
+
+#content{
+
+margin:10px; 
+
+}
+
+
+
+#clear{
+height:0;
+font-size:1px;
+line-height:0px;
+clear:both;
+}
+
+#footer{
+
+}
+#footer p{
+margin:0px;  
+padding: 10px 0; 
+}

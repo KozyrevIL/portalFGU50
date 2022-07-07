@@ -1,0 +1,183 @@
+<style> .textmode { mso-number-format:\@; } </style><div>
+	<table cellspacing="0" cellpadding="3" rules="all" border="1" id="GridView1" style="color:#333333;border-collapse:collapse;">
+		<tr class="textGridView3" align="left" style="color:White;background-color:#5D7B9D;font-weight:bold;background-color:#FFFFFF;">
+			<th scope="col" style="background-color:green;">&nbsp;</th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$reception_window&#39;)" style="color:White;">Окно</a></th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$date_begin&#39;)" style="color:White;">Дата</a></th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$FIO_customer&#39;)" style="color:White;">ФИО заявителя</a></th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$region&#39;)" style="color:White;">Район</a></th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$reg_move&#39;)" style="color:White;">Рег. Действие</a></th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$count_oper&#39;)" style="color:White;">Количество опер.</a></th><th scope="col" style="background-color:green;"><a href="javascript:__doPostBack(&#39;GridView1&#39;,&#39;Sort$number_phone&#39;)" style="color:White;">Номер тел.</a></th>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_0" href="javascript:__doPostBack(&#39;GridView1$ctl02$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_LabelItemDate_begin_0">06.11.2013 9:00:00</span>
+                                </td><td style="width:200px;">
+                                    <span id="GridView1_LabelItemFIO_customer_0">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;">Губаха</td><td style="width:50px;">регистрация права</td><td style="width:50px;">12</td><td style="width:50px;">
+                                    <span id="GridView1_Label1_0">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;background-color:#C2D69B;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_1" href="javascript:__doPostBack(&#39;GridView1$ctl03$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemDate_begin_1">06.11.2013 9:30:00</span>
+                                </td><td style="width:200px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemFIO_customer_1">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;background-color:#C2D69B;">Губаха</td><td style="width:50px;background-color:#C2D69B;">регистрация права</td><td style="width:50px;background-color:#C2D69B;">12</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_Label1_1">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_2" href="javascript:__doPostBack(&#39;GridView1$ctl04$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_LabelItemDate_begin_2">06.11.2013 10:00:00</span>
+                                </td><td style="width:200px;">
+                                    <span id="GridView1_LabelItemFIO_customer_2">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;">Губаха</td><td style="width:50px;">регистрация права</td><td style="width:50px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_Label1_2">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;background-color:#C2D69B;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_3" href="javascript:__doPostBack(&#39;GridView1$ctl05$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemDate_begin_3">06.11.2013 10:30:00</span>
+                                </td><td style="width:200px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemFIO_customer_3">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;background-color:#C2D69B;">Губаха</td><td style="width:50px;background-color:#C2D69B;">регистрация права</td><td style="width:50px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_Label1_3">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_4" href="javascript:__doPostBack(&#39;GridView1$ctl06$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_LabelItemDate_begin_4">06.11.2013 11:00:00</span>
+                                </td><td style="width:200px;">
+                                    <span id="GridView1_LabelItemFIO_customer_4">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;">Губаха</td><td style="width:50px;">регистрация права</td><td style="width:50px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_Label1_4">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;background-color:#C2D69B;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_5" href="javascript:__doPostBack(&#39;GridView1$ctl07$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemDate_begin_5">06.11.2013 11:30:00</span>
+                                </td><td style="width:200px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemFIO_customer_5">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;background-color:#C2D69B;">Губаха</td><td style="width:50px;background-color:#C2D69B;">регистрация права</td><td style="width:50px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_Label1_5">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_6" href="javascript:__doPostBack(&#39;GridView1$ctl08$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_LabelItemDate_begin_6">06.11.2013 12:00:00</span>
+                                </td><td style="width:200px;">
+                                    <span id="GridView1_LabelItemFIO_customer_6">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;">Губаха</td><td style="width:50px;">регистрация права</td><td style="width:50px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_Label1_6">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;background-color:#C2D69B;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_7" href="javascript:__doPostBack(&#39;GridView1$ctl09$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemDate_begin_7">06.11.2013 13:00:00</span>
+                                </td><td style="width:200px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemFIO_customer_7">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;background-color:#C2D69B;">Губаха</td><td style="width:50px;background-color:#C2D69B;">регистрация права</td><td style="width:50px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_Label1_7">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_8" href="javascript:__doPostBack(&#39;GridView1$ctl10$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_LabelItemDate_begin_8">06.11.2013 13:30:00</span>
+                                </td><td style="width:200px;">
+                                    <span id="GridView1_LabelItemFIO_customer_8">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;">Губаха</td><td style="width:50px;">регистрация права</td><td style="width:50px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_Label1_8">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;background-color:#C2D69B;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_9" href="javascript:__doPostBack(&#39;GridView1$ctl11$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemDate_begin_9">06.11.2013 14:00:00</span>
+                                </td><td style="width:200px;background-color:#C2D69B;">
+                                    <span id="GridView1_LabelItemFIO_customer_9">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;background-color:#C2D69B;">Губаха</td><td style="width:50px;background-color:#C2D69B;">регистрация права</td><td style="width:50px;background-color:#C2D69B;">2</td><td style="width:50px;background-color:#C2D69B;">
+                                    <span id="GridView1_Label1_9">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr><tr class="textGridView3" class="textmode" style="color:#284775;background-color:White;">
+			<td style="width:50px;">
+                                <div style="width:55px">
+                                    
+                                    <a onclick="return confirm(&#39;Удалить запись?&#39;);" id="GridView1_LinkButtonItemDelete_10" href="javascript:__doPostBack(&#39;GridView1$ctl12$LinkButtonItemDelete&#39;,&#39;&#39;)">Удалить</a>
+                                </div>
+                                                 
+                            </td><td style="width:30px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_LabelItemDate_begin_10">06.11.2013 14:30:00</span>
+                                </td><td style="width:200px;">
+                                    <span id="GridView1_LabelItemFIO_customer_10">Порошин Роман Валерьевич</span>
+                                </td><td style="width:100px;">Губаха</td><td style="width:50px;">регистрация права</td><td style="width:50px;">2</td><td style="width:50px;">
+                                    <span id="GridView1_Label1_10">89638819122</span>
+                                     
+                                     
+                                </td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,541 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+
+
+
+namespace EGRNUtility
+{
+    public class EGRNGetInfo
+    {
+        public struct TBody
+        {
+            public string NumReg;
+            public string NameReg;
+            public string DocReg;
+            public string DateReg;
+            public string DateEnd;
+            public string Status;
+        }
+        public struct TCost
+        {
+            public double? Cost;
+            public double? UPKS;
+            public DateTime? DateUtv;
+            public DateTime? DateOpred;
+            public DateTime? DateVnes;
+            public DateTime? DateZayav;
+            public DateTime? DatePrim;
+        }
+
+        public struct TContour
+        {
+            public string number_pp;
+            public double? area;
+            public double? inaccuracy;
+            public string area_type;
+        }
+
+
+        private EGRN EGRNConnect;
+        public double Area;
+        public double Area_ZU;
+        public string Area_ZU_type;
+        public List<string> Flats;
+        public List<string> ZUs;
+        public List<string> IncludeZUS;
+        public List<string> NextObjects;
+        public List<string> PrevObjects;
+
+        public string CancelDate;
+        public string floors;
+        public string ufloors;
+        public string purpose;
+        public string name;
+        public string readable_adres;
+        public string status;
+        public bool isRight;
+        public List<TBody> Rights;
+        public string category;
+        public string land_use;
+        public List<TCost> Costs;
+        public TCost CurrCost;
+        public string JsonData;
+        public List<TContour> Contours;
+
+
+        public EGRNGetInfo()
+        {
+            Rights = new List<TBody>();
+            Costs = new List<TCost>();
+            CurrCost = new TCost();
+            Contours = new List<TContour>();
+            CurrCost.Cost = -1;
+            CurrCost.UPKS = -1;
+            name = "";
+        }
+
+        private void EmptyProps()
+        {
+            Costs = new List<TCost>();
+            CurrCost = new TCost();
+            Contours = new List<TContour>();
+            Area = 0; ;
+            Area_ZU = 0;
+            Area_ZU_type = "";
+            Flats = new List<string>();
+            ZUs = new List<string>();
+            IncludeZUS = new List<string>();
+            NextObjects = new List<string>();
+            PrevObjects = new List<string>();
+
+            CancelDate = "";
+            floors = "";
+            ufloors = "";
+            purpose = "";
+            name = "";
+            readable_adres = "";
+            status = "";
+            isRight = false;
+            category = "";
+            land_use = "";
+
+        }
+        public EGRN workEGRN
+        {
+            set { EGRNConnect = value; }
+            get { return EGRNConnect; }
+        }
+        private string GetBetweenTag(string t, string t1, string t2)
+        {
+            string r = "";
+            try
+            {
+                r = t.Substring(t.IndexOf(t1) + t1.Length, t.IndexOf(t2) - (t.IndexOf(t1) + t1.Length));
+            }
+            catch
+            {
+                r = "";
+            }
+            return r;
+        }
+
+        public void GetRight(string CadNum)
+        {
+            string webreq = EGRNConnect.pkurp + "/search/tabs/number?utf8=?&search[section]=" + CadNum + "&search[only_today]=0&search[only_today]=1&commit=Запросить";
+            string stats;
+            string htmlall = EGRNConnect.Get(webreq, out stats);
+
+            htmlall = GetBetweenTag(htmlall, "<tbody", "</tbody>");
+            while (htmlall.IndexOf("<tr") >= 0)
+            {
+                string line = GetBetweenTag(htmlall, "<tr", "</tr>");
+                htmlall = htmlall.Substring(htmlall.IndexOf("</tr>") + 5);
+                if (line.IndexOf("colspan") == -1)
+                {
+                    TBody RT = new TBody();
+
+                    RT.NumReg = GetBetweenTag(line, "<td>", "</td>");
+                    RT.NumReg = GetBetweenTag(RT.NumReg, ">", "</a>");
+                    line = line.Substring(line.IndexOf("</td>") + 5);
+
+                    RT.NameReg = GetBetweenTag(line, "<td>", "</td>").Trim();
+                    line = line.Substring(line.IndexOf("</td>") + 5);
+
+                    RT.DocReg = GetBetweenTag(line, "<td>", "</td>").Trim();
+                    line = line.Substring(line.IndexOf("</td>") + 5);
+
+                    RT.DateReg = GetBetweenTag(line, "<td>", "</td>").Trim();
+                    RT.DateReg = GetBetweenTag(RT.DateReg, ">", "</span>");
+                    line = line.Substring(line.IndexOf("</td>") + 5);
+
+                    RT.DateEnd = GetBetweenTag(line, "<td>", "</td>").Trim();
+                    RT.DateEnd = GetBetweenTag(RT.DateEnd, ">", "</span>");
+                    line = line.Substring(line.IndexOf("</td>") + 5);
+
+                    RT.Status = GetBetweenTag(line, "<td>", "</td>").Trim();
+                    RT.Status = GetBetweenTag(RT.Status, ">", "</span>");
+
+                    Rights.Add(RT);
+                    if ((RT.NameReg == "Запись о вещных правах") && (RT.Status == "Актуальная"))
+                    {
+                        isRight = true;
+                    }
+                }
+            }
+
+        }
+
+        public void GetInfo(string CadNum)
+        {
+            EmptyProps();
+
+            string webreq = EGRNConnect.pkurp + "/search/items/record?number=" + CadNum.Replace(":", "%3A");
+            string stats;
+            string htmlall = WebUtility.HtmlDecode(EGRNConnect.Get(webreq, out stats));
+
+            int p1 = htmlall.IndexOf("data-data=");
+            p1 = p1 + 11;
+            htmlall = htmlall.Substring(p1);
+            p1 = htmlall.IndexOf("}'");
+            if (p1 < 0)
+            {
+                p1 = htmlall.IndexOf("}\"");
+            }
+
+            htmlall = htmlall.Substring(0, p1 + 1);
+            JsonData = htmlall;
+
+            JObject o = new JObject();
+            try
+            {
+                o = JObject.Parse(htmlall);
+            }
+            catch
+            {
+                return;
+            }
+
+            try
+            {
+                JToken jt = o.SelectToken(".params.area");
+                Area = jt.Value<double>();
+            }
+            catch
+            {
+                Area = -1;
+            }
+            try
+            {
+                JToken jt = o.SelectToken(".params.area.value");
+                Area_ZU = jt.Value<double>();
+            }
+            catch
+            {
+                Area_ZU = -1;
+            }
+            try
+            {
+                Area_ZU_type = o.SelectToken(".params.area.type.value").ToString();
+            }
+            catch
+            {
+                Area_ZU_type = "";
+            }
+
+
+            try
+            {
+                floors = o.SelectToken(".params.floors").ToString();
+            }
+            catch { }
+            try
+            {
+                ufloors = o.SelectToken(".params.underground_floors").ToString();
+            }
+            catch { }
+            try
+            {
+                purpose = o.SelectToken(".params.purpose.value").ToString();
+            }
+            catch { }
+            try
+            {
+                name = o.SelectToken(".params.name").ToString();
+            }
+            catch { }
+            try
+            {
+                readable_adres = o.SelectToken(".address_location.address.readable_address").ToString();
+            }
+            catch { }
+
+            try
+            {
+                land_use = o.SelectToken(".params.permitted_use.permitted_use_established.by_document").ToString();
+            }
+            catch { }
+            try
+            {
+                category = o.SelectToken(".params.category.type.value").ToString();
+            }
+            catch { }
+
+
+            try
+            {
+                JToken jrooms = o.SelectToken(".cad_links.room_cad_numbers");
+
+                Flats = new List<string>();
+
+                foreach (JToken jtroom in jrooms.Children())
+                {
+                    Flats.Add(jtroom.Value<string>("cad_number"));
+                }
+            }
+            catch { }
+            try
+            {
+                JToken jrooms = o.SelectToken(".cad_links.land_cad_numbers");
+
+                ZUs = new List<string>();
+
+                foreach (JToken jtroom in jrooms.Children())
+                {
+                    ZUs.Add(jtroom.Value<string>("cad_number"));
+                }
+            }
+            catch { }
+
+            try
+            {
+                JToken jrooms = o.SelectToken(".cad_links.common_land.included_cad_numbers");
+
+                IncludeZUS = new List<string>();
+
+                foreach (JToken jtroom in jrooms.Children())
+                {
+                    IncludeZUS.Add(jtroom.Value<string>("cad_number"));
+                }
+            }
+            catch { }
+
+            try
+            {
+                JToken jrooms = o.SelectToken(".cad_links.descendant_cad_numbers");
+
+                NextObjects = new List<string>();
+
+                foreach (JToken jtroom in jrooms.Children())
+                {
+                    NextObjects.Add(jtroom.Value<string>("cad_number"));
+                }
+            }
+            catch { }
+
+            try
+            {
+                JToken jrooms = o.SelectToken(".cad_links.ascendant_cad_numbers");
+
+                PrevObjects = new List<string>();
+
+                foreach (JToken jtroom in jrooms.Children())
+                {
+                    PrevObjects.Add(jtroom.Value<string>("cad_number"));
+                }
+            }
+            catch { }
+
+            try
+            {
+                JToken jcosts = o.SelectToken(".costs");
+
+                Costs = new List<TCost>();
+                TCost? CostPrim = null;
+                TCost? CostVnes = null;
+                DateTime? DPrim = null;
+                DateTime? DVnes = null;
+
+                foreach (JToken jcost in jcosts.Children())
+                {
+                    TCost CST = new TCost();
+                    try { CST.Cost = Convert.ToDouble(jcost.SelectToken(".value")); } catch { CST.Cost = -1; }
+                    try { CST.UPKS = Convert.ToDouble(jcost.SelectToken(".cost_index")); } catch { CST.UPKS = -1; }
+                    try { CST.DateUtv = Convert.ToDateTime(jcost.SelectToken(".approvement_date")); } catch { CST.DateUtv = null; }
+                    try { CST.DateOpred = Convert.ToDateTime(jcost.SelectToken(".determination_date")); } catch { CST.DateOpred = null; }
+                    try { CST.DateVnes = Convert.ToDateTime(jcost.SelectToken(".registration_date")); } catch { CST.DateVnes = null; }
+                    try { CST.DateZayav = Convert.ToDateTime(jcost.SelectToken(".revisal_statement_date")); } catch { CST.DateZayav = null; }
+                    try { CST.DatePrim = Convert.ToDateTime(jcost.SelectToken(".application_date")); } catch { CST.DatePrim = null; }
+                    Costs.Add(CST);
+                    if (DPrim == null)
+                    {
+                        DPrim = CST.DatePrim;
+                        CostPrim = new TCost();
+                        CostPrim = CST;
+                    }
+                    else
+                    {
+                        if (CST.DatePrim != null)
+                        {
+                            if (DPrim < CST.DatePrim)
+                            {
+                                DPrim = CST.DatePrim;
+                                CostPrim = CST;
+                            }
+                        }
+                    }
+
+                    if (DVnes == null)
+                    {
+                        DVnes = CST.DateVnes;
+                        CostVnes = new TCost();
+                        CostVnes = CST;
+                    }
+                    else
+                    {
+                        if (CST.DateVnes != null)
+                        {
+                            if (DVnes < CST.DateVnes)
+                            {
+                                DVnes = CST.DateVnes;
+                                CostVnes = CST;
+                            }
+                        }
+                    }
+
+                }
+                CostPrim = (CostPrim != null) ? CostPrim : CostVnes;
+                if (CostPrim != null) { CurrCost = (TCost)CostPrim; }
+
+
+            }
+            catch { }
+
+
+            try
+            {
+                JToken jcontours = o.SelectToken(".contours_location.contours");
+
+                Contours = new List<TContour>();
+
+                foreach (JToken jcontour in jcontours.Children())
+                {
+                    TContour CNT = new TContour();
+                    try { CNT.number_pp = (jcontour.Value<string>("number_pp")); } catch { CNT.number_pp = ""; }
+                    try { CNT.area = Convert.ToDouble(jcontour.SelectToken(".area.value")); } catch { CNT.area = -1; }
+                    try { CNT.area_type = Convert.ToString(jcontour.SelectToken(".area.type.value")); } catch { CNT.area_type = ""; }
+                    try { CNT.inaccuracy = Convert.ToDouble(jcontour.SelectToken(".area.inaccuracy")); } catch { CNT.inaccuracy = -1; }
+                    Contours.Add(CNT);
+
+                }
+
+            }
+            catch { }
+
+            try
+            {
+                CancelDate = o.SelectToken(".record_info.cancel_date").ToString();
+                if (CancelDate.Trim() != "")
+                {
+                    status = "Архивный";
+                }
+                else
+                {
+                    status = "Актуальный";
+                }
+            }
+            catch {
+                status = "Неопределено";
+            }
+        }
+
+        private bool CheckObr(string kn,string obj, JArray ja)
+        {
+            bool res = false;
+            foreach (JToken j in ja)
+            {
+                if ((j["KN"].ToString()==kn)&&(j["STAT"].ToString()==obj))
+                {
+                    res = true;
+                    break;
+                }
+            }
+            return res;
+        }
+        public JArray GetObjectEncumbrances(string kns)
+        {
+            EGRN PKURP = new EGRN();
+            PKURP.pkurp = "http://pkurp-app-balancer-01.prod.egrn";
+            PKURP.current_system = "pkurp";
+            PKURP.usr = "aichernov";
+            PKURP.pswd = "Aa123456";
+            PKURP.LoginEGRN();
+
+            workEGRN = PKURP;
+
+            string[] kn = kns.Split(',');
+            JArray jdata = new JArray();
+            foreach (string k in kn)
+            {
+                Rights.Clear();
+                GetRight(k.Trim());
+                if (Rights.Count == 0)
+                {
+                    JObject jo = new JObject();
+                    jo["KN"] = k.Trim();
+                    jo["STAT"] = "Нет КН";
+                    jdata.Add(jo);
+                }
+                else
+                {
+                    foreach (TBody tb in Rights)
+                    {
+                        if (tb.Status== "Актуальная")
+                        {
+                            if (tb.NameReg == "Запись об ограничении прав и обременениях")
+                            {
+                                JObject jo = new JObject();
+                                jo["KN"] = k.Trim();
+                                if (tb.DocReg.IndexOf("Запрещение") >= 0)
+                                {
+                                    if (!CheckObr(k.Trim(),"Арест", jdata))
+                                    {
+                                        jo["STAT"] = "Арест";
+                                        jdata.Add(jo);
+                                    }
+                                }
+                                else if (tb.DocReg.IndexOf("Ипотека") >= 0)
+                                {
+                                    if (!CheckObr(k.Trim(), "Ипотека", jdata))
+                                    {
+                                        jo["STAT"] = "Ипотека";
+                                        jdata.Add(jo);
+                                    }
+                                }
+                                else
+                                {
+                                    if (!CheckObr(k.Trim(), "Обременение", jdata))
+                                    {
+                                        jo["STAT"] = "Обременение";
+                                        jdata.Add(jo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            return jdata;
+        }
+
+        public string GeoCoding(string address)
+        {
+            string points = "";
+            string stats = "";
+            EGRN E = new EGRN();
+            string Resp = E.Get("http://search.maps.sputnik.ru/search/addr?q="+address, out stats, false, false, "");
+            try
+            {
+                JObject JData = JObject.Parse(Resp);
+                points = JData["result"]["address"][0]["features"][0]["geometry"]["geometries"][0]["coordinates"].ToString();
+                points = (points.Replace("[", "").Replace("]","")).Trim();
+                string[] pnts = points.Split(',');
+                points = pnts[1] + ',' + pnts[0];
+            }
+            catch
+            {
+                points = "";
+            }
+            return points;
+        }
+
+    }
+}

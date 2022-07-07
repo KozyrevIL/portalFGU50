@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin_journal_new.master.cs" Inherits="Admin_admin_journal_new" %>
+
+<%@ Register src="../UC/admin_banner.ascx" tagname="admin_banner" tagprefix="uc1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+
+     <link rel="stylesheet" href="../jQuery/css/start/jquery-ui-1.8.16.custom.css">
+	<script src="../jQuery/jquery-1.6.2.min.js"></script>
+	<script src="../jQuery/ui/minified/jquery.ui.core.min.js"></script>
+	<script src="../jQuery/ui/minified/jquery.ui.widget.min.js"></script>
+	<script src="../jQuery/ui/minified/jquery.ui.datepicker.min.js"></script>
+	<script src="../jQuery/ui/i18n/jquery.ui.datepicker-ru-utf8.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        
+            
+            <link href="../portalFGU59.css" rel="stylesheet" type="text/css" />
+           
+        
+    </asp:ContentPlaceHolder>
+
+    
+
+</head>
+<body leftmargin="0" topmargin="0">
+    <form id="form1" runat="server">
+        <div>
+            
+            <div id="page">
+                <uc1:admin_banner ID="admin_banner1" runat="server" />
+              
+                <div style="margin: 10px;padding: 0px 0px 10px 0px;">
+                    <div class="formTextTest">
+                        <div id="formInputData">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</body>
+</html>

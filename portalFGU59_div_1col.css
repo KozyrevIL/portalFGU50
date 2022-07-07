@@ -1,0 +1,423 @@
+﻿html, body, form
+{
+    margin:0px;
+    font-family: Tahoma;
+}
+
+
+
+/*ie hack min-width start*/
+*html .ie6
+{
+    _border-left:960px solid #fff;
+    _position:relative;
+    _float:left;
+    _z-index:1;
+}
+
+html .ie6--wrapper
+{
+    _margin-left:-960px;
+    _position:relative;
+    _float:left;
+    _z-index:2;
+    _background:#fff;
+    _margin-top: -12px;
+}
+/*ie hack end*/
+
+.content
+{
+   min-width:600px;
+}
+.content--button--Export-to-xls
+{
+    font-size:0.8em;
+}   
+.header-3
+{
+    font-family: Tahoma;
+    font-size: 14px;
+    font-weight: 900;
+    margin: 3px;
+}   
+
+.content--label
+{
+    font-family: Tahoma;
+    font-size: 14px;
+    color: #000;
+    margin: 0 0 0px 0px;
+    vertical-align:middle;
+    display: block;
+}
+
+.content--edits
+{
+    background: #FBDEDA;
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+    padding: 10px 20px 20px 30px;
+    margin:0 0 0px 0;
+}
+.content--edits--light-brown {
+    background: #FEF6E1;
+    border-top: 1px solid #FED17E;
+    border-bottom: 1px solid #FED17E;
+    padding: 5px 0px 0px 10px;
+    margin: 0 0 0px 0;
+}
+
+.content--edits--left-float {
+    float:left;
+    margin: 0 1% 2em 0;
+    /*min-height:400px;*/
+    /*height:80%;*/
+}
+
+.edits--select {
+    font-size:1.1em;
+}
+    .edits--select > option {
+       /* border:solid 1px black;*/
+        margin:1px;
+        
+    }
+
+.edits--select--header {
+    float: left;
+    position: relative;
+    left: 50%;
+    margin: 0 0 0 -4em;
+    width: 10em;
+    font-size: 1.6em;
+}
+
+.content--edits--left-float:last-child {
+    margin-right:0;
+}
+
+.content--edits--left-float>select {
+    margin: 0;
+    float:left;
+        clear:both;
+}
+
+.content--edits--item
+{
+    border: 1px solid #Ff0000;
+    display: block;
+    float: left;
+    margin: 0px 10px 5px 0px;
+    padding: 5px;
+}
+
+.edits--chekbox--large > input {
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    position: relative;
+}
+
+.edits--chekbox--large > label {
+    text-transform: lowercase;
+    font-size: 1.35em;
+}
+
+.edits--item--wrapper {
+    display: block;
+    border: 1px solid #FED17E;
+    margin: 0px 10px 5px 0px;
+    padding: 5px;
+    background:white;
+    font:400 0.7em Tahoma;
+}
+.edits--item {
+    display:block;
+    /*border:1px solid #1E5A92;*/
+}
+
+.edits--aligned--top {
+    margin: 1.8em 0 0 0;
+}
+.edits--aligned--top > input {
+    width:12em;
+}
+
+#RadioButtonList_cartStatus {
+    float: left;
+    margin: 1.8em 0.9em 2em 0;
+}
+
+#RadioButtonList_cartExchange {
+    margin: 1.8em 0 0 0;
+}
+
+#cabinetAdd_Click_error {
+    color:red;
+}
+
+
+#error {
+    color: red;
+}
+
+error--redborder {
+    border: 3px solid red;
+}
+
+.input--dial {
+    list-style-type:none;
+    padding:0;
+}
+
+    .input--dial li {
+        margin-bottom:3px;
+    }
+
+.dial--digit {
+    width:2em;
+    height:2em;
+}
+
+.dial--clear {
+    width:4.2em;
+    height:2em;
+}
+
+.item--block {
+    display: block;
+}
+
+.item--inline {
+    display: inline;
+    padding: 0px 10px;
+}
+
+.content--buttons--wrapper
+{
+    margin: 0px 0px 0px 0px;
+    padding: 10px 0 0 0;
+    /*clear:both;*/
+}
+
+.content--button--fetch-data
+{
+    display: inline;
+    margin: 0px 20px 0px 0px;
+    height:40px;
+}
+
+.content--input--normal {
+    padding:2px;
+    font-size:1em;
+}
+
+.content--chart
+{
+    }
+    
+.content--grid-veiw--general-data
+{
+    width: 70%;
+    margin:auto;
+}
+
+.content--grid-veiw--otdel-data
+{
+    width:850px;
+    margin:10px;
+}
+
+.content--grid-view
+{
+    width:100%;
+    /*padding: 10px;*/
+    margin:30px 10px;  
+    border:1px solid #CCC;
+	font-family:Tahoma;
+}
+
+.content--grid-view--cartridges {
+    width:48%;
+    font-size:1em;
+    max-width:50em;
+    margin:1em 0.5em 0.5em 0;
+    border:1px solid #ccc;
+    /*clear:both;*/
+}
+
+.cartridges--reports--panel {
+    border:1px #1E5A92 solid;
+    float:left;
+    margin-right:1em;
+}
+
+.grid-view--cartridges--on-refill {
+    width:25%;
+    float:left;
+}
+
+.grid-view--cartridges--on-refill-transactions {
+    clear:both;
+    float:left;
+}
+
+.grid-view--cartridges--movement {
+    clear:both;
+    float:left;
+}
+
+.grid-view--cartridges--in-depts {
+    width:45%;
+    min-width:30em;
+    float:left;
+    overflow:auto;
+
+}
+
+.grid-view--cabinets {
+    float:left;
+    clear:both;
+    width:40%;
+}
+
+.grid-view--cabinets--cartridges {
+    float: left;
+    width:40%;
+}
+
+.cartridges--movement--time {
+    width:10%;
+}
+.grid-view--cartridges--movement-in-cabinets {
+    float:left;
+}
+
+/*таблицы с данными (все)*/
+.content table {
+    border: 1px solid #aaa;
+    border-color:#aaa;
+}
+.content table td
+/*.content table th,
+.content table tr*/
+{
+    width:100%;
+    border:1px solid #aaa;
+}
+
+.content table a
+{
+    text-decoration:none;
+    color:#1E5A92;
+}
+
+.content table a:hover
+{
+    color:#eE5A92;
+}
+
+.content table > caption
+{
+    font-size: 18px;
+    color: #54548A;
+    font-family: tahoma;
+    margin: 1px;
+}
+/*конец таблиц*/
+.grid-view--row/*,
+.grid-view--row td,.grid-view--row th*/
+{
+    color:#333333;
+    background-color:white;
+    font-size:1em;
+	font-weight:normal;
+    border:1px solid #aaa;
+	/*color:#000000;*/
+}
+
+.grid-view--row:hover {
+    background: #ccc;
+}
+
+.grid-view--first-row
+{
+    background: #5D7B9D;
+    color: white;
+    font-size:16px;
+    font-size: 14px;
+    font-family: tahoma;
+    border:1px solid #aaa;
+}
+.grid-view--first-row a
+{
+    text-decoration: none;
+    color:White;
+}
+
+.content--iframe
+{
+    border:0;
+    height:500px;
+    padding:0px 0px 0px 0px
+}
+.content>div.custom-tabs
+{
+    border:none;
+}
+/*табы jquery*/
+.custom-tabs >ul
+{
+    background:none;  
+    border: none;
+    border-bottom: 1px solid #1574c0;
+    border-radius:0px;
+    
+}
+.custom-tabs>ul>li
+{
+    display:inline;
+    background:#1E5A92;
+    font-size:1.2em;
+    font-family:Tahoma;
+    padding: 5px 10px 1px 10px;   
+    margin:5px;
+    border:none;
+}
+.custom-tabs>ul>li a
+{
+    text-decoration:none;
+    color:White;
+}
+.custom-tabs>ul>li.ui-state-default
+{
+    background:#1E5A92;
+    color:#fff;
+    border:none;
+    
+}
+.custom-tabs>ul>li.ui-state-hover
+{
+    background:#CCC;
+    color:#F05071;
+}
+.custom-tabs>ul>li.ui-state-active
+{
+    background:#F05071;
+    border:none;
+}
+/*закончились табы*/  
+
+#footer 
+{
+    position: relative;
+    bottom:0px;
+    margin-top: -40px;
+	height: 40px;
+	background:#1E5A92;
+	clear:both;
+	margin:15px 0 0 0;
+}
+
+

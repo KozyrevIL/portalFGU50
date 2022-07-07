@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+
+/// <summary>
+/// Создает подключение к базе и возвращает таблицу с результатом
+/// </summary>
+public class BDConnection
+{
+    private SqlConnection connection;
+    private SqlDataAdapter dAdapter;
+    private DataTable dTable;
+    private DataView dView;
+	
+    public BDConnection(CommandType cmdType,string cmdText ,SqlParameter [] parameters = null)
+	{
+
+        ///cmdtype - тип команды(процедура, текст); cmdText - имя процедуры или текст запроса;
+        ///parameters - параметры для хранимой процедуры
+        this.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"].ConnectionString);
+        SqlCommand cmd = new SqlCommand(cmdText,this.Connection);
+        cmd.CommandType = cmdType;
+        if (cmdType.Equals(CommandType.StoredProcedure))
+        {
+            foreach (SqlParameter param in parameters)
+            {
+                cmd.Parameters.Add(param);
+            }
+        }
+        this.DTable = new DataTable();
+        this.DAdapter = new SqlDataAdapter(cmd);
+        this.DAdapter.Fill(this.DTable);
+        this.DView = new DataView(this.DTable);
+	}
+
+    public DataTable DTable
+    {
+        get { return dTable; }
+        set { dTable = value; }
+    }
+
+    public DataView DView
+    {
+        get { return dView; }
+        set { dView = value; }
+    }
+
+    public SqlDataAdapter DAdapter
+    {
+        get { return dAdapter; }
+        set { dAdapter = value; }
+    }
+
+    public SqlConnection Connection 
+    {   
+        get {return connection;} 
+        set {connection = value;} 
+    }
+}

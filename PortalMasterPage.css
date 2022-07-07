@@ -1,0 +1,73 @@
+﻿body
+{
+    color: #1E5A92;
+    background-color: #EEEEEE;
+    font-family: 'Times New Roman' , Times, serif;
+    font-size: 12pt;
+    font-weight: 500;
+}
+
+.MainPageHeader
+{
+    border-left: thin none #C0C0C0;
+    border-right: thin none #C0C0C0;
+    border-top: thin none #C0C0C0;
+    border-bottom: thin solid #C0C0C0;
+    background-color: #1E5A92;
+    color: #FFFFFF;
+}
+
+.MainPageHeaderTop
+{
+    border-left: thin none #C0C0C0;
+    border-right: thin none #C0C0C0;
+    border-top: thin none #C0C0C0;
+    border-bottom: thin none #C0C0C0;
+    background-color: #1E5A92;
+    color: #FFFFFF;
+}
+
+.MainPageFooter
+{
+    background-color: #1E5A92;
+    color: #FFFFFF;
+    text-align: center;
+    height: 50px;
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: #C0C0C0;
+}
+
+.MainPageLeftSider
+{
+    border-style: none solid none none;
+    border-width: thin;
+    border-color: #C0C0C0;
+    background-color: #FFFFFF;
+    color: #FFFFFF;
+    text-align: left;
+    width: 250px;
+    vertical-align: top;
+}
+
+.MainPageCorner
+{
+    background-color: #1E5A92;
+    color: #FFFFFF;
+    width: 250px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.MainPageTable
+{
+    border-style: none;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    empty-cells: show;
+    table-layout: auto;
+    caption-side: top;
+}

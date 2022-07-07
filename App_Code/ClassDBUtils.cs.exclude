@@ -1,0 +1,864 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI.WebControls;
+
+
+
+
+    public class ClassDBUtils
+    {
+
+        public ClassDBUtils()
+        {
+
+        }
+        public string GetNextNumID(int id_serv)
+        {
+            string pref = "";
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("select prefDog from Services where id = @id", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@id", id_serv);
+                try
+                {
+                    sqlConn.Open();
+                    pref = (string)sqlCmd.ExecuteScalar();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            if (pref != "")
+            {
+                return GetNextNum(pref);
+            }
+            else
+                return "";
+
+        }
+
+        public string GetNextNum(string pref)
+        {
+            string Num = "";
+            int id = -1;
+            int nextNum = 0;
+
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("Select id, maxnum from NextSequence where pref = @pref", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@pref", pref);
+                try
+                {
+                    sqlConn.Open();
+                    SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (readerData.HasRows)
+                    {
+                        readerData.Read();
+                        id = (int)readerData["id"];
+                        nextNum = (int)readerData["maxnum"];
+                    }
+                    readerData.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+            nextNum += 1;
+            if (id > 0)
+            {
+                using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+                {
+                    var sqlCmd = new SqlCommand("update NextSequence set maxnum=@NextNum where pref = @pref", sqlConn);
+                    sqlCmd.CommandType = CommandType.Text;
+                    sqlCmd.Parameters.AddWithValue("@NextNum", nextNum);
+                    sqlCmd.Parameters.AddWithValue("@pref", pref);
+                    try
+                    {
+                        sqlConn.Open();
+                        sqlCmd.ExecuteNonQuery();
+                        sqlConn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+            }
+            else
+            {
+                using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+                {
+                    var sqlCmd = new SqlCommand("insert into NextSequence (pref,maxnum) values (@pref,@NextNum)", sqlConn);
+                    sqlCmd.CommandType = CommandType.Text;
+                    sqlCmd.Parameters.AddWithValue("@pref", pref);
+                    sqlCmd.Parameters.AddWithValue("@NextNum", nextNum);
+                    try
+                    {
+                        sqlConn.Open();
+                        sqlCmd.ExecuteNonQuery();
+                        sqlConn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            Num = pref + nextNum.ToString();
+
+            return Num;
+        }
+        public string CreateContract(string NumContract, string Pth)
+        {
+            string dgp_nom = "";
+            string dgp_podr = "";
+            string dgp_date = "";
+            string dgp_decl = "";
+            string dgp_usl = "";
+            string dgp_ekz = "";
+            string dgp_summa = "";
+            string dgp_nds = "";
+            string dgp_srok = "";
+
+
+            Pth = Pth + "\\" + NumContract.Replace('/','_').Replace('\\','_').Replace(':','_');
+            if (!Directory.Exists(Pth))
+            {
+                Directory.CreateDirectory(Pth);
+            }
+            
+            string pdffile = "";
+            WorkWordDoc wd = new WorkWordDoc("DOGFGBU", Pth);
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand(@"select r.id_depart, r.Status, r.id_service, r.NumContract, r.DateContract, r.FL_LastName+' '+r.FL_FirstName+' '+r.FL_MiddleName FIO,r.FL_passport_series+' '+r.FL_passport_number passprt , r.FL_passport_birthday, r.FL_birthday_place,
+r.FL_passport_date_issue, r.FL_passport_name_org, r.FL_phone_number, r.FL_email, r.FL_passport_address, r.FL_type_declarant, r.IPCertSer, r.IPCertNum, r.IPCertDate, r.IPCertOrgan,
+r.UL_org_address, r.UL_post_address, r.UL_org_ogrn, r.UL_org_kpp, r.UL_org_inn, r.UL_org_account, r.UL_bank_name, r.UL_corr_account, r.UL_org_bik, r.UL_org_okpo, r.UL_org_okato,
+r.UL_fio_director, r.UL_fio_accountant, r.UL_post_director, r.UL_post_accountant, r.UL_OPF, r.UL_name_org, r.UL_post_base, f.city_filial, s.Name , s.price, s.pricends, r.Number_copies, r.Date_service, r.Objs_adres
+FROM Request r, services s, portalFGU59.dbo.Otdel otd, portalFGU59.dbo.Filial f where r.id_service=s.id and r.id_depart = otd.id_otdel and otd.id_filial = f.id_filial and r.NumContract=@idReq", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@idReq", NumContract);
+                try
+                {
+                    sqlConn.Open();
+                    SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (readerData.HasRows)
+                    {
+                        readerData.Read();
+                        dgp_nom = (string)readerData["NumContract"];
+                        dgp_podr = (string)readerData["city_filial"];
+                        dgp_date = ((DateTime)readerData["dateContract"]).ToString("dd MMMM yyyy");
+                        int type_decl = (int)readerData["FL_type_declarant"];
+                        switch (type_decl)
+                        {
+                            case 1:
+                                dgp_decl="Гражданин Российской Федерации "+ (string)readerData["FIO"]+", "+ ((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения, место рождения " + (string)readerData["FL_birthday_place"]+","+
+                                         " паспорт " + (string)readerData["passprt"] + ", выдан "+ ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") +" "+ (string)readerData["FL_passport_name_org"]+", зарегистрирован по адресу: "+ (string)readerData["FL_passport_address"];
+                                break;
+                            case 3:
+
+                                dgp_decl = (string)readerData["UL_OPF"] + " " + (string)readerData["UL_name_org"] + ", в лице " + (string)readerData["UL_post_director"] +
+                                          " " + (string)readerData["UL_fio_director"] + " действующего на основании " + (string)readerData["UL_post_base"];
+                                if ((dgp_decl== "Общество с ограниченной ответственностью")|| (dgp_decl == "Публичное акционерное общество"))
+                                {
+                                    dgp_decl += " и Устава";
+                                }
+                           //     dgp_decl += ", именуемое в дальнейшем «Заказчик»";
+                                break;
+                            case 2:
+                                dgp_decl = (string)readerData["FIO"] + ", зарегистрированный (-ая) в качестве индивидуального предпринимателя, что подтверждается свидетельством серия " +
+                                        (string)readerData["IPCertSer"] + " № " + (string)readerData["IPCertNum"] + " от " + ((DateTime)readerData["IPCertDate"]).ToString("D") +
+                                        ", выданным " + (string)readerData["IPCertOrgan"]; // + ", именуемый(-ая) в дальнейшем «Заказчик»";
+                                break;
+
+                        }
+                        dgp_usl = (string)readerData["Name"];
+                        dgp_ekz = readerData["Number_copies"].ToString(); 
+                        NumbyWords gk = new NumbyWords();
+                        dgp_summa = gk.RurPhrase((Decimal)readerData["Price"], 3);
+                        dgp_nds = gk.RurPhrase((Decimal)readerData["PriceNDS"], 3); ;
+                        dgp_srok = (string)readerData["date_service"]; ;
+                         
+
+                    }
+                    readerData.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+            wd.ChangePattern("[ДГП:НОМЕР]", dgp_nom);
+            wd.ChangePattern("[ДГП:ПОДР]", dgp_podr);
+            wd.ChangePattern("[ДГП:ДАТА]", dgp_date);
+            wd.ChangePattern("[ДГП:ЗАКАЗЧИК]", dgp_decl);
+            wd.ChangePattern("[ДГП:УСЛУГА]", dgp_usl.ToLower());
+            wd.ChangePattern("[ДГП:ЭКЗ]", dgp_ekz);
+            wd.ChangePattern("[ДГП:СУММА]", dgp_summa);
+            wd.ChangePattern("[ДГП:СУММАНДС]", dgp_nds);
+            wd.ChangePattern("[ДГП:СРОК]", dgp_srok);
+
+            wd.Export2PDF();
+            wd.Clear();
+            pdffile = wd.fnamepdf;
+
+            
+
+
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("update Request set ContractPDF=@FN where NumContract = @Num", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@Num", NumContract);
+                sqlCmd.Parameters.AddWithValue("@FN", pdffile);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+
+            return pdffile;
+        }
+
+        public string CreateContract2(string NumContract, string Pth)
+        {
+            string dgp_nom = "";
+            string dgp_podr = "";
+            string dgp_date = "";
+
+            string dgp_decl = "";
+            string dgp_decl_year_birthday = "";
+            string dgp_decl_birthday_place = "";
+            string dgp_decl_pasport = "";
+            string dgp_decl_pasport_address = "";
+            string dgp_decl_date_issue = "";
+            string dgp_decl_name_org = "";
+
+
+            string dgp_usl = "";
+            string dgp_ekz = "";
+            string dgp_summa = "";
+            string dgp_nds = "";
+            string dgp_srok = "";
+
+            string dgp_fio_registr = "";        //ФИО Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            string dgp_fio_registr_doc = "";    //ФИО Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            string dgp_dolgnost = "";           //Должность Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            string dgp_dolgnost_doc = "";       //Должность Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            string dgp_power_attorney_doc = ""; //Дата и номер доверенности подписанта
+
+
+            Pth = Pth + "\\" + NumContract.Replace('/', '_').Replace('\\', '_').Replace(':', '_');
+            if (!Directory.Exists(Pth))
+            {
+                Directory.CreateDirectory(Pth);
+            }
+
+            string pdffile = "";
+            WorkWordDoc wd = new WorkWordDoc("DOGFGBU", Pth);
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand(@"select r.id_depart, r.Status, r.id_service, r.NumContract, r.DateContract, r.FL_LastName+' '+r.FL_FirstName+' '+r.FL_MiddleName FIO,r.FL_passport_series+' '+r.FL_passport_number passprt , r.FL_passport_birthday, r.FL_birthday_place,
+                r.FL_passport_date_issue, r.FL_passport_name_org, r.FL_phone_number, r.FL_email, r.FL_passport_address, r.FL_type_declarant, r.IPCertSer, r.IPCertNum, r.IPCertDate, r.IPCertOrgan,
+                r.UL_org_address, r.UL_post_address, r.UL_org_ogrn, r.UL_org_kpp, r.UL_org_inn, r.UL_org_account, r.UL_bank_name, r.UL_corr_account, r.UL_org_bik, r.UL_org_okpo, r.UL_org_okato,
+                r.UL_fio_director, r.UL_fio_accountant, r.UL_post_director, r.UL_post_accountant, r.UL_OPF, r.UL_name_org, r.UL_post_base, f.city_filial, s.Name , s.price, s.pricends, r.Number_copies, r.Date_service, r.Objs_adres, r.FIO_register, r.FIO_register_doc, r.DOLGNOST, r.DOLGNOST_doc, r.Power_attorney_doc
+                FROM Request r, services s, portalFGU59.dbo.Otdel otd, portalFGU59.dbo.Filial f where r.id_service=s.id and r.id_depart = otd.id_otdel and otd.id_filial = f.id_filial and r.NumContract=@idReq", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@idReq", NumContract);
+                try
+                {
+                    sqlConn.Open();
+                    SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (readerData.HasRows)
+                    {
+                        readerData.Read();
+                        dgp_nom = (string)readerData["NumContract"];
+                        dgp_podr = (string)readerData["city_filial"];
+                        dgp_date = ((DateTime)readerData["dateContract"]).ToString("dd MMMM yyyy");
+                        int type_decl = (int)readerData["FL_type_declarant"];
+                        switch (type_decl)
+                        {
+                            case 1:
+                                dgp_decl = "Гражданин Российской Федерации " + (string)readerData["FIO"] + ", ";                                        //ФИО
+                                dgp_decl_year_birthday = ((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения, ";  //День рождения
+                                dgp_decl_birthday_place = "место рождения " + (string)readerData["FL_birthday_place"];                                  //Место рождения
+                                dgp_decl_pasport=", паспорт " + (string)readerData["passprt"];                                                          //Паспорт серия номер
+                                dgp_decl_date_issue=", выдан " + ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") + " ";                  //Дата выдачи
+                                dgp_decl_name_org = (string)readerData["FL_passport_name_org"];                                                         //Организаця 
+                                dgp_decl_pasport_address=", зарегистрирован по адресу: " + (string)readerData["FL_passport_address"];                   //Регистрация
+                                dgp_fio_registr = (string)readerData["FIO_register"];                                                                   //ФИО Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+                                dgp_fio_registr_doc = (string)readerData["FIO_register_doc"];                                                           //ФИО Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+                                dgp_dolgnost = (string)readerData["DOLGNOST"];                                                                          //Должность Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+                                dgp_dolgnost_doc = (string)readerData["DOLGNOST_doc"];                                                                  //Должность Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+                                dgp_power_attorney_doc = (string)readerData["Power_attorney_doc"];                                                      //Дата и номер доверенности подписанта
+
+                                break;
+                            case 3:
+
+                                dgp_decl = (string)readerData["UL_OPF"] + " " + (string)readerData["UL_name_org"] + ", в лице " + (string)readerData["UL_post_director"] +
+                                          " " + (string)readerData["UL_fio_director"] + " действующего на основании " + (string)readerData["UL_post_base"];
+                                if ((dgp_decl == "Общество с ограниченной ответственностью") || (dgp_decl == "Публичное акционерное общество"))
+                                {
+                                    dgp_decl += " и Устава";
+                                }
+                                //     dgp_decl += ", именуемое в дальнейшем «Заказчик»";
+                                break;
+                            case 2:
+                                dgp_decl = (string)readerData["FIO"] + ", зарегистрированный (-ая) в качестве индивидуального предпринимателя, что подтверждается свидетельством серия " +
+                                        (string)readerData["IPCertSer"] + " № " + (string)readerData["IPCertNum"] + " от " + ((DateTime)readerData["IPCertDate"]).ToString("D") +
+                                        ", выданным " + (string)readerData["IPCertOrgan"]; // + ", именуемый(-ая) в дальнейшем «Заказчик»";
+                                break;
+
+                        }
+                        dgp_usl = (string)readerData["Name"];
+                        dgp_ekz = readerData["Number_copies"].ToString();
+                        NumbyWords gk = new NumbyWords();
+                        dgp_summa = gk.RurPhrase((Decimal)readerData["Price"], 3);
+                        dgp_nds = gk.RurPhrase((Decimal)readerData["PriceNDS"], 3); ;
+                        dgp_srok = (string)readerData["date_service"]; ;
+
+
+                    }
+                    readerData.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+            wd.ChangePattern("[ДГП:НОМЕР]", dgp_nom);
+            wd.ChangePattern("[ДГП:ПОДР]", dgp_podr);
+            wd.ChangePattern("[ДГП:ДАТА]", dgp_date);
+
+            wd.ChangePattern("[ДГП:ЗАКАЗЧИК]", dgp_decl);                           //FL ФИО
+            wd.ChangePattern("[ДГП:ДЕНЬРОЖДЕНИЯ]", dgp_decl_year_birthday);         //FL День рождения
+            wd.ChangePattern("[ДГП:МЕСТОРОЖДЕНИЯ]", dgp_decl_birthday_place);       //FL Место рождения
+            wd.ChangePattern("[ДГП:ПАСПОРТ]", dgp_decl_pasport);                    //FL Паспорт серия номер
+            wd.ChangePattern("[ДГП:ДАТАВЫДАЧИ]", dgp_decl_date_issue);              //FL Дата выдачи
+            wd.ChangePattern("[ДГП:ОРГАНИЗАЦИЯ]", dgp_decl_name_org);               //FL Организаця 
+            wd.ChangePattern("[ДГП:РЕГИСТРАЦИЯ]", dgp_decl_pasport_address);        //FL Регистрация
+
+            wd.ChangePattern("[ДГП:УСЛУГА]", dgp_usl.ToLower());
+            wd.ChangePattern("[ДГП:ЭКЗ]", dgp_ekz);
+            wd.ChangePattern("[ДГП:СУММА]", dgp_summa);
+            wd.ChangePattern("[ДГП:СУММАНДС]", dgp_nds);
+            wd.ChangePattern("[ДГП:СРОК]", dgp_srok);
+
+            wd.ChangePattern("[ДГП:ФИОПОДПИСАНТ]", dgp_fio_registr); //ФИО Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            wd.ChangePattern("[ДГП:ФИОПОДПИСАНТДОГ]", dgp_fio_registr_doc); //ФИО Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            wd.ChangePattern("[ДГП:ДОЛЖНОСТЬ]", dgp_dolgnost); //Должность Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            wd.ChangePattern("[ДГП:ДОЛЖНОСТЬДОГ]", dgp_dolgnost_doc); //Должность Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            wd.ChangePattern("[ДГП:ДАТАНОМЕРДОВЕРЕННОСТИ]", dgp_power_attorney_doc); //Дата и номер доверенности подписанта
+
+            wd.Export2PDF();
+            wd.Clear();
+            pdffile = wd.fnamepdf;
+
+
+
+
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("update Request set ContractPDF=@FN where NumContract = @Num", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@Num", NumContract);
+                sqlCmd.Parameters.AddWithValue("@FN", pdffile);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+
+            return pdffile;
+        }
+
+        public string CreateRequest(string NumContract, string Pth)
+        {
+            string dgp_nom = "";
+            string dgp_podr = "";
+            string dgp_date = "";
+            string dgp_decl = "";
+            string dgp_usl = "";
+            string dgp_summa = "";
+            string dgp_tel = "";
+            string dgp_objadres = "";
+
+
+            Pth = Pth + "\\" + NumContract.Replace('/', '_').Replace('\\', '_').Replace(':', '_');
+            if (!Directory.Exists(Pth))
+            {
+                Directory.CreateDirectory(Pth);
+            }
+
+            string pdffile = "";
+            WorkWordDoc wd = new WorkWordDoc("REGFGBU", Pth);
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand(@"select r.id_depart, r.Status, r.id_service, r.NumContract, r.DateContract, r.FL_LastName+' '+r.FL_FirstName+' '+r.FL_MiddleName FIO,r.FL_passport_series+' '+r.FL_passport_number passprt , r.FL_passport_birthday, r.FL_birthday_place,
+                r.FL_passport_date_issue, r.FL_passport_name_org, r.FL_phone_number, r.FL_email, r.FL_passport_address, r.FL_type_declarant, r.IPCertSer, r.IPCertNum, r.IPCertDate, r.IPCertOrgan,
+                r.UL_org_address, r.UL_post_address, r.UL_org_ogrn, r.UL_org_kpp, r.UL_org_inn, r.UL_org_account, r.UL_bank_name, r.UL_corr_account, r.UL_org_bik, r.UL_org_okpo, r.UL_org_okato,
+                r.UL_fio_director, r.UL_fio_accountant, r.UL_post_director, r.UL_post_accountant, r.UL_OPF, r.UL_name_org, r.UL_post_base, f.city_filial+', '+f.street_filial+', '+f.home_filial city_filial, s.Name , s.price, s.pricends, r.Objs_adres
+                FROM Request r, services s, portalFGU59.dbo.Otdel otd, portalFGU59.dbo.Filial f where r.id_service=s.id and r.id_depart = otd.id_otdel and otd.id_filial = f.id_filial and r.NumContract=@idReq", sqlConn);
+
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@idReq", NumContract);
+                try
+                {
+                    sqlConn.Open();
+                    SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (readerData.HasRows)
+                    {
+                        readerData.Read();
+                        dgp_nom = (string)readerData["NumContract"];
+                        dgp_podr = (string)readerData["city_filial"];
+                        dgp_date = ((DateTime)readerData["dateContract"]).ToString("dd MMMM yyyy");
+                        int type_decl = (int)readerData["FL_type_declarant"];
+                        switch (type_decl)
+                        {
+                            case 1:
+                                //dgp_decl = "- "+(string)readerData["FIO"] + "," + (char)13 + (char)10 +
+                                //    "- " + ((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения," + (char)13 + (char)10 +
+                                //    "- место рождения: " + (char)13 + (char)10 +
+                                //    "- паспорт: " + (string)readerData["passprt"] + ", выдан " + ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") + " " + (string)readerData["FL_passport_name_org"] + (char)13 + (char)10 +
+                                //    "- адрес: " + (string)readerData["FL_passport_address"] + (char)13 + (char)10 +
+                                //    "- тел. "+ (string)readerData["FL_phone_number"] + (char)13 + (char)10 +
+                                //    "- email " + (string)readerData["FL_email"] + (char)13 + (char)10;
+                        dgp_decl = Environment.NewLine + (string)readerData["FIO"] + "," + Environment.NewLine +
+                            ((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения," + Environment.NewLine+
+                            "место рождения: " + (string)readerData["FL_birthday_place"] + Environment.NewLine +
+                            "паспорт: " + (string)readerData["passprt"] + ", выдан " + ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") + " " + (string)readerData["FL_passport_name_org"] + Environment.NewLine +
+                            "адрес: " + (string)readerData["FL_passport_address"] + Environment.NewLine +
+                            "тел: " + (string)readerData["FL_phone_number"] + Environment.NewLine +
+                            "email: " + (string)readerData["FL_email"];
+                        break;
+                            case 3:
+
+                                dgp_decl = Environment.NewLine + (string)readerData["UL_name_org"] + Environment.NewLine +
+                                    "ОГРН: " + (string)readerData["UL_org_ogrn"] + Environment.NewLine +
+                                    "ИНН: " + (string)readerData["UL_org_inn"] + Environment.NewLine +
+                                    "КПП: " + (string)readerData["UL_org_kpp"] + Environment.NewLine +
+                                    "адрес: " + (string)readerData["UL_org_address"] + Environment.NewLine +
+                                    "тел: " + (string)readerData["FL_phone_number"] + Environment.NewLine +
+                                    "email: " + (string)readerData["FL_email"] + Environment.NewLine;
+
+                                break;
+                            case 2:
+                                dgp_decl = Environment.NewLine + "Индивидуальный предприниматель " +(string)readerData["FIO"] + Environment.NewLine + Environment.NewLine +
+                                      "Свидетельство серия " + (string)readerData["IPCertSer"] + " № " + (string)readerData["IPCertNum"] + " от " + ((DateTime)readerData["IPCertDate"]).ToString("D") + Environment.NewLine +
+                                      "выданно " + (string)readerData["IPCertOrgan"];
+                                break;
+
+                        }
+                        dgp_usl = (string)readerData["Name"];
+                        dgp_summa =readerData["Price"].ToString();
+                        dgp_tel = (string)readerData["FL_phone_number"];
+                        dgp_objadres = (string)readerData["Objs_adres"];
+                        
+                    }
+                    readerData.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+            wd.ChangePattern("[ЗВК:НОМЕР]", dgp_nom);
+            wd.ChangePattern("[ЗВК:АДРЕСФИЛИАЛА]", dgp_podr);
+            wd.ChangePattern("[ЗВК:ДАТА]", dgp_date);
+            wd.ChangePattern("[ЗВК:ФИО]", dgp_decl);
+            wd.ChangePattern("[ЗВК:УСЛУГА]", dgp_usl);
+            wd.ChangePattern("[ЗВК:СУММА]", dgp_summa);
+            wd.ChangePattern("[ЗВК:ТЕЛЕФОН]", dgp_tel);
+            wd.ChangePattern("[ЗВК:АДРЕСА]", dgp_objadres);
+
+            wd.Export2PDF();
+            wd.Clear();
+            pdffile = wd.fnamepdf;
+
+            
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("update Request set RequestPDF=@FN where NumContract = @Num", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@Num", NumContract);
+                sqlCmd.Parameters.AddWithValue("@FN", pdffile);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+
+            return pdffile;
+        }
+
+        public string CreateRequest2(string NumContract, string Pth)
+        {
+            string dgp_nom = "";
+            string dgp_podr = "";
+            string dgp_date = "";
+            //FL
+            string dgp_decl = "";
+            string dgp_decl_year_birthday = "";
+            string dgp_decl_place_birthday = "";
+            string dgp_decl_pasport = "";
+            string dgp_decl_pasport_address = "";
+            string dgp_decl_email = "";
+            //
+            string dgp_usl = "";
+            string dgp_summa = "";
+            string dgp_tel = "";
+            string dgp_objadres = "";
+
+
+            Pth = Pth + "\\" + NumContract.Replace('/', '_').Replace('\\', '_').Replace(':', '_');
+            if (!Directory.Exists(Pth))
+            {
+                Directory.CreateDirectory(Pth);
+            }
+
+            string pdffile = "";
+            WorkWordDoc wd = new WorkWordDoc("REGFGBU", Pth);
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand(@"select r.id_depart, r.Status, r.id_service, r.NumContract, r.DateContract, r.FL_LastName+' '+r.FL_FirstName+' '+r.FL_MiddleName FIO,r.FL_passport_series+' '+r.FL_passport_number passprt , r.FL_passport_birthday, r.FL_birthday_place,
+                r.FL_passport_date_issue, r.FL_passport_name_org, r.FL_phone_number, r.FL_email, r.FL_passport_address, r.FL_type_declarant, r.IPCertSer, r.IPCertNum, r.IPCertDate, r.IPCertOrgan,
+                r.UL_org_address, r.UL_post_address, r.UL_org_ogrn, r.UL_org_kpp, r.UL_org_inn, r.UL_org_account, r.UL_bank_name, r.UL_corr_account, r.UL_org_bik, r.UL_org_okpo, r.UL_org_okato,
+                r.UL_fio_director, r.UL_fio_accountant, r.UL_post_director, r.UL_post_accountant, r.UL_OPF, r.UL_name_org, r.UL_post_base, f.city_filial+', '+f.street_filial+', '+f.home_filial city_filial, s.Name , s.price, s.pricends, r.Objs_adres
+                FROM Request r, services s, portalFGU59.dbo.Otdel otd, portalFGU59.dbo.Filial f where r.id_service=s.id and r.id_depart = otd.id_otdel and otd.id_filial = f.id_filial and r.NumContract=@idReq", sqlConn);
+
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@idReq", NumContract);
+                try
+                {
+                    sqlConn.Open();
+                    SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (readerData.HasRows)
+                    {
+                        readerData.Read();
+                        dgp_nom = (string)readerData["NumContract"];
+                        dgp_podr = (string)readerData["city_filial"];
+                        dgp_date = ((DateTime)readerData["dateContract"]).ToString("dd MMMM yyyy");
+                        int type_decl = (int)readerData["FL_type_declarant"];
+                        switch (type_decl)
+                        {
+                            case 1:
+                                //         dgp_decl = Environment.NewLine + (string)readerData["FIO"] + "," + Environment.NewLine +
+                                //((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения," + Environment.NewLine +
+                                //"место рождения: " + (string)readerData["FL_birthday_place"] + Environment.NewLine +
+                                //"паспорт: " + (string)readerData["passprt"] + ", выдан " + ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") + " " + (string)readerData["FL_passport_name_org"] + Environment.NewLine +
+                                //"адрес: " + (string)readerData["FL_passport_address"] + Environment.NewLine +
+                                //"тел: " + (string)readerData["FL_phone_number"] + Environment.NewLine +
+                                //"email: " + (string)readerData["FL_email"];
+                                dgp_decl = "ФИО: " + (string)readerData["FIO"] + ",";
+                                dgp_decl_year_birthday = ((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения," ;
+                                dgp_decl_place_birthday = "место рождения: " + (string)readerData["FL_birthday_place"];
+                                dgp_decl_pasport = "паспорт: " + (string)readerData["passprt"] + ", выдан " + ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") + " " + (string)readerData["FL_passport_name_org"];
+                                dgp_decl_pasport_address = "адрес: " + (string)readerData["FL_passport_address"];
+                                dgp_decl_email = "email: " + (string)readerData["FL_email"]; 
+
+                                break;
+                            case 3:
+
+                                dgp_decl = Environment.NewLine + (string)readerData["UL_name_org"] + Environment.NewLine +
+                                    "ОГРН: " + (string)readerData["UL_org_ogrn"] + Environment.NewLine +
+                                    "ИНН: " + (string)readerData["UL_org_inn"] + Environment.NewLine +
+                                    "КПП: " + (string)readerData["UL_org_kpp"] + Environment.NewLine +
+                                    "адрес: " + (string)readerData["UL_org_address"] + Environment.NewLine +
+                                    "тел: " + (string)readerData["FL_phone_number"] + Environment.NewLine +
+                                    "email: " + (string)readerData["FL_email"] + Environment.NewLine;
+
+                                break;
+                            case 2:
+                                dgp_decl = Environment.NewLine + "Индивидуальный предприниматель " + (string)readerData["FIO"] + Environment.NewLine + Environment.NewLine +
+                                      "Свидетельство серия " + (string)readerData["IPCertSer"] + " № " + (string)readerData["IPCertNum"] + " от " + ((DateTime)readerData["IPCertDate"]).ToString("D") + Environment.NewLine +
+                                      "выданно " + (string)readerData["IPCertOrgan"];
+                                break;
+
+                        }
+                        dgp_usl = (string)readerData["Name"];
+                        dgp_summa = readerData["Price"].ToString();
+                        dgp_tel = (string)readerData["FL_phone_number"];
+                        dgp_objadres = (string)readerData["Objs_adres"];
+
+                    }
+                    readerData.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+            wd.ChangePattern("[ЗВК:НОМЕР]", dgp_nom);
+            wd.ChangePattern("[ЗВК:АДРЕСФИЛИАЛА]", dgp_podr);
+            wd.ChangePattern("[ЗВК:ДАТА]", dgp_date);
+
+            wd.ChangePattern("[ЗВК:ФИО]", dgp_decl);                //FL только ФИО
+
+            wd.ChangePattern("[ЗВК:ГОДРОЖДЕНИЯ]", dgp_decl_year_birthday);  //FL
+            wd.ChangePattern("[ЗВК:МЕСТОРОЖДЕНИЯ]", dgp_decl_place_birthday); //FL
+            wd.ChangePattern("[ЗВК:ПАСПОРТ]", dgp_decl_pasport);        //FL
+            wd.ChangePattern("[ЗВК:ПАСПОРАДРЕС]", dgp_decl_pasport_address);//FL
+            wd.ChangePattern("[ЗВК:EMAIL]", dgp_decl_email);          //FL
+
+            wd.ChangePattern("[ЗВК:УСЛУГА]", dgp_usl);
+            wd.ChangePattern("[ЗВК:СУММА]", dgp_summa);
+            wd.ChangePattern("[ЗВК:ТЕЛЕФОН]", dgp_tel);
+            wd.ChangePattern("[ЗВК:АДРЕСА]", dgp_objadres);
+
+            wd.Export2PDF();
+            wd.Clear();
+            pdffile = wd.fnamepdf;
+
+
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("update Request set RequestPDF=@FN where NumContract = @Num", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@Num", NumContract);
+                sqlCmd.Parameters.AddWithValue("@FN", pdffile);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+
+            return pdffile;
+        }
+
+
+        public string CreateAktWork(string NumContract, string Pth)
+        {
+            string dgp_nom = "";
+            string dgp_podr = "";
+            string dgp_date = "";
+
+            string dgp_decl = "";
+            string dgp_decl_year_birthday = "";
+            string dgp_decl_birthday_place = "";
+            string dgp_decl_pasport = "";
+            string dgp_decl_pasport_address = "";
+            string dgp_decl_date_issue = "";
+            string dgp_decl_name_org = "";
+
+
+            string dgp_usl = "";
+            string dgp_ekz = "";
+            string dgp_summa = "";
+            string dgp_nds = "";
+            string dgp_srok = "";
+
+            string dgp_fio_registr = "";        //ФИО Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            string dgp_fio_registr_doc = "";    //ФИО Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            string dgp_dolgnost = "";           //Должность Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            string dgp_dolgnost_doc = "";       //Должность Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            string dgp_power_attorney_doc = ""; //Дата и номер доверенности подписанта
+
+            string dgp_decl_rekvizit = "";
+            string dgp_decl_email = "";
+            string dgp_tel = "";
+            string dgp_objadres = "";
+            string dgp_decl_pasport_rekvizit = "";
+            string dgp_decl_pasport_address_rekvizit = "";
+
+            Pth = Pth + "\\" + NumContract.Replace('/', '_').Replace('\\', '_').Replace(':', '_');
+            if (!Directory.Exists(Pth))
+            {
+                Directory.CreateDirectory(Pth);
+            }
+
+            string pdffile = "";
+            WorkWordDoc wd = new WorkWordDoc("AKTWORK", Pth);
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand(@"select r.id_depart, r.Status, r.id_service, r.NumContract, r.DateContract, r.FL_LastName+' '+r.FL_FirstName+' '+r.FL_MiddleName FIO,r.FL_passport_series+' '+r.FL_passport_number passprt , r.FL_passport_birthday, r.FL_birthday_place,
+                r.FL_passport_date_issue, r.FL_passport_name_org, r.FL_phone_number, r.FL_email, r.FL_passport_address, r.FL_type_declarant, r.IPCertSer, r.IPCertNum, r.IPCertDate, r.IPCertOrgan,
+                r.UL_org_address, r.UL_post_address, r.UL_org_ogrn, r.UL_org_kpp, r.UL_org_inn, r.UL_org_account, r.UL_bank_name, r.UL_corr_account, r.UL_org_bik, r.UL_org_okpo, r.UL_org_okato,
+                r.UL_fio_director, r.UL_fio_accountant, r.UL_post_director, r.UL_post_accountant, r.UL_OPF, r.UL_name_org, r.UL_post_base, f.city_filial, s.Name , s.price, s.pricends, r.Number_copies, r.Date_service, r.Objs_adres, r.FIO_register, r.FIO_register_doc, r.DOLGNOST, r.DOLGNOST_doc, r.Power_attorney_doc
+                FROM Request r, services s, portalFGU59.dbo.Otdel otd, portalFGU59.dbo.Filial f where r.id_service=s.id and r.id_depart = otd.id_otdel and otd.id_filial = f.id_filial and r.NumContract=@idReq", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@idReq", NumContract);
+                try
+                {
+                    sqlConn.Open();
+                    SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (readerData.HasRows)
+                    {
+                        readerData.Read();
+                        dgp_nom = (string)readerData["NumContract"];
+                        dgp_podr = (string)readerData["city_filial"];
+                        dgp_date = ((DateTime)readerData["dateContract"]).ToString("dd MMMM yyyy");
+                        int type_decl = (int)readerData["FL_type_declarant"];
+                        switch (type_decl)
+                        {
+                            case 1:
+                                dgp_decl = "Гражданин Российской Федерации " + (string)readerData["FIO"] + ", ";                                        //ФИО
+                                dgp_decl_rekvizit = (string)readerData["FIO"];                                                                          //ФИО в реквизитах
+                                dgp_decl_year_birthday = ((DateTime)readerData["FL_passport_birthday"]).ToString("dd MMMM yyyy") + " года рождения, ";  //День рождения
+                                dgp_decl_birthday_place = "место рождения " + (string)readerData["FL_birthday_place"];                                  //Место рождения
+                                dgp_decl_pasport = ", паспорт " + (string)readerData["passprt"];                                                         //Паспорт серия номер
+                                dgp_decl_pasport_rekvizit= (string)readerData["passprt"];                                                                //Паспорт в реквизитах
+                                dgp_decl_date_issue = ", выдан " + ((DateTime)readerData["FL_passport_date_issue"]).ToString("D") + " ";                  //Дата выдачи
+                                dgp_decl_name_org = (string)readerData["FL_passport_name_org"];                                                         //Организаця 
+                                dgp_decl_pasport_address = ", зарегистрирован по адресу: " + (string)readerData["FL_passport_address"];                   //Регистрация
+                                dgp_decl_pasport_address_rekvizit = (string)readerData["FL_passport_address"];                                          //Регистрация в реквизитах                                            
+                                dgp_fio_registr = (string)readerData["FIO_register"];                                                                   //ФИО Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+                                dgp_fio_registr_doc = (string)readerData["FIO_register_doc"];                                                           //ФИО Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+                                dgp_dolgnost = (string)readerData["DOLGNOST"];                                                                          //Должность Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+                                dgp_dolgnost_doc = (string)readerData["DOLGNOST_doc"];                                                                  //Должность Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+                                dgp_power_attorney_doc = (string)readerData["Power_attorney_doc"];
+                                dgp_decl_email = (string)readerData["FL_email"];                                                                        //Email в реквизитах
+                                dgp_tel = (string)readerData["FL_phone_number"];                                                                        //Телефон в реквизитах
+                                dgp_objadres = (string)readerData["Objs_adres"];                                                                          //Адрес в реквизитах
+
+                                //Дата и номер доверенности подписанта
+
+                                break;
+                            case 3:
+
+                                dgp_decl = (string)readerData["UL_OPF"] + " " + (string)readerData["UL_name_org"] + ", в лице " + (string)readerData["UL_post_director"] +
+                                          " " + (string)readerData["UL_fio_director"] + " действующего на основании " + (string)readerData["UL_post_base"];
+                                if ((dgp_decl == "Общество с ограниченной ответственностью") || (dgp_decl == "Публичное акционерное общество"))
+                                {
+                                    dgp_decl += " и Устава";
+                                }
+                                //     dgp_decl += ", именуемое в дальнейшем «Заказчик»";
+                                break;
+                            case 2:
+                                dgp_decl = (string)readerData["FIO"] + ", зарегистрированный (-ая) в качестве индивидуального предпринимателя, что подтверждается свидетельством серия " +
+                                        (string)readerData["IPCertSer"] + " № " + (string)readerData["IPCertNum"] + " от " + ((DateTime)readerData["IPCertDate"]).ToString("D") +
+                                        ", выданным " + (string)readerData["IPCertOrgan"]; // + ", именуемый(-ая) в дальнейшем «Заказчик»";
+                                break;
+
+                        }
+                        dgp_usl = (string)readerData["Name"];
+                        dgp_ekz = readerData["Number_copies"].ToString();
+                        NumbyWords gk = new NumbyWords();
+                        dgp_summa = gk.RurPhrase((Decimal)readerData["Price"], 3);
+                        dgp_nds = gk.RurPhrase((Decimal)readerData["PriceNDS"], 3); ;
+                        dgp_srok = (string)readerData["date_service"]; ;
+
+
+                    }
+                    readerData.Close();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+            wd.ChangePattern("[ДГП:НОМЕР]", dgp_nom);
+            wd.ChangePattern("[ДГП:ПОДР]", dgp_podr);
+            wd.ChangePattern("[ДГП:ДАТА]", dgp_date);
+
+            wd.ChangePattern("[ДГП:ЗАКАЗЧИК]", dgp_decl);                           //FL ФИО
+            wd.ChangePattern("[ДГП:ДЕНЬРОЖДЕНИЯ]", dgp_decl_year_birthday);         //FL День рождения
+            wd.ChangePattern("[ДГП:МЕСТОРОЖДЕНИЯ]", dgp_decl_birthday_place);       //FL Место рождения
+            wd.ChangePattern("[ДГП:ПАСПОРТ]", dgp_decl_pasport);                    //FL Паспорт серия номер
+            wd.ChangePattern("[ДГП:ДАТАВЫДАЧИ]", dgp_decl_date_issue);              //FL Дата выдачи
+            wd.ChangePattern("[ДГП:ОРГАНИЗАЦИЯ]", dgp_decl_name_org);               //FL Организаця 
+            wd.ChangePattern("[ДГП:РЕГИСТРАЦИЯ]", dgp_decl_pasport_address);        //FL Регистрация
+
+            wd.ChangePattern("[ДГП:УСЛУГА]", dgp_usl.ToLower());
+            wd.ChangePattern("[ДГП:ЭКЗ]", dgp_ekz);
+            wd.ChangePattern("[ДГП:СУММА]", dgp_summa);
+            wd.ChangePattern("[ДГП:СУММАНДС]", dgp_nds);
+            wd.ChangePattern("[ДГП:СРОК]", dgp_srok);
+
+            wd.ChangePattern("[ДГП:ФИОПОДПИСАНТ]", dgp_fio_registr); //ФИО Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            wd.ChangePattern("[ДГП:ФИОПОДПИСАНТДОГ]", dgp_fio_registr_doc); //ФИО Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            wd.ChangePattern("[ДГП:ДОЛЖНОСТЬ]", dgp_dolgnost); //Должность Сотрудника осуществляющего подписание договора - внизу договора им. падеж
+            wd.ChangePattern("[ДГП:ДОЛЖНОСТЬДОГ]", dgp_dolgnost_doc); //Должность Сотрудника осуществляющего подписание договора - вверху договора род. падеж
+            wd.ChangePattern("[ДГП:ДАТАНОМЕРДОВЕРЕННОСТИ]", dgp_power_attorney_doc); //Дата и номер доверенности подписанта
+
+
+            wd.ChangePattern("[ЗВК:ФИО]", dgp_decl_rekvizit);                           //ФИО в реквизитах
+            wd.ChangePattern("[ЗВК:ПАСПОРТ]", dgp_decl_pasport_rekvizit);               //Паспорт в реквизитах
+            wd.ChangePattern("[ЗВК:ПАСПОРАДРЕС]", dgp_decl_pasport_address_rekvizit);  //Паспорт в адрес
+            wd.ChangePattern("[ЗВК:EMAIL]", dgp_decl_email);                            //email
+            wd.ChangePattern("[ЗВК:ТЕЛЕФОН]", dgp_tel);                                 //телефон
+            wd.ChangePattern("[ЗВК:АДРЕСА]", dgp_objadres);                             //Адрес
+
+
+
+            wd.Export2PDF();
+            wd.Clear();
+            pdffile = wd.fnamepdf;
+
+
+
+
+            using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["WorkCadastr"].ConnectionString))
+            {
+                var sqlCmd = new SqlCommand("update Request set AktWorkPDF=@FN where NumContract = @Num", sqlConn);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@Num", NumContract);
+                sqlCmd.Parameters.AddWithValue("@FN", pdffile);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlConn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+
+
+            return pdffile;
+        }
+
+    }

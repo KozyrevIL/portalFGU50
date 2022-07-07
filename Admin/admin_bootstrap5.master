@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin_bootstrap5.master.cs" Inherits="Admin_admin_bootstrap5" %>
+
+
+<%@ Register Src="~/UC/admin_banner.ascx" TagPrefix="uc1" TagName="admin_banner" %>
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head runat="server">
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../css/bootstrap5/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap-fgu59.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <script src="../css/bootstrap5/js/bootstrap.min.js"></script>
+        <script src="../css/bootstrap5/js/bootstrap.bundle.min.js"></script>
+
+
+        <div class="header">
+
+            <uc1:admin_banner ID="admin_banner1" runat="server" />
+        </div>
+        <div class="container-fluid">
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+
+        </div>
+
+
+    </form>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+</html>

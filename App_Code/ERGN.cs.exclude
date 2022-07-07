@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+/// <summary>
+/// Сводное описание для ERGN
+/// </summary>
+public class ERGN
+{
+    public ERGN()
+    {
+        //
+        // TODO: добавьте логику конструктора
+        //
+    }
+    static public int isNumberPKURP(string number_request)
+    {
+        int id;
+
+
+        string str_request = @"SELECT count(id) as countid FROM portalFGU59.dbo.Exter_statements_PK  where number_receipt_in_PVD3 like('%' + @number_receipt_in_PVD3 + '%')";
+
+       
+        using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"].ConnectionString))
+        {
+            var sqlCmd = new SqlCommand(str_request, sqlConn);
+            sqlCmd.CommandType = CommandType.Text;
+            sqlCmd.Parameters.AddWithValue("@number_receipt_in_PVD3", number_request);
+            try
+            {
+                sqlConn.Open();
+                SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (readerData.HasRows)
+                {
+                    readerData.Read();
+                    id = Convert.ToInt16(readerData["countid"].ToString());
+
+                    return id;
+
+                }
+
+                readerData.Close();
+                sqlConn.Close();
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        return -1;
+    }
+    static public int isNumberPPOZ(string number_request)
+    {
+        int id;
+        string str_request = @"SELECT count(id) as countid FROM PortalFGU59.dbo.JornalItems  where type_items=45 and param2_str255=@param2_str255";
+
+        using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"].ConnectionString))
+        {
+            var sqlCmd = new SqlCommand(str_request, sqlConn);
+            sqlCmd.CommandType = CommandType.Text;
+            sqlCmd.Parameters.AddWithValue("@param2_str255", number_request);
+            try
+            {
+                sqlConn.Open(); 
+                SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (readerData.HasRows)
+                {
+                    readerData.Read();
+                    id = Convert.ToInt16(readerData["countid"].ToString());
+                    
+                    return id;
+
+                }
+
+                readerData.Close();
+                sqlConn.Close();
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        return -1;
+    }
+    static public int isNumberPPOZ(string number_request, string statusEGRN)
+    {
+        int id;
+        string str_request = @"SELECT count(id) as countid FROM PortalFGU59.dbo.JornalItems  where type_items=45 and param2_str255=@param2_str255 and param0_str50=@param0_str50";
+
+        using (var sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"].ConnectionString))
+        {
+            var sqlCmd = new SqlCommand(str_request, sqlConn);
+            sqlCmd.CommandType = CommandType.Text;
+            sqlCmd.Parameters.AddWithValue("@param2_str255", number_request);
+            sqlCmd.Parameters.AddWithValue("@param0_str50", statusEGRN);
+            try
+            {
+                sqlConn.Open();
+                SqlDataReader readerData = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (readerData.HasRows)
+                {
+                    readerData.Read();
+                    id = Convert.ToInt16(readerData["countid"].ToString());
+
+                    return id;
+
+                }
+
+                readerData.Close();
+                sqlConn.Close();
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        return -1;
+    }
+}

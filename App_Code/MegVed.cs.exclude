@@ -1,0 +1,614 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
+
+/// <summary>
+/// Summary description for MegVed
+/// </summary>
+public class MegVed
+{
+	public MegVed()
+	{
+		//
+		// TODO: Add constructor logic here
+		//
+	}
+    /// <summary>
+    /// Получение items_word, items_scan
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public SqlDataReader MegVedSelect(int id)
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        string str = @"SELECT items_word, items_scan FROM Megved  where id_megved="+id;
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand(str, myConnection);
+
+              
+        myCommand.CommandType = CommandType.Text;
+
+        myConnection.Open();
+
+        return myCommand.ExecuteReader(CommandBehavior.CloseConnection);
+    }
+    public SqlDataReader MegVedSelectArhive(int id, string connectionStrings)
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings[connectionStrings];
+
+        string str = @"SELECT items_word, items_scan FROM Megved  where id_megved=" + id;
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand(str, myConnection);
+
+
+        myCommand.CommandType = CommandType.Text;
+
+        myConnection.Open();
+
+        return myCommand.ExecuteReader(CommandBehavior.CloseConnection);
+    }
+    public void UpdateMegVed
+       (
+        int id_megved,
+        String kad_number,
+        String reg_number,
+        DateTime date_reg,
+        String name_request_dela,
+        String address,
+        String variant_send,
+        DateTime date_to_take,
+        DateTime time_to_take,
+        DateTime date_control,
+        DateTime date_to_ready,
+        DateTime time_to_ready,
+        String name_doc_ready,
+        DateTime date_ca_ready,
+        DateTime time_ca_ready,
+        String items_word,
+        String items_scan,
+        String kad_num_address,
+        String reg_number_AIS,
+        bool sended
+       )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedUpdate", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid_megved = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid_megved.Value = id_megved;
+        myCommand.Parameters.Add(parameterid_megved);
+
+        SqlParameter parameterkad_number = new SqlParameter("@kad_number", SqlDbType.NVarChar, 10);
+        parameterkad_number.Value = kad_number;
+        myCommand.Parameters.Add(parameterkad_number);
+
+        SqlParameter parameterreg_number = new SqlParameter("@reg_number", SqlDbType.NVarChar, 50);
+        parameterreg_number.Value = reg_number;
+        myCommand.Parameters.Add(parameterreg_number);
+
+        SqlParameter parameterdate_reg = new SqlParameter("@date_reg", SqlDbType.DateTime);
+        parameterdate_reg.Value = date_reg;
+        myCommand.Parameters.Add(parameterdate_reg);
+
+        SqlParameter parametername_request_dela = new SqlParameter("@name_request_dela", SqlDbType.NVarChar, 255);
+        parametername_request_dela.Value = name_request_dela;
+        myCommand.Parameters.Add(parametername_request_dela);
+
+        SqlParameter parameteraddress = new SqlParameter("@address", SqlDbType.NVarChar, 1000);
+        parameteraddress.Value = address;
+        myCommand.Parameters.Add(parameteraddress);
+
+        SqlParameter parametervariant_send = new SqlParameter("@variant_send", SqlDbType.NChar, 10);
+        parametervariant_send.Value = variant_send;
+        myCommand.Parameters.Add(parametervariant_send);
+
+        SqlParameter parameterdate_to_take = new SqlParameter("@date_to_take", SqlDbType.SmallDateTime);
+        parameterdate_to_take.Value = date_to_take;
+        myCommand.Parameters.Add(parameterdate_to_take);
+
+        SqlParameter parametertime_to_take = new SqlParameter("@time_to_take", SqlDbType.SmallDateTime);
+        parametertime_to_take.Value = time_to_take;
+        myCommand.Parameters.Add(parametertime_to_take);
+
+        SqlParameter parameterdate_control = new SqlParameter("@date_control", SqlDbType.DateTime);
+        parameterdate_control.Value = date_control;
+        myCommand.Parameters.Add(parameterdate_control);
+
+        SqlParameter parameterdate_to_ready = new SqlParameter("@date_to_ready", SqlDbType.SmallDateTime);
+        parameterdate_to_ready.Value = date_to_ready;
+        myCommand.Parameters.Add(parameterdate_to_ready);
+
+        SqlParameter parametertime_to_ready = new SqlParameter("@time_to_ready", SqlDbType.SmallDateTime);
+        parametertime_to_ready.Value = time_to_ready;
+        myCommand.Parameters.Add(parametertime_to_ready);
+
+        SqlParameter parametername_doc_ready = new SqlParameter("@name_doc_ready", SqlDbType.NVarChar, 255);
+        parametername_doc_ready.Value = name_doc_ready;
+        myCommand.Parameters.Add(parametername_doc_ready);
+
+        SqlParameter parameterdate_ca_ready = new SqlParameter("@date_ca_ready", SqlDbType.SmallDateTime);
+        parameterdate_ca_ready.Value = date_ca_ready;
+        myCommand.Parameters.Add(parameterdate_ca_ready);
+
+        SqlParameter parametertime_ca_ready = new SqlParameter("@time_ca_ready", SqlDbType.SmallDateTime);
+        parametertime_ca_ready.Value = time_ca_ready;
+        myCommand.Parameters.Add(parametertime_ca_ready);
+
+        SqlParameter parameteritems_word = new SqlParameter("@items_word", SqlDbType.NVarChar, 50);
+        parameteritems_word.Value = items_word;
+        myCommand.Parameters.Add(parameteritems_word);
+
+        SqlParameter parameteritems_scan = new SqlParameter("@items_scan", SqlDbType.NVarChar, 50);
+        parameteritems_scan.Value = items_scan;
+        myCommand.Parameters.Add(parameteritems_scan);
+
+        SqlParameter parameterkad_num_address = new SqlParameter("@kad_num_address", SqlDbType.NVarChar, 1000);
+        parameterkad_num_address.Value = kad_num_address;
+        myCommand.Parameters.Add(parameterkad_num_address);
+
+        SqlParameter parameterreg_number_AIS = new SqlParameter("@reg_number_AIS", SqlDbType.NVarChar, 50);
+        parameterreg_number_AIS.Value = reg_number_AIS;
+        myCommand.Parameters.Add(parameterreg_number_AIS);
+
+        SqlParameter parametersended = new SqlParameter("@sended", SqlDbType.Bit);
+        parametersended.Value = sended;
+        myCommand.Parameters.Add(parametersended);
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void UpdateMegVedQuery_power
+   (
+    int id_megved,
+    String kad_number,
+    String reg_number,
+    DateTime date_reg,
+    String name_request_dela,
+    String address,
+    String variant_send,
+    DateTime date_to_take,
+    DateTime time_to_take,
+    DateTime date_control,
+    DateTime date_to_ready,
+    DateTime time_to_ready,
+    String name_doc_ready,
+    DateTime date_ca_ready,
+    DateTime time_ca_ready,
+    String items_word,
+    String items_scan,
+    String kad_num_address,
+    String reg_number_AIS
+   )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedUpdateQuery_power", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid_megved = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid_megved.Value = id_megved;
+        myCommand.Parameters.Add(parameterid_megved);
+
+        SqlParameter parameterkad_number = new SqlParameter("@kad_number", SqlDbType.NVarChar, 10);
+        parameterkad_number.Value = kad_number;
+        myCommand.Parameters.Add(parameterkad_number);
+
+        SqlParameter parameterreg_number = new SqlParameter("@reg_number", SqlDbType.NVarChar, 50);
+        parameterreg_number.Value = reg_number;
+        myCommand.Parameters.Add(parameterreg_number);
+
+        SqlParameter parameterdate_reg = new SqlParameter("@date_reg", SqlDbType.DateTime);
+        parameterdate_reg.Value = date_reg;
+        myCommand.Parameters.Add(parameterdate_reg);
+
+        SqlParameter parametername_request_dela = new SqlParameter("@name_request_dela", SqlDbType.NVarChar, 255);
+        parametername_request_dela.Value = name_request_dela;
+        myCommand.Parameters.Add(parametername_request_dela);
+
+        SqlParameter parameteraddress = new SqlParameter("@address", SqlDbType.NVarChar, 1000);
+        parameteraddress.Value = address;
+        myCommand.Parameters.Add(parameteraddress);
+
+        SqlParameter parametervariant_send = new SqlParameter("@variant_send", SqlDbType.NChar, 10);
+        parametervariant_send.Value = variant_send;
+        myCommand.Parameters.Add(parametervariant_send);
+
+        SqlParameter parameterdate_to_take = new SqlParameter("@date_to_take", SqlDbType.SmallDateTime);
+        parameterdate_to_take.Value = date_to_take;
+        myCommand.Parameters.Add(parameterdate_to_take);
+
+        SqlParameter parametertime_to_take = new SqlParameter("@time_to_take", SqlDbType.SmallDateTime);
+        parametertime_to_take.Value = time_to_take;
+        myCommand.Parameters.Add(parametertime_to_take);
+
+        SqlParameter parameterdate_control = new SqlParameter("@date_control", SqlDbType.DateTime);
+        parameterdate_control.Value = date_control;
+        myCommand.Parameters.Add(parameterdate_control);
+
+        SqlParameter parameterdate_to_ready = new SqlParameter("@date_to_ready", SqlDbType.SmallDateTime);
+        parameterdate_to_ready.Value = date_to_ready;
+        myCommand.Parameters.Add(parameterdate_to_ready);
+
+        SqlParameter parametertime_to_ready = new SqlParameter("@time_to_ready", SqlDbType.SmallDateTime);
+        parametertime_to_ready.Value = time_to_ready;
+        myCommand.Parameters.Add(parametertime_to_ready);
+
+        SqlParameter parametername_doc_ready = new SqlParameter("@name_doc_ready", SqlDbType.NVarChar, 255);
+        parametername_doc_ready.Value = name_doc_ready;
+        myCommand.Parameters.Add(parametername_doc_ready);
+
+        SqlParameter parameterdate_ca_ready = new SqlParameter("@date_ca_ready", SqlDbType.SmallDateTime);
+        parameterdate_ca_ready.Value = date_ca_ready;
+        myCommand.Parameters.Add(parameterdate_ca_ready);
+
+        SqlParameter parametertime_ca_ready = new SqlParameter("@time_ca_ready", SqlDbType.SmallDateTime);
+        parametertime_ca_ready.Value = time_ca_ready;
+        myCommand.Parameters.Add(parametertime_ca_ready);
+
+        SqlParameter parameteritems_word = new SqlParameter("@items_word", SqlDbType.NVarChar, 50);
+        parameteritems_word.Value = items_word;
+        myCommand.Parameters.Add(parameteritems_word);
+
+        SqlParameter parameteritems_scan = new SqlParameter("@items_scan", SqlDbType.NVarChar, 50);
+        parameteritems_scan.Value = items_scan;
+        myCommand.Parameters.Add(parameteritems_scan);
+
+        SqlParameter parameterkad_num_address = new SqlParameter("@kad_num_address", SqlDbType.NVarChar, 1000);
+        parameterkad_num_address.Value = kad_num_address;
+        myCommand.Parameters.Add(parameterkad_num_address);
+
+        SqlParameter parameterreg_number_AIS = new SqlParameter("@reg_number_AIS", SqlDbType.NVarChar, 50);
+        parameterreg_number_AIS.Value = reg_number_AIS;
+        myCommand.Parameters.Add(parameterreg_number_AIS);
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void UpdateMegVedQuery_powerArhiv
+  (
+        string connectionString,
+   int id_megved,
+   String kad_number,
+   String reg_number,
+   DateTime date_reg,
+   String name_request_dela,
+   String address,
+   String variant_send,
+   DateTime date_to_take,
+   DateTime time_to_take,
+   DateTime date_control,
+   DateTime date_to_ready,
+   DateTime time_to_ready,
+   String name_doc_ready,
+   DateTime date_ca_ready,
+   DateTime time_ca_ready,
+   String items_word,
+   String items_scan,
+   String kad_num_address,
+   String reg_number_AIS
+  )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings[connectionString];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedUpdateQuery_power", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid_megved = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid_megved.Value = id_megved;
+        myCommand.Parameters.Add(parameterid_megved);
+
+        SqlParameter parameterkad_number = new SqlParameter("@kad_number", SqlDbType.NVarChar, 10);
+        parameterkad_number.Value = kad_number;
+        myCommand.Parameters.Add(parameterkad_number);
+
+        SqlParameter parameterreg_number = new SqlParameter("@reg_number", SqlDbType.NVarChar, 50);
+        parameterreg_number.Value = reg_number;
+        myCommand.Parameters.Add(parameterreg_number);
+
+        SqlParameter parameterdate_reg = new SqlParameter("@date_reg", SqlDbType.DateTime);
+        parameterdate_reg.Value = date_reg;
+        myCommand.Parameters.Add(parameterdate_reg);
+
+        SqlParameter parametername_request_dela = new SqlParameter("@name_request_dela", SqlDbType.NVarChar, 255);
+        parametername_request_dela.Value = name_request_dela;
+        myCommand.Parameters.Add(parametername_request_dela);
+
+        SqlParameter parameteraddress = new SqlParameter("@address", SqlDbType.NVarChar, 1000);
+        parameteraddress.Value = address;
+        myCommand.Parameters.Add(parameteraddress);
+
+        SqlParameter parametervariant_send = new SqlParameter("@variant_send", SqlDbType.NChar, 10);
+        parametervariant_send.Value = variant_send;
+        myCommand.Parameters.Add(parametervariant_send);
+
+        SqlParameter parameterdate_to_take = new SqlParameter("@date_to_take", SqlDbType.SmallDateTime);
+        parameterdate_to_take.Value = date_to_take;
+        myCommand.Parameters.Add(parameterdate_to_take);
+
+        SqlParameter parametertime_to_take = new SqlParameter("@time_to_take", SqlDbType.SmallDateTime);
+        parametertime_to_take.Value = time_to_take;
+        myCommand.Parameters.Add(parametertime_to_take);
+
+        SqlParameter parameterdate_control = new SqlParameter("@date_control", SqlDbType.DateTime);
+        parameterdate_control.Value = date_control;
+        myCommand.Parameters.Add(parameterdate_control);
+
+        SqlParameter parameterdate_to_ready = new SqlParameter("@date_to_ready", SqlDbType.SmallDateTime);
+        parameterdate_to_ready.Value = date_to_ready;
+        myCommand.Parameters.Add(parameterdate_to_ready);
+
+        SqlParameter parametertime_to_ready = new SqlParameter("@time_to_ready", SqlDbType.SmallDateTime);
+        parametertime_to_ready.Value = time_to_ready;
+        myCommand.Parameters.Add(parametertime_to_ready);
+
+        SqlParameter parametername_doc_ready = new SqlParameter("@name_doc_ready", SqlDbType.NVarChar, 255);
+        parametername_doc_ready.Value = name_doc_ready;
+        myCommand.Parameters.Add(parametername_doc_ready);
+
+        SqlParameter parameterdate_ca_ready = new SqlParameter("@date_ca_ready", SqlDbType.SmallDateTime);
+        parameterdate_ca_ready.Value = date_ca_ready;
+        myCommand.Parameters.Add(parameterdate_ca_ready);
+
+        SqlParameter parametertime_ca_ready = new SqlParameter("@time_ca_ready", SqlDbType.SmallDateTime);
+        parametertime_ca_ready.Value = time_ca_ready;
+        myCommand.Parameters.Add(parametertime_ca_ready);
+
+        SqlParameter parameteritems_word = new SqlParameter("@items_word", SqlDbType.NVarChar, 50);
+        parameteritems_word.Value = items_word;
+        myCommand.Parameters.Add(parameteritems_word);
+
+        SqlParameter parameteritems_scan = new SqlParameter("@items_scan", SqlDbType.NVarChar, 50);
+        parameteritems_scan.Value = items_scan;
+        myCommand.Parameters.Add(parameteritems_scan);
+
+        SqlParameter parameterkad_num_address = new SqlParameter("@kad_num_address", SqlDbType.NVarChar, 1000);
+        parameterkad_num_address.Value = kad_num_address;
+        myCommand.Parameters.Add(parameterkad_num_address);
+
+        SqlParameter parameterreg_number_AIS = new SqlParameter("@reg_number_AIS", SqlDbType.NVarChar, 50);
+        parameterreg_number_AIS.Value = reg_number_AIS;
+        myCommand.Parameters.Add(parameterreg_number_AIS);
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void UpdateMegVedArhiv
+    (
+     string connectionString,
+     int id_megved,
+     String kad_number,
+     String reg_number,
+     DateTime date_reg,
+     String name_request_dela,
+     String address,
+     String variant_send,
+     DateTime date_to_take,
+     DateTime time_to_take,
+     DateTime date_control,
+     DateTime date_to_ready,
+     DateTime time_to_ready,
+     String name_doc_ready,
+     DateTime date_ca_ready,
+     DateTime time_ca_ready,
+     String items_word,
+     String items_scan,
+     String kad_num_address,
+     String reg_number_AIS
+    )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings[connectionString];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedUpdate", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid_megved = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid_megved.Value = id_megved;
+        myCommand.Parameters.Add(parameterid_megved);
+
+        SqlParameter parameterkad_number = new SqlParameter("@kad_number", SqlDbType.NVarChar, 10);
+        parameterkad_number.Value = kad_number;
+        myCommand.Parameters.Add(parameterkad_number);
+
+        SqlParameter parameterreg_number = new SqlParameter("@reg_number", SqlDbType.NVarChar, 50);
+        parameterreg_number.Value = reg_number;
+        myCommand.Parameters.Add(parameterreg_number);
+
+        SqlParameter parameterdate_reg = new SqlParameter("@date_reg", SqlDbType.DateTime);
+        parameterdate_reg.Value = date_reg;
+        myCommand.Parameters.Add(parameterdate_reg);
+
+        SqlParameter parametername_request_dela = new SqlParameter("@name_request_dela", SqlDbType.NVarChar, 255);
+        parametername_request_dela.Value = name_request_dela;
+        myCommand.Parameters.Add(parametername_request_dela);
+
+        SqlParameter parameteraddress = new SqlParameter("@address", SqlDbType.NVarChar, 1000);
+        parameteraddress.Value = address;
+        myCommand.Parameters.Add(parameteraddress);
+
+        SqlParameter parametervariant_send = new SqlParameter("@variant_send", SqlDbType.NChar, 10);
+        parametervariant_send.Value = variant_send;
+        myCommand.Parameters.Add(parametervariant_send);
+
+        SqlParameter parameterdate_to_take = new SqlParameter("@date_to_take", SqlDbType.SmallDateTime);
+        parameterdate_to_take.Value = date_to_take;
+        myCommand.Parameters.Add(parameterdate_to_take);
+
+        SqlParameter parametertime_to_take = new SqlParameter("@time_to_take", SqlDbType.SmallDateTime);
+        parametertime_to_take.Value = time_to_take;
+        myCommand.Parameters.Add(parametertime_to_take);
+
+        SqlParameter parameterdate_control = new SqlParameter("@date_control", SqlDbType.DateTime);
+        parameterdate_control.Value = date_control;
+        myCommand.Parameters.Add(parameterdate_control);
+
+        SqlParameter parameterdate_to_ready = new SqlParameter("@date_to_ready", SqlDbType.SmallDateTime);
+        parameterdate_to_ready.Value = date_to_ready;
+        myCommand.Parameters.Add(parameterdate_to_ready);
+
+        SqlParameter parametertime_to_ready = new SqlParameter("@time_to_ready", SqlDbType.SmallDateTime);
+        parametertime_to_ready.Value = time_to_ready;
+        myCommand.Parameters.Add(parametertime_to_ready);
+
+        SqlParameter parametername_doc_ready = new SqlParameter("@name_doc_ready", SqlDbType.NVarChar, 255);
+        parametername_doc_ready.Value = name_doc_ready;
+        myCommand.Parameters.Add(parametername_doc_ready);
+
+        SqlParameter parameterdate_ca_ready = new SqlParameter("@date_ca_ready", SqlDbType.SmallDateTime);
+        parameterdate_ca_ready.Value = date_ca_ready;
+        myCommand.Parameters.Add(parameterdate_ca_ready);
+
+        SqlParameter parametertime_ca_ready = new SqlParameter("@time_ca_ready", SqlDbType.SmallDateTime);
+        parametertime_ca_ready.Value = time_ca_ready;
+        myCommand.Parameters.Add(parametertime_ca_ready);
+
+        SqlParameter parameteritems_word = new SqlParameter("@items_word", SqlDbType.NVarChar, 50);
+        parameteritems_word.Value = items_word;
+        myCommand.Parameters.Add(parameteritems_word);
+
+        SqlParameter parameteritems_scan = new SqlParameter("@items_scan", SqlDbType.NVarChar, 50);
+        parameteritems_scan.Value = items_scan;
+        myCommand.Parameters.Add(parameteritems_scan);
+
+        SqlParameter parameterkad_num_address = new SqlParameter("@kad_num_address", SqlDbType.NVarChar, 1000);
+        parameterkad_num_address.Value = kad_num_address;
+        myCommand.Parameters.Add(parameterkad_num_address);
+
+        SqlParameter parameterreg_number_AIS = new SqlParameter("@reg_number_AIS", SqlDbType.NVarChar, 50);
+        parameterreg_number_AIS.Value = reg_number_AIS;
+        myCommand.Parameters.Add(parameterreg_number_AIS);
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void DeleteMegVedArhive
+       (
+            int id,
+            string connectionString
+       )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings[connectionString];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedDelete", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid.Value = id;
+        myCommand.Parameters.Add(parameterid);
+
+
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void DeleteMegVed
+       (
+
+            int id
+       )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedDelete", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid.Value = id;
+        myCommand.Parameters.Add(parameterid);
+
+
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void DeleteMegVedQuery_power
+       (
+
+            int id
+       )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedDeleteQuery_power", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid.Value = id;
+        myCommand.Parameters.Add(parameterid);
+
+
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+    public void DeleteMegVedArhiv
+      (
+            string connectionString,
+           int id
+      )
+    {
+        ConnectionStringSettings settings;
+        settings = ConfigurationManager.ConnectionStrings[connectionString];
+
+        SqlConnection myConnection = new SqlConnection(settings.ToString());
+        SqlCommand myCommand = new SqlCommand("MegVedDelete", myConnection);
+
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter parameterid = new SqlParameter("@id_megved", SqlDbType.Int);
+        parameterid.Value = id;
+        myCommand.Parameters.Add(parameterid);
+
+
+
+        myConnection.Open();
+        myCommand.ExecuteNonQuery();
+        myConnection.Close();
+
+    }
+}

@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="bootstrap5_base.master.cs" Inherits="bootstrap5_base" %>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head runat="server">
+    <title></title>
+    <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link href="css/bootstrap5/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="css/bootstrap5/bootstrap-5-fgu59.css" rel="stylesheet" />
+
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+            
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+   <script src="../css/bootstrap5/js/bootstrap.min.js"></script>
+    <script src="../css/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    <script src="../jQuery/jquery-3.0.0.min.js"></script>
+    <form id="form1" runat="server">
+        <div class="container-fluid log-in">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+ 
+
+
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<place_storages>
+  <place name="Выбор хранения" value="-1"></place>
+  <place name="Барда"  value="Барда"></place>
+  <place name="Верещагино" value="Верещагино"></place>
+  <place name="Лысьва"  value="Лысьва"></place>
+  <place name="Нытва" value="Нытва"></place>
+  <place name="Оханск"  value="Оханск"></place>
+  <place name="Оса"  value="Оса"></place>
+  <place name="Очер"  value="Очер"></place>
+  <place name="Чайковский"  value="Чайковский"></place>
+  <place name="Пермь"  value="Пермь"></place>
+  <place name="Березники"  value="Березники"></place>
+  <place name="Кудымкар"  value="Кудымкар"></place>
+  <place name="Чернушка"  value="Чернушка"></place>
+  <place name="Чусовой" value="Чусовой"></place>
+</place_storages>
+	
+
+	

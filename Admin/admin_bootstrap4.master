@@ -1,0 +1,51 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin_bootstrap4.master.cs" Inherits="Admin_admin_bootstrap4" %>
+
+
+<%@ Register Src="~/UC/admin_banner.ascx" TagPrefix="uc1" TagName="admin_banner" %>
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head runat="server">
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../fonts/FontAwesome/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="./../css/bootstrap-fgu59.css" rel="stylesheet" />
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+            
+
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div class="header">
+
+            <uc1:admin_banner ID="admin_banner1" runat="server" />
+        </div>
+        <div class="container-fluid">
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+
+        </div>
+
+
+    </form>
+
+
+   <script src="../dist/js/bootstrap.min.js"></script>
+    <script src="../dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
