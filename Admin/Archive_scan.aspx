@@ -36,6 +36,78 @@
         }
     </script>
 
+    <section id="form_input_data">
+        <div class="container-fluid well well-sm">
+
+            <div class="row">
+
+
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Номер реестрового дела</label><br />
+                        <div class="input-group">
+                            <asp:TextBox ID="TextBoxKad_number" runat="server" CssClass="form-control" Width="100%" /> 
+                            <asp:RequiredFieldValidator ErrorMessage="требуется заполнить" ControlToValidate="TextBoxKad_number" runat="server" Display="Dynamic"  />
+                        </div>
+                    </div>
+                </div>
+                 
+                  <div class="col-lg-1">
+                    <div class="form-group">
+                        <label>Переведено томов</label><br />
+                        <div class="input-group">
+                            <asp:TextBox ID="TextBoxV_volume" runat="server" CssClass="form-control" />
+                            <asp:RequiredFieldValidator ErrorMessage="требуется заполнить" ControlToValidate="TextBoxV_volume" runat="server" Display="Dynamic"  />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        <label>Переведено листов</label><br />
+                        <div class="input-group">
+                            <asp:TextBox ID="TextBoxV_sheets" runat="server" CssClass="form-control" />
+                            <asp:RequiredFieldValidator ErrorMessage="требуется заполнить" ControlToValidate="TextBoxV_sheets" runat="server" Display="Dynamic"  />
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="col-lg-1">
+                    <div class="form-group">
+                        <label>Переведено страниц</label><br />
+                        <div class="input-group">
+                            <asp:TextBox ID="TextBoxV_pages" runat="server" CssClass="form-control" />
+                            <asp:RequiredFieldValidator ErrorMessage="требуется заполнить" ControlToValidate="TextBoxV_pages" runat="server" Display="Dynamic" />
+                        </div>
+                    </div>
+                </div>
+
+
+                 <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Примечание</label><br />
+                        <div class="input-group">
+                            <asp:TextBox ID="TextBoxComments" runat="server" CssClass="form-control" Width="300px"  TextMode="MultiLine" Height="50px" />  
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="btn btn-group">
+                        <asp:LinkButton ID="LinkButtonInsert" Text="Добавить" CssClass="btn btn-success" runat="server" OnClick="LinkButtonInsert_Click"><i class="glyphicon glyphicon-paste"></i>&nbsp;Добавить</asp:LinkButton>
+<%--                            <asp:LinkButton ID="ImageButtonExcel" runat="server" CssClass="btn btn-default" CausesValidation="false" OnClick="ImageButtonExcel_Click1"> <span aria-hidden="true" class="fa fa-file-excel-o"></span>Excel </asp:LinkButton><asp:LinkButton ID="ImageButtonWord" runat="server" CssClass="btn btn-default" CausesValidation="false" OnClick="ImageButtonWord_Click1"> <span aria-hidden="true" class="fa fa-file-word-o"></span>Word </asp:LinkButton>--%>
+                    </div>
+                </div>
+                
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
     <section id="search_data" style="margin-top: 15px;">
         <div class="container-fluid well well-sm">
             <div class="row">
@@ -51,9 +123,8 @@
                     <div class="input-group">
                         <asp:DropDownList ID="DropDownListStatus" runat="server" CssClass="form-control">
                             <asp:ListItem Value="all">Все</asp:ListItem>
-                            <asp:ListItem Value="work" Selected="True">В работе</asp:ListItem>
-                            <asp:ListItem Value="scan">Отсканировано, но не возвращено</asp:ListItem>
-                            <asp:ListItem Value="ret">Возвращено</asp:ListItem>
+                            <asp:ListItem Value="notLoaded" Selected="True">Не загружено в ИС Архив</asp:ListItem>
+                            <asp:ListItem Value="Loaded">Загружено в ИС Архив</asp:ListItem>
                         </asp:DropDownList>
                     </div>
                 </div>
@@ -147,13 +218,13 @@
                             </asp:BoundField>
 
                             <asp:BoundField DataField="id_act" HeaderText="id_act" SortExpression="id_act" Visible="false" />
-                            <asp:TemplateField HeaderText="Номер дела" SortExpression="num_delo">
+                           <asp:TemplateField HeaderText="Номер дела" SortExpression="num_delo">
                                 <ItemTemplate>
                                     <asp:Label ID="Label8" runat="server" Text='<%# Bind("num_delo") %>'></asp:Label>
                                 </ItemTemplate>
                                 <ItemStyle CssClass="success" />
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Номер тома" SortExpression="nums_toma">
+                        <%--     <asp:TemplateField HeaderText="Номер тома" SortExpression="nums_toma">
                                 <ItemTemplate>
                                     <asp:Label ID="Label7" runat="server" Text='<%# Bind("nums_toma") %>'></asp:Label>
                                 </ItemTemplate>
@@ -168,7 +239,7 @@
                                 <ItemTemplate>
                                     <asp:Label ID="LabelDateWork" runat="server" Text='<%# Bind("date_to_work","{0:dd.MM.yyyy}") %>'></asp:Label>
                                 </ItemTemplate>
-                            </asp:TemplateField>
+                            </asp:TemplateField>--%>
                             <asp:TemplateField Visible="false">
                                 <ItemTemplate>
                                     <asp:Label ID="LabelDScan" runat="server" Text='<%# Eval("date_scan","{0:dd.MM.yyyy}") %>'></asp:Label>
@@ -321,11 +392,10 @@
             SelectCommand=" SELECT s.id,s.id_act,id_item,id_otdel,id_sotrudnik,operator,date_to_work,date_scan,i.qty_pages qty_pages_item, s.qty_pages,comments,date_to_AIS_ARCHIVE,qty_sheets,qty_toms
             ,i.num_delo,i.nums_toma,s.isDeFibre, s.info_txt, s.download_type 
   FROM ARCHIVE_SCAN s right join ARCHIVE_ITEMS i on s.id_item=i.id
-  where (i.num_delo=@mask OR (@mask = '-1')) and (id_sotrudnik=@id_sotrudnik or @id_sotrudnik=' ') and
+  where (i.num_delo like @mask+'%' OR (@mask = '-1')) and (id_sotrudnik=@id_sotrudnik or @id_sotrudnik=' ') and
             ((@status='all') or
-             (@status='work' and date_scan is null) or
-             (@status='scan' and date_scan is not null and return_to_box is null) or
-             (@status='ret' and date_scan is not null and return_to_box is not null) 
+             (@status='notLoaded' and date_to_AIS_ARCHIVE is null) or
+             (@status='Loaded' and date_to_AIS_ARCHIVE is not null) 
             )
   order by s.id desc
             "
@@ -340,7 +410,8 @@
             <SelectParameters>
                 <asp:ControlParameter ControlID="TextBoxSearch" DefaultValue="-1" Name="mask" PropertyName="Text" />
                 <asp:ControlParameter ControlID="DropDownListOperator" DefaultValue=" " Name="id_sotrudnik" PropertyName="SelectedValue" />
-                <asp:ControlParameter ControlID="DropDownListStatus" DefaultValue="work" Name="status" PropertyName="SelectedValue" />
+                <asp:ControlParameter ControlID="DropDownListStatus" DefaultValue="notLoaded" Name="status" PropertyName="SelectedValue" />
+<%--                <asp:Parameter Name="status" DefaultValue="all"/>--%>
             </SelectParameters>
 
             <UpdateParameters>

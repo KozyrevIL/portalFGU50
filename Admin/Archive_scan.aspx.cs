@@ -103,8 +103,26 @@ public partial class Admin_Archive_scan : System.Web.UI.Page
 
     protected void LinkButtonInsert_Click(object sender, EventArgs e)
     {
-
-        SqlDataSourceArchive_scan.Insert();
+        using (SqlConnection sqc = new SqlConnection(ConfigurationManager.ConnectionStrings["portalFGU59ConnectionString"].ToString()))
+        {
+            sqc.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = sqc;
+            string sqlText = @"Declare @ID_ITEM as NUMERIC(18,0)
+INSERT INTO [dbo].[ARCHIVE_ITEMS] (NUM_DELO) VALUES(@numDelo)
+Select @ID_ITEM = @@IDENTITY
+Insert into archive_scan (id_item,id_otdel,id_sotrudnik,date_scan,qty_pages,qty_sheets,qty_toms,comments) values (@ID_ITEM,@idOtdel,@idSotr,GETDATE(),@qtyPages,@qtySheets,@qtyToms,@comments)";
+            cmd.CommandText = sqlText;
+            cmd.Parameters.AddWithValue("numDelo", TextBoxKad_number.Text);
+            cmd.Parameters.AddWithValue("idOtdel", ViewState["id_otdel"].ToString());
+            cmd.Parameters.AddWithValue("idSotr", ViewState["id_sotrudnik"].ToString());
+            cmd.Parameters.AddWithValue("qtyPages", TextBoxV_pages.Text);
+            cmd.Parameters.AddWithValue("qtySheets", TextBoxV_sheets.Text);
+            cmd.Parameters.AddWithValue("qtyToms", TextBoxV_volume.Text);
+            cmd.Parameters.AddWithValue("comments", TextBoxComments.Text);
+            cmd.ExecuteNonQuery();
+            sqc.Close();
+        }
         GridView1.DataBind();
 
     }

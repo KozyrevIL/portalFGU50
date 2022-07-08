@@ -24,7 +24,7 @@
 			Expanded="False" SelectAction="Expand">
 			<asp:TreeNode NavigateUrl="~/Admin/close_request.aspx" Text="Журнал закрытых заявлений. Ввод." Value="Журнал закрытых заявлений. Ввод."></asp:TreeNode>
 			
-		    <asp:TreeNode NavigateUrl="~/Admin/ScanDPD.aspx" Text="Сканирование ДПД" Value="Сканирование ДПД"></asp:TreeNode>
+		    <asp:TreeNode NavigateUrl="~/Admin/Archive_scan.aspx" Text="Сканирование ДПД" Value="Сканирование ДПД"></asp:TreeNode>
 
 		</asp:TreeNode>
 	</Nodes>
